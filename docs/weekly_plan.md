@@ -1,0 +1,21 @@
+## Weekly plan ##
+
+- Week #1 (24-28 Feb) - understand hyperledger & experiment with it
+- Week #2 (02-06 Mar) - understand hyperledger & experiment with it + requirements document
+- Week #3 (09-13 Mar) - design of prototype with base functionalities
+- Week #4 (16-20 Mar) - implementation of prototype
+- Week #5 (23-27 Mar) - implementation of prototype
+- Week #6 (30 Mar-03 Apr) - implementation of prototype
+- Week #7 (06-10 Apr) - implementation of prototype
+- Week #8 (13-17 Apr) - holidays
+- Week #9 (20-24 Apr) Testing of prototype + design of new functionalities / improvements
+- Week #10 (27 Apr -01 May) - Implementation of new functionalities / improvements
+- Week #11 (04-08 May) - Implementation of new functionalities / improvements
+- Week #12 (11-15 May) - Implementation of new functionalities / improvements
+- Week #13 (18-22 May) - Testing of the entire project & bug fixing
+- Week #14 (25-29 May) - Testing of the entire project & bug fixing
+- Week #15 (01-05 Jun) - Emergency slot for that thing you didn't think of
+- Week #16 (08-12 Jun) - Preparation of the presentation
+- Week #17 (15-19 Jun) - exams
+- Week #18 (22-26 Jun) - presentation?
+- Week #19 (29-30 Jun) - presentation? 
