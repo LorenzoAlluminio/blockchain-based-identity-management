@@ -1,4 +1,4 @@
-## Weekly plan ##
+# Weekly plan 
 
 - Week #1 (24-28 Feb) - understand hyperledger & experiment with it
 - Week #2 (02-06 Mar) - understand hyperledger & experiment with it + requirements document
@@ -18,4 +18,4 @@
 - Week #16 (08-12 Jun) - Preparation of the presentation
 - Week #17 (15-19 Jun) - exams
 - Week #18 (22-26 Jun) - presentation?
-- Week #19 (29-30 Jun) - presentation? 
+- Week #19 (29-30 Jun) - presentation?
