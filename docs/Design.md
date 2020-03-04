@@ -17,12 +17,26 @@ This webapp will also contain the wallet for the client (the certificate)
 - 1 ordering node for each SP
 
 ## Chaincode design
-- world state
-| UserId | SubscriptionId|startTime|endTime| Type |
-| --- | --- | --- | --- | --- |
-|A|001|01/01/2020|31/12/2020|S|
-|A|001|01/10/2020|02/10/2020|O|
+- subscription world state
 
-## Improvments
+UserId | Provider | SubscriptionId|startTime|endTime
+---- | ---- | ---- | ---- | ---- |
+A|Netflick|001|01/01/2020 00.00 | 31/12/2020 12.59
+
+- offers world state
+
+UserId | Provider | SubscriptionId|startTime|endTime | price
+---- | ---- | ---- | ---- | ---- | ----
+A|Netflick|001|07/07/2020 13.00 |07/07/2020 14.00 | 50 HC
+
+- Insert subscription smart contract
+Smart contract used by SP to certify a subscription of a user. Modifies the subscription world state. Endorsement policy: SP related to the subscription
+
+- Offers smart contract
+Smart contract triggered by user to insert/acquire advertisments. modifies offers world state. Endorsement policy: majority vote.
+
+## Improvements
 - enable cross device auth
 - make only necessary data public
+- bidding system
+- signing of offer from user
