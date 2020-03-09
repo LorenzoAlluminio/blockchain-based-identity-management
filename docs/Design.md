@@ -37,11 +37,14 @@ A|Netflick|001|07/07/2020 13.00 |07/07/2020 14.00 | 50 HC
 
 - Insert subscription smart contract
 Smart contract used by SP to certify a subscription of a user. Modifies the subscription world state. Endorsement policy: SP related to the subscription
+methods: new sub, split sub, query
 
 - Offers smart contract
 Smart contract triggered by user to insert/acquire advertisments. modifies offers world state. Endorsement policy: majority vote.
+methods: sell,buy,query
 - money smart contract
 add or sub money to user. Endorsement policy: majority vote
+methods: add,sub,query
 
 ## Improvements
 - enable cross device auth (crypted key on sp solution)
