@@ -1,0 +1,14 @@
+- Presentation of requirements, user to blockchain model
+- Discussion about business feasibility of the project, revenue streams for provider ( monthly fee, transaction fee, user that buys currency)
+- Presentation of design, chaincode & world states definition, login through hyperledger and access control on blockchain
+- Discussion about majority vote in endorsement policy of offers smart contract
+- Discussion about state evolution of subscription world state ( no 2 users connected at the same time with same subscription)
+- Benefit: no need to share credentials to other users, easy revocation of access
+- Possible generalization to edge computing
+
+Next steps:
+- More detailed design ( specify endorsement policy )
+- Implement chaincodes and internal stuff
+
+Next meeting: Wed,Thu,Fri for first half of semester
+              Tue,Wed,Fri for second half of semester
