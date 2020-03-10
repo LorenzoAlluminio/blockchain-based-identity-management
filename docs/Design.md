@@ -13,7 +13,7 @@ Users will not be able to convert HyperCash into real money.
 
 ## Network design
 The network is composed by one application channel on which are deployed three chaincodes (one related to subscriptions, one related to money and one which controls the rent offers). Each service provider will have a peer which executes the three smart contracts (SCS, SCM and SCO respectively) and keeps an updated version of the three world states (WS, WM and WO). The endorsement policies are different based on the type of the transaction. Each provider will have also 1 ordering nodes, and they will reach consensus through Raft.
-The user will connect to the network through a web app which is store in the customer device. Then he can check the state of its own wallet, issue a new offer, read the offer world state or rent a subscription.
+The user will connect to the network through a web app which is stored in the customer device. There he can check the state of its own wallet, issue a new offer, read the offer world state or rent a subscription.
 
 Example network with 2 SP and 2 users:
 ![general schema](../img/general_schema.png "General schema of the network")
@@ -27,11 +27,7 @@ All the other peer in the network will add it to their ledger, if the data is va
 Example of insertion of offer by the user:
 ![Offer insertion](../img/offer_schema.png "Offer insertion")
 
-When a user wants to add an offer to the ledger it requests a write to the ledger, if the offer is legitimate the service providers approves it and adds it to LO (Ledger of Offers)
-
-
-
-
+When a user wants to add an offer to the ledger it requests a write to the ledger, if the offer is legitimate the service providers approves it and adds it to LO (Ledger of Offers).
 
 ## Application Design
 
