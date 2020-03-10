@@ -1,8 +1,22 @@
 #Design
 
-Legenda:
 SP = Service Provider
-U = User / customer / client
+U = User
+
+## Summary of the requirements
+
+The idea is to create an hyperledger network between multiple service provider that offer different type of services (e.g video streaming, hosting, vpn access ...)
+
+This network will allow users to rent to other users their access to services and gain in return HyperCash (HC).
+Then they will be able to rent access to other services belonging to the network using the gained currency. So this technology will basically allow the creation of a marketplace of access to services between users.
+Users will not be able to convert HyperCash into real money.
+
+## Network design
+- 1 peer for each SP. Each peer on the same channel.
+- 1 ordering node for each SP, consensus reached with Raft.
+
+Example with 2 SP and 2 users:
+![general schema](../img/general_schema.png "General schema of the network")
 
 ## Application Design
 
@@ -10,11 +24,6 @@ U = User / customer / client
 - Login with Hyperledger to access the Service  (on each SP).
 - Webapp local to client to login to the network itself and see the offers. (gateway)
 This webapp will also contain the wallet for the client (the certificate)
-
-## Network design
-
-- at least 1 peer for each SP. Each peer on the same channel.
-- 1 ordering node for each SP
 
 ## Chaincode design
 - subscription world state
