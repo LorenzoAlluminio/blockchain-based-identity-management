@@ -39,11 +39,20 @@ This webapp will also contain the wallet for the client (the certificate)
 ## Chaincode design
 - subscription world state
 
-UserId | Provider | SubscriptionId|startTime|endTime
+It is used to keep track of the owner of a certain subscription for a determined period of time. The update of the world state happens when a User subscribes to a new service outside the network or when a user rents an existing subscription for a fixed time. In the second case the SP will update the ledger removing the time slot from the previous user and adding it to the new one.
+The endorsement policy for this Smart Contract should require that the transaction is signed by the provider of the service itself in case of a new subscription.
+The methods that needs to be implemented are: new subscription, split subscription, query.
+
+UserId | Provider | SubscriptionId|Duration
 ---- | ---- | ---- | ---- | ---- |
-A|Netflick|001|01/01/2020 00.00 | 31/12/2020 12.59
+A|Netflick|001|{0: {01/01/2020 00.00,31/12/2020 12.59}, 1: {...,...}}
 
 - money world state
+
+It will represent the state of the wallet of each user inside the blockchain.
+The endorsement policy will require that at least the majority of the SP share the same result and sign it.
+The function that need to be implemented are: addiction, subtraction and query
+
 
 UserId | amountOfMoney |
 ---- | ---- |
@@ -51,20 +60,13 @@ A|100|
 
 - offers world state
 
+It is the collection of all the offers. The user can trigger a request to add a new offer inside the ledger. When a second user decides to accept this offer the SCO (Offers Smart Contract) has to trigger a change the other 2 chaincodes in order to keep updated the wallets of the two users and the owner of the subscription.
+The endorsement policy requires that the majority of the SPs agree on the transaction. This prevent that a single service provider stops a user from making rent requests, as this would allow the SP to benefit from the network, without actually providing the service. Moreover it also allows consistency because when the transaction is approved it will also modify the subscription world state and prevent a user from renting the same slot time twice. On the other hand other service providers will not have any interest to validate fake request from the moment that it will result in a bigger contribution to the blockchain from the victim service provider. This is why we think a majority vote is enough for this type of transaction.
+methods: publish,accept,query
+
 UserId | Provider | SubscriptionId|startTime|endTime | price
 ---- | ---- | ---- | ---- | ---- | ----
 A|Netflick|001|07/07/2020 13.00 |07/07/2020 14.00 | 50 HC
-
-- Insert subscription smart contract
-Smart contract used by SP to certify a subscription of a user. Modifies the subscription world state. Endorsement policy: SP related to the subscription
-methods: new sub, split sub, query
-
-- Offers smart contract
-Smart contract triggered by user to insert/acquire advertisments. modifies offers world state. Endorsement policy: majority vote.
-methods: sell,buy,query
-- money smart contract
-add or sub money to user. Endorsement policy: majority vote
-methods: add,sub,query
 
 ## Improvements
 - enable cross device auth (crypted key on sp solution)
