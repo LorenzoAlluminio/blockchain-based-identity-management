@@ -52,12 +52,18 @@ This page will allow users to publish their ownership of a "normal" account of a
 - Login with Hyperledger to access the Service
 This will be an additional button (Like "login with google") that the user will be able to use in order to use his certificate to identify himself and login to the service. The provider will check on the blockchain if the user really has access to the service at this moment in time.
 
-![Login](../img/link.png "Login")
+![Login](../img/login.png "Login")
 
 ### Client side (webapp)
 
-- Webapp local to client to login to the network itself and see the offers. (gateway)
-This webapp will also contain the wallet for the client (the certificate)
+The client side webapp will handle the wallet of the user and provide a graphical interface in order connect to the blockchain and perform the operation specified in the network design.
+Operations:
+- retrieve all offers
+- accept an offer
+- insert a new offer
+
+![Webapp](../img/webapp.png "Webapp")
+
 
 ## Chaincode design
 - subscription world state
@@ -90,6 +96,12 @@ methods: publish,accept,query
 UserId | Provider | SubscriptionId|startTime|endTime | price
 ---- | ---- | ---- | ---- | ---- | ----
 A|Netflick|001|07/07/2020 13.00 |07/07/2020 14.00 | 50 HC
+
+## Economic returns
+The use of the network will require the payment of a monthly fee for all the users. Moreover, each user can buy extra coins to rent subscriptions using real money.  Therefore, to prevent an excess of coin in the network, which would prevent the user from buying new ones, at each transaction is applied a tax.
+
+All the money collected by the previous means will be distributed to all the organization that partecipate to the network. The split could be equal for each company or could be based on the contribution of the service provider in the network (how many subscription are rented)
+
 
 ## Improvements
 - enable cross device auth (crypted key on sp solution)
