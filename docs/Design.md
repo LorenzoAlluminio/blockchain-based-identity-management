@@ -100,7 +100,7 @@ A|Netflick|001|07/07/2020 13.00 |07/07/2020 14.00 | 50 HC
 ## Economic returns
 The use of the network will require the payment of a monthly fee for all the users. Moreover, each user can buy extra coins to rent subscriptions using real money.  Therefore, to prevent an excess of coin in the network, which would prevent the user from buying new ones, at each transaction is applied a tax.
 
-All the money collected by the previous means will be distributed to all the organization that partecipate to the network. The split could be equal for each company or could be based on the contribution of the service provider in the network (how many subscription are rented)
+All the money collected by the previous means will be distributed to all the organization that partecipate to the network. The split could be equal for each company or could be based on the contribution of the service provider in the network (how many subscription are rented).
 
 
 ## Improvements
