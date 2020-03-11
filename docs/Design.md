@@ -29,10 +29,33 @@ Example of insertion of offer by the user:
 
 When a user wants to add an offer to the ledger it requests a write to the ledger, if the offer is legitimate the service providers approves it and adds it to LO (Ledger of Offers).
 
+Example of accept of offer by the user:
+![Offer accept](../img/buy_schema.png "Offer accept")
+
+When a user wants to accept an offer from the ledger, it queries the offers smart contract and gets all the offers. Then it decides which one he wants and he sends on the channel for the provider to update the state.
 ## Application Design
 
-- Register to the network / Link account (on each SP). Add user to channel MSP?
-- Login with Hyperledger to access the Service  (on each SP).
+### Service provider side
+
+- Register to the network page
+The service provider will have to implement a register to the network page where users can generate their couple (sk,pk) and get a certificate that identifies them into the blockchain network.
+
+![Registration](../img/registration.png "Registration")
+
+
+- Link account page
+This page will allow users to publish their ownership of a "normal" account of a Service Provider to the blockchain network, linking it to their public key. The user will have to send a signature to prove that he own the sk related to his pk. The SP will have to modify his internal database in order to link the "normal" account to the Hyperledger certificate.
+
+![Link](../img/link.png "Link")
+
+
+- Login with Hyperledger to access the Service
+This will be an additional button (Like "login with google") that the user will be able to use in order to use his certificate to identify himself and login to the service. The provider will check on the blockchain if the user really has access to the service at this moment in time.
+
+![Login](../img/link.png "Login")
+
+### Client side (webapp)
+
 - Webapp local to client to login to the network itself and see the offers. (gateway)
 This webapp will also contain the wallet for the client (the certificate)
 
