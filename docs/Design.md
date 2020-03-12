@@ -75,9 +75,11 @@ It is used to keep track of the owner of a certain subscription for a determined
 The access control and transaction validation for this Smart Contract should be majority + the service provider that is related to the subscription.
 The methods that needs to be implemented are: new subscription, split subscription, query.
 
-UserId | Provider | SubscriptionId|Duration
----- | ---- | ---- | ---- | ----
-A|Netflick|001|{0: {01/01/2020 00.00,31/12/2020 12.59}, 1: {...,...}}
+
+UserId | Provider | SubscriptionId | Duration
+---- | ---- | ---- | ---- 
+A | Netflick | 001 | [0: [01/01/2020 00.00,31/12/2020 12.59], 1: [...,...]]
+
 
 - money world state
 
