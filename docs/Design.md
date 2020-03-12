@@ -1,7 +1,5 @@
 # Design
 
-SP = Service Provider
-U = User
 
 ## Summary of the requirements
 
