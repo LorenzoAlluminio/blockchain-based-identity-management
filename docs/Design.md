@@ -37,12 +37,6 @@ When a user wants to accept an offer from the ledger, it queries the offers smar
 
 ### Service provider side
 
-- Register to the network page
-The service provider will have to implement a register to the network page where users can generate their couple (sk,pk) and get a certificate that identifies them into the blockchain network.
-
-![Registration](../img/registration.png "Registration")
-
-
 - Link account page
 This page will allow users to publish their ownership of a "normal" account of a Service Provider to the blockchain network, linking it to their public key. The user will have to send a signature to prove that he own the sk related to his pk. The SP will have to modify his internal database in order to link the "normal" account to the Hyperledger certificate.
 
@@ -56,20 +50,29 @@ This will be an additional button (Like "login with google") that the user will 
 
 ### Client side (webapp)
 
+- Register to the network page
+The service provider will have to implement a register to the network page where users can generate their couple (sk,pk) and get a certificate that identifies them into the blockchain network.
+
 The client side webapp will handle the wallet of the user and provide a graphical interface in order connect to the blockchain and perform the operation specified in the network design.
+The application will also handle the payments to the blockchain network
 Operations:
 - retrieve all offers
 - accept an offer
 - insert a new offer
+- perform payment (monthly fee, buy currency)
 
 ![Webapp](../img/webapp.png "Webapp")
+
+The webapp will also handle the registration to the blockchain network. When a new user enrolls via the webapp it creates the key pair (sk,pk), connect to the CA of the network, and get a certificate that identifies them into the blockchain network.
+
+![Registration](../img/registration.png "Registration")
 
 
 ## Chaincode design
 - subscription world state
 
 It is used to keep track of the owner of a certain subscription for a determined period of time. The update of the world state happens when a User subscribes to a new service outside the network or when a user rents an existing subscription for a fixed time. In the second case the SP will update the ledger removing the time slot from the previous user and adding it to the new one.
-The endorsement policy for this Smart Contract should require that the transaction is signed by the provider of the service itself in case of a new subscription.
+The access control and transaction validation for this Smart Contract should be majority + the service provider that is related to the subscription.
 The methods that needs to be implemented are: new subscription, split subscription, query.
 
 UserId | Provider | SubscriptionId|Duration
@@ -80,12 +83,12 @@ A|Netflick|001|{0: {01/01/2020 00.00,31/12/2020 12.59}, 1: {...,...}}
 
 It will represent the state of the wallet of each user inside the blockchain.
 The endorsement policy will require that at least the majority of the SP share the same result and sign it.
-The function that need to be implemented are: addiction, subtraction and query
+The function that need to be implemented are: addiction, subtraction,query and verifyPayment
 
 
-UserId | amountOfMoney |
----- | ---- |
-A|100|
+UserId | amountOfMoney | LastPaymentDate
+---- | ---- | ---- |
+A|100| 03/09/2020 |
 
 - offers world state
 
@@ -96,6 +99,13 @@ methods: publish,accept,query
 UserId | Provider | SubscriptionId|startTime|endTime | price
 ---- | ---- | ---- | ---- | ---- | ----
 A|Netflick|001|07/07/2020 13.00 |07/07/2020 14.00 | 50 HC
+
+### Common payment design
+
+There will be a common payment account (bank account or ethereum account) where users will deposit their money when paying to the network.
+In order to claim the assets the client will invoke a transaction where he will provide a proof of payment. The peers will verify that the payment has been actually performed and will grant the assets on the blockchain.
+
+![Payment](../img/payments.png "Payment")
 
 ## Economic returns
 The use of the network will require the payment of a monthly fee for all the users. Moreover, each user can buy extra coins to rent subscriptions using real money.  Therefore, to prevent an excess of coin in the network, which would prevent the user from buying new ones, at each transaction is applied a tax.
