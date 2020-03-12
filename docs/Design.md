@@ -12,7 +12,7 @@ Then they will be able to rent access to other services belonging to the network
 Users will not be able to convert HyperCash into real money.
 
 ## Network design
-The network is composed by one application channel on which are deployed three chaincodes (one related to subscriptions, one related to money and one which controls the rent offers). Each service provider will have a peer which executes the three smart contracts (SCS, SCM and SCO respectively) and keeps an updated version of the three world states (WS, WM and WO). The endorsement policies are different based on the type of the transaction. Each provider will have also 1 ordering nodes, and they will reach consensus through Raft.
+The network is composed by one application channel on which are deployed three chaincodes (one related to subscriptions, one related to money and one which controls the rent offers). Each service provider will have a peer which executes the three smart contracts (SCS, SCM and SCO respectively) and keeps an updated version of the three world states (WS, WM and WO). The endorsement policies and the access control are different based on the type of the transaction. Each provider will have also 1 ordering node, and they will reach consensus through Raft.
 The user will connect to the network through a web app which is stored in the customer device. There he can check the state of its own wallet, issue a new offer, read the offer world state or rent a subscription.
 
 Example network with 2 SP and 2 users:
@@ -32,7 +32,7 @@ When a user wants to add an offer to the ledger it requests a write to the ledge
 Example of accept of offer by the user:
 ![Offer accept](../img/buy_schema.png "Offer accept")
 
-When a user wants to accept an offer from the ledger, it queries the offers smart contract and gets all the offers. Then it decides which one he wants and he sends on the channel for the provider to update the state.
+When a user wants to accept an offer from the ledger, it queries the offers smart contract and gets all the offers. Then it decides which one he wants and he sends it on the channel so that the provider can update the state.
 ## Application Design
 
 ### Service provider side
@@ -50,11 +50,8 @@ This will be an additional button (Like "login with google") that the user will 
 
 ### Client side (webapp)
 
-- Register to the network page
-The service provider will have to implement a register to the network page where users can generate their couple (sk,pk) and get a certificate that identifies them into the blockchain network.
-
 The client side webapp will handle the wallet of the user and provide a graphical interface in order connect to the blockchain and perform the operation specified in the network design.
-The application will also handle the payments to the blockchain network
+The application will also handle the payments to the blockchain.
 Operations:
 - retrieve all offers
 - accept an offer
@@ -77,7 +74,7 @@ The methods that needs to be implemented are: new subscription, split subscripti
 
 
 UserId | Provider | SubscriptionId | Duration
----- | ---- | ---- | ---- 
+---- | ---- | ---- | ----
 A | Netflick | 001 | [0: [01/01/2020 00.00,31/12/2020 12.59], 1: [...,...]]
 
 
@@ -102,6 +99,11 @@ UserId | Provider | SubscriptionId|startTime|endTime | price
 ---- | ---- | ---- | ---- | ---- | ----
 A|Netflick|001|07/07/2020 13.00 |07/07/2020 14.00 | 50 HC
 
+## Economic returns
+The use of the network will require the payment of a monthly fee for all the users. Moreover, each user can buy extra coins to rent subscriptions using real money.  Therefore, to prevent an excess of coin in the network, which would prevent the user from buying new ones, at each transaction is applied a tax.
+
+All the money collected by the previous means will be distributed to all the organization that partecipate to the network. The split could be equal for each company or could be based on the contribution of the service provider in the network (how many subscription are rented).
+
 ### Common payment design
 
 There will be a common payment account (bank account or ethereum account) where users will deposit their money when paying to the network.
@@ -109,15 +111,9 @@ In order to claim the assets the client will invoke a transaction where he will 
 
 ![Payment](../img/payments.png "Payment")
 
-## Economic returns
-The use of the network will require the payment of a monthly fee for all the users. Moreover, each user can buy extra coins to rent subscriptions using real money.  Therefore, to prevent an excess of coin in the network, which would prevent the user from buying new ones, at each transaction is applied a tax.
-
-All the money collected by the previous means will be distributed to all the organization that partecipate to the network. The split could be equal for each company or could be based on the contribution of the service provider in the network (how many subscription are rented).
-
 
 ## Improvements
 - enable cross device auth (crypted key on sp solution)
 - make only necessary data public
 - bidding system
 - signing of offer from user
-- common payments with ethereum?
