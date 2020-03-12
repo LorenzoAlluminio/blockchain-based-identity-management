@@ -75,7 +75,7 @@ The methods that needs to be implemented are: new subscription, split subscripti
 
 UserId | Provider | SubscriptionId | Duration
 ---- | ---- | ---- | ----
-A | Netflick | 001 | [0: [01/01/2020 00.00,31/12/2020 12.59], 1: [...,...]]
+A | Provider 1 | 001 | [0: [01/01/2020 00.00,31/12/2020 12.59], 1: [...,...]]
 
 
 - money world state
@@ -97,7 +97,7 @@ methods: publish,accept,query
 
 UserId | Provider | SubscriptionId|startTime|endTime | price
 ---- | ---- | ---- | ---- | ---- | ----
-A|Netflick|001|07/07/2020 13.00 |07/07/2020 14.00 | 50 HC
+A|Provider 1|001|07/07/2020 13.00 |07/07/2020 14.00 | 50 HC
 
 ## Economic returns
 The use of the network will require the payment of a monthly fee for all the users. Moreover, each user can buy extra coins to rent subscriptions using real money.  Therefore, to prevent an excess of coin in the network, which would prevent the user from buying new ones, at each transaction is applied a tax.
