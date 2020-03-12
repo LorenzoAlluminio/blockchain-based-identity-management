@@ -1,4 +1,4 @@
-#Design
+# Design
 
 SP = Service Provider
 U = User
@@ -76,7 +76,7 @@ The access control and transaction validation for this Smart Contract should be 
 The methods that needs to be implemented are: new subscription, split subscription, query.
 
 UserId | Provider | SubscriptionId|Duration
----- | ---- | ---- | ---- | ---- |
+---- | ---- | ---- | ---- | ----
 A|Netflick|001|{0: {01/01/2020 00.00,31/12/2020 12.59}, 1: {...,...}}
 
 - money world state
