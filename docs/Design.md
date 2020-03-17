@@ -10,8 +10,15 @@ Then they will be able to rent access to other services belonging to the network
 Users will not be able to convert HyperCash into real money.
 
 ## Network design
+
+#### Parties involved
+ - Service providers, which host each one hyperledger peer, one ordering node and provide the service of certificate authority to the end user.
+ - Users, which will host the webapp
+ - CA (trusted root CA between all the organizations)
+
 The network is composed by one application channel on which are deployed three chaincodes (one related to subscriptions, one related to money and one which controls the rent offers). Each service provider will have a peer which executes the three smart contracts (SCS, SCM and SCO respectively) and keeps an updated version of the three world states (WS, WM and WO). The endorsement policies and the access control are different based on the type of the transaction. Each provider will have also 1 ordering node, and they will reach consensus through Raft.
 The user will connect to the network through a web app which is stored in the customer device. There he can check the state of its own wallet, issue a new offer, read the offer world state or rent a subscription.
+During the registration of a user, a service provider will sign the new certificate send it back to the user and issue it on the system channel.
 
 Example network with 2 SP and 2 users:
 ![general schema](../img/general_schema.png "General schema of the network")
@@ -27,7 +34,7 @@ This page will allow users to link their "normal account" to the blockchain one.
 
 - Issue subscription
 
-When a user subscribes to a new service, if it chooses to share the subscription within the network, the Service Provider will issue the new subscription to the channel.
+When a user subscribes to a new service, if it chooses to share the subscription (sub) within the network, the Service Provider will issue the new subscription to the channel.
 All the other peer in the network will add it to their ledger, if the data is valid.
 
 ![Subscription insertion](../img/subscription_schema.png "Subscription insertion")
