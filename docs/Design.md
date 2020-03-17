@@ -12,9 +12,15 @@ Users will not be able to convert HyperCash into real money.
 ## Network design
 
 #### Parties involved
- - Service providers, which host each one hyperledger peer, one ordering node and provide the service of certificate authority to the end user.
+- Service providers, which contains
+      - server with related database that allows access of the service to the client.
+      - hyperledger peer
+      - one ordering node
+      - provides the service of certificate authority to the end user.
+      -
  - Users, which will host the webapp
  - CA (trusted root CA between all the organizations)
+ - Common payment account, external to the Hyperledger blockchain.
 
 The network is composed by one application channel on which are deployed three chaincodes (one related to subscriptions, one related to money and one which controls the rent offers). Each service provider will have a peer which executes the three smart contracts (SCS, SCM and SCO respectively) and keeps an updated version of the three world states (WS, WM and WO). The endorsement policies and the access control are different based on the type of the transaction. Each provider will have also 1 ordering node, and they will reach consensus through Raft.
 The user will connect to the network through a web app which is stored in the customer device. There he can check the state of its own wallet, issue a new offer, read the offer world state or rent a subscription.
@@ -52,7 +58,9 @@ Operations:
 - retrieve all offers & eventually accept an offer
 ![Offer accept](../img/buy_schema.png "Offer accept")
 
-When a user wants to accept an offer from the ledger, it queries the offers smart contract and gets all the offers. Then it decides which one he wants and he sends it on the channel so that the provider can update the state.
+The process of accepting an offer from the ledger consists in 2 phases:
+1. the user queries the offers smart contract and gets all the offers (Off1,Off2,Off3).
+2. the user decides which one he wants (Off3) and he sends it on the channel so that the provider can update the state.
 
 - insert a new offer
 ![Offer insertion](../img/offer_schema.png "Offer insertion")
