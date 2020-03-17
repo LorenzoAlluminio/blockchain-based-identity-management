@@ -33,11 +33,6 @@ Example network with 2 SP and 2 users:
 
 ### Service provider side
 
-- Login with Hyperledger to access the Service
-This will be an additional button (Like "login with google") that the user will be able to use in order to use his certificate to identify himself and login to the service. The provider will check on the blockchain if the user really has access to the service at this moment in time.
-
-![Login](../img/login.png "Login")
-
 - Link account page
 This page will allow users to link their "normal account" to the blockchain one. The user will have to send a signature to prove that he own the sk related to his pk. The SP will have to modify his internal database in order to link the "normal" account to the user identifier.
 
@@ -49,6 +44,12 @@ When a user subscribes to a new service, if it chooses to share the subscription
 All the other peer in the network will add it to their ledger, if the data is valid.
 
 ![Subscription insertion](../img/subscription_schema.png "Subscription insertion")
+
+- Login with Hyperledger to access the Service
+This will be an additional button (Like "login with google") that the user will be able to use in order to use his certificate to identify himself and login to the service. The provider will check on the blockchain if the user really has access to the service at this moment in time.
+
+![Login](../img/login.png "Login")
+
 
 ### Client side (webapp)
 
