@@ -17,10 +17,12 @@ Users will not be able to convert HyperCash into real money.
     - hyperledger peer.
     - hyperledger ordering node.
     - CA that provides certificates to the end user.
- - End users
+
+- End users
     - they will use the WebApp to interact to the hyperledger blockchain.
- - CA (trusted root CA between all the organizations)
- - Common payment account, external to the Hyperledger blockchain.
+
+- CA (trusted root CA between all the organizations)
+- Common payment account, external to the Hyperledger blockchain.
 
 The network is composed by one application channel on which are deployed three chaincodes (one related to subscriptions, one related to money and one which controls the rent offers). Each service provider will have a peer which executes the three smart contracts (SCS, SCM and SCO respectively) and keeps an updated version of the three world states (WS, WM and WO). The endorsement policies and the access control are different based on the type of the transaction. Each provider will have also 1 ordering node, and they will reach consensus through Raft.
 The user will connect to the network through a web app which is stored in the customer device. There he can check the state of its own wallet, issue a new offer, read the offer world state or rent a subscription.
