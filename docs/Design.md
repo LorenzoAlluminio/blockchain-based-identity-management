@@ -14,11 +14,10 @@ Users will not be able to convert HyperCash into real money.
 #### Parties involved
 - Service providers, which contains
       - server with related database that allows access of the service to the client.
-      - hyperledger peer
-      - one ordering node
-      - provides the service of certificate authority to the end user.
-      -
- - Users, which will host the webapp
+      - hyperledger peer.
+      - hyperledger ordering node.
+      - CA that provides certificates to the end user.
+ - End users, which will host the webapp
  - CA (trusted root CA between all the organizations)
  - Common payment account, external to the Hyperledger blockchain.
 
