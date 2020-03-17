@@ -13,11 +13,12 @@ Users will not be able to convert HyperCash into real money.
 
 #### Parties involved
 - Service providers, which contains
-      - server with related database that allows access of the service to the client.
-      - hyperledger peer.
-      - hyperledger ordering node.
-      - CA that provides certificates to the end user.
- - End users, which will host the webapp
+    - server with related database that allows access of the service to the client.
+    - hyperledger peer.
+    - hyperledger ordering node.
+    - CA that provides certificates to the end user.
+ - End users
+    - they will use the WebApp to interact to the hyperledger blockchain.
  - CA (trusted root CA between all the organizations)
  - Common payment account, external to the Hyperledger blockchain.
 
@@ -39,7 +40,7 @@ This page will allow users to link their "normal account" to the blockchain one.
 
 - Issue subscription
 
-When a user subscribes to a new service, if it chooses to share the subscription (sub) within the network, the Service Provider will issue the new subscription to the channel.
+When a user subscribes to a new service, if it chooses to share the subscription (sub1) within the network, the Service Provider will issue the new subscription to the channel.
 All the other peer in the network will add it to their ledger, if the data is valid.
 
 ![Subscription insertion](../img/subscription_schema.png "Subscription insertion")
