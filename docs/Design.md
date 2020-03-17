@@ -33,6 +33,11 @@ Example network with 2 SP and 2 users:
 
 ### Service provider side
 
+- Login with Hyperledger to access the Service
+This will be an additional button (Like "login with google") that the user will be able to use in order to use his certificate to identify himself and login to the service. The provider will check on the blockchain if the user really has access to the service at this moment in time.
+
+![Login](../img/login.png "Login")
+
 - Link account page
 This page will allow users to link their "normal account" to the blockchain one. The user will have to send a signature to prove that he own the sk related to his pk. The SP will have to modify his internal database in order to link the "normal" account to the user identifier.
 
@@ -45,33 +50,29 @@ All the other peer in the network will add it to their ledger, if the data is va
 
 ![Subscription insertion](../img/subscription_schema.png "Subscription insertion")
 
-- Login with Hyperledger to access the Service
-This will be an additional button (Like "login with google") that the user will be able to use in order to use his certificate to identify himself and login to the service. The provider will check on the blockchain if the user really has access to the service at this moment in time.
-
-![Login](../img/login.png "Login")
-
 ### Client side (webapp)
 
 The client side webapp will handle the wallet of the user and provide a graphical interface in order to connect to the blockchain and perform the operation specified below.
 The application will also handle the payments to the blockchain.
 Operations:
-- retrieve all offers & eventually accept an offer
-![Offer accept](../img/buy_schema.png "Offer accept")
-
-The process of accepting an offer from the ledger consists in 2 phases:
-1. the user queries the offers smart contract and gets all the offers (Off1,Off2,Off3).
-2. the user decides which one he wants (Off3) and he sends it on the channel so that the provider can update the state.
-
-- insert a new offer
-![Offer insertion](../img/offer_schema.png "Offer insertion")
-
-When a user wants to add an offer (Off1) to the ledger it requests a write to the ledger, if the offer is legitimate the service providers approves it and adds it to LO (Ledger of Offers).
 
 - register to the network
 
 ![Registration](../img/registration.png "Registration")
 
 When a new user register via the webapp it creates the key pair (sk,pk), connect to the CA of the network, and get a certificate that identifies them into the blockchain network.
+
+- insert a new offer
+![Offer insertion](../img/offer_schema.png "Offer insertion")
+
+When a user wants to add an offer (Off1) to the ledger it requests a write to the ledger, if the offer is legitimate the service providers approves it and adds it to LO (Ledger of Offers).
+
+- retrieve all offers & eventually accept an offer
+![Offer accept](../img/buy_schema.png "Offer accept")
+
+The process of accepting an offer from the ledger consists in 2 phases:
+1. the user queries the offers smart contract and gets all the offers (Off1,Off2,Off3).
+2. the user decides which one he wants (Off3) and he sends it on the channel so that the provider can update the state.
 
 ## Chaincode design
 #### subscription world state
