@@ -40,7 +40,7 @@ This page will allow users to link their "normal account" to the blockchain one.
 
 - Issue subscription
 
-When a user subscribes to a new service, if it chooses to share the subscription (sub1) within the network, the Service Provider will issue the new subscription to the channel.
+When a user subscribes to a new service, if it chooses to share the subscription (Sub1) within the network, the Service Provider will issue the new subscription to the channel.
 All the other peer in the network will add it to their ledger, if the data is valid.
 
 ![Subscription insertion](../img/subscription_schema.png "Subscription insertion")
@@ -65,7 +65,7 @@ The process of accepting an offer from the ledger consists in 2 phases:
 - insert a new offer
 ![Offer insertion](../img/offer_schema.png "Offer insertion")
 
-When a user wants to add an offer to the ledger it requests a write to the ledger, if the offer is legitimate the service providers approves it and adds it to LO (Ledger of Offers).
+When a user wants to add an offer (Off1) to the ledger it requests a write to the ledger, if the offer is legitimate the service providers approves it and adds it to LO (Ledger of Offers).
 
 - register to the network
 
