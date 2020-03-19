@@ -4,6 +4,7 @@ import (
     "encoding/json"
     "errors"
     "fmt"
+    "time"
     "github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
@@ -14,11 +15,11 @@ type MoneyContract struct {
 type MoneyAccount struct {
 	UserId string `json:"userId"`
 	AmountOfMoney  int `json:"amountOfMoney"`
-  LastPaymentDate string `json:"lastPaymentDate"`
+  LastPaymentDate time.Time `json:"lastPaymentDate"`
 }
 
 
-func (sc *MoneyContract) NewMoneyAccount(ctx contractapi.TransactionContextInterface, userId string, amountOfMoney int, lastPaymentDate string) error {
+func (sc *MoneyContract) NewMoneyAccount(ctx contractapi.TransactionContextInterface, userId string, amountOfMoney int, lastPaymentDate time.Time) error {
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
@@ -117,7 +118,7 @@ func (sc *MoneyContract) SubMoney(ctx contractapi.TransactionContextInterface, u
 	return nil
 }
 
-func (sc *MoneyContract) UpdateLastPaymentDate(ctx contractapi.TransactionContextInterface, userId string, newDate string) error {
+func (sc *MoneyContract) UpdateLastPaymentDate(ctx contractapi.TransactionContextInterface, userId string, newDate time.Time) error {
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
@@ -190,7 +191,7 @@ func (sc *MoneyContract) VerifyPaymentForMoney(ctx contractapi.TransactionContex
 	return sc.AddMoney(ctx,userId,boughtMoney)
 }
 
-func (sc *MoneyContract) VerifyPaymentForDate(ctx contractapi.TransactionContextInterface, userId string, pop int, newDate string) error {
+func (sc *MoneyContract) VerifyPaymentForDate(ctx contractapi.TransactionContextInterface, userId string, pop int, newDate time.Time) error {
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
