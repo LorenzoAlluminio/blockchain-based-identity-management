@@ -157,7 +157,7 @@ func (sc *MoneyContract) GetMoneyAccount(ctx contractapi.TransactionContextInter
   }
 
   if existing == nil {
-      return nil,fmt.Errorf("Cannot get money account with key %s. It doesn't exists", userId)
+      return nil,fmt.Errorf("Cannot get money account with userId %s. It doesn't exists", userId)
   }
 
 	ma := new(MoneyAccount)
@@ -165,8 +165,46 @@ func (sc *MoneyContract) GetMoneyAccount(ctx contractapi.TransactionContextInter
 	err = json.Unmarshal(existing, ma)
 
 	if err != nil {
-		return nil, fmt.Errorf("Data retrieved from world state for key %s was not of type MoneyAccount", userId)
+		return nil, fmt.Errorf("Data retrieved from world state for userId %s was not of type MoneyAccount", userId)
 	}
 
 	return ma, nil
+}
+
+func (sc *MoneyContract) VerifyPaymentForMoney(ctx contractapi.TransactionContextInterface, userId string, pop int, boughtMoney int) error {
+  existing, err := ctx.GetStub().GetState(userId)
+
+  if err != nil {
+      return errors.New("Unable to interact with world state")
+  }
+
+  if existing == nil {
+      return fmt.Errorf("Cannot verify payment with userId %s. It doesn't exists", userId)
+  }
+
+  // TODO properly check for proof of payment
+  if pop != 1 {
+    return errors.New("Proof of payment is not valid")
+  }
+
+	return AddMoney(ctx,userId,boughtMoney)
+}
+
+func (sc *MoneyContract) VerifyPaymentForDate(ctx contractapi.TransactionContextInterface, userId string, pop int, newDate string) error {
+  existing, err := ctx.GetStub().GetState(userId)
+
+  if err != nil {
+      return errors.New("Unable to interact with world state")
+  }
+
+  if existing == nil {
+      return fmt.Errorf("Cannot verify payment with userId %s. It doesn't exists", userId)
+  }
+
+  // TODO properly check for proof of payment
+  if pop != 1 {
+    return errors.New("Proof of payment is not valid")
+  }
+
+	return UpdateLastPaymentDate(ctx,userId,newDate)
 }
