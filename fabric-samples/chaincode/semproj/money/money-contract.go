@@ -187,7 +187,7 @@ func (sc *MoneyContract) VerifyPaymentForMoney(ctx contractapi.TransactionContex
     return errors.New("Proof of payment is not valid")
   }
 
-	return AddMoney(ctx,userId,boughtMoney)
+	return sc.AddMoney(ctx,userId,boughtMoney)
 }
 
 func (sc *MoneyContract) VerifyPaymentForDate(ctx contractapi.TransactionContextInterface, userId string, pop int, newDate string) error {
@@ -206,5 +206,5 @@ func (sc *MoneyContract) VerifyPaymentForDate(ctx contractapi.TransactionContext
     return errors.New("Proof of payment is not valid")
   }
 
-	return UpdateLastPaymentDate(ctx,userId,newDate)
+	return sc.UpdateLastPaymentDate(ctx,userId,newDate)
 }
