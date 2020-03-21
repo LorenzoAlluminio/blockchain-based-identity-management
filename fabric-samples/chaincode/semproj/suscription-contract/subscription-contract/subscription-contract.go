@@ -3,7 +3,6 @@ package main
 import (
     "errors"
     "fmt"
-    "container/list"
     "encoding/json"
     "time"
     "github.com/hyperledger/fabric-contract-api-go/contractapi"
@@ -12,13 +11,6 @@ import (
 type TimeSlot struct{
     StartTime time.Time `json:"StartTime"`
     EndTime time.Time `json:"EndTime"`
-}
-
-type WorldState struct{
-  UserID string `json:"UserID"`
-  SubID string `json:"SubID"`
-  ProviderID  string `json:"ProviderID"`
-	TimeSlots list.List `json:"TimeSlots"`
 }
 
 type Key struct{
@@ -70,7 +62,8 @@ func (sc *SubscriptionContract) IssueSubscription(ctx contractapi.TransactionCon
       }
 
       // possibiliti to merge with previous slots or owerride them in future
-      value.TimeSlots.PushBack(new)
+
+      value.TimeSlots  = append(value.TimeSlots,new)
 
       result, _ := json.Marshal(value)
 
@@ -86,12 +79,12 @@ func (sc *SubscriptionContract) IssueSubscription(ctx contractapi.TransactionCon
         EndTime: EndTime,
       }
 
-      l := list.New()
-      l.PushBack(ts)
+      timeSlot := make([]TimeSlot,10)
+      timeSlot = append(timeSlot, ts)
 
       vStr := Subscription{
         ProviderID: ProviderID,
-        TimeSlots: *l,
+        TimeSlots: timeSlot,
         }
 
       value, _ := json.Marshal(vStr)
@@ -110,74 +103,75 @@ func (sc *SubscriptionContract) IssueSubscription(ctx contractapi.TransactionCon
 // Create or update the state of a subscription for a user (called from offerts smartContract)
 func (sc *SubscriptionContract) RentSubscription(ctx contractapi.TransactionContextInterface, UserID string, SubID string, ProviderID string, StartTime time.Time, EndTime time.Time) error {
 
-    if EndTime.Before(StartTime) {
-      return errors.New("Error in time format")
-    }
-
-    kStr := Key{
-      UserID: UserID,
-      SubID: SubID,
-    }
-
-    key, _ := json.Marshal(kStr)
-
-    query_result, err := ctx.GetStub().GetState(string(key))
-
-    if err != nil {
-      return errors.New("Unable to interact with world state")
-    }
-
-    if query_result != nil {
-
-      value := Subscription{}
-      _ = json.Unmarshal(query_result, value)
-
-      new := TimeSlot{
-        StartTime: StartTime,
-        EndTime: EndTime,
+      if EndTime.Before(StartTime) {
+        return errors.New("Error in time format")
       }
 
-      // possibiliti to merge with previous slots or owerride them in future
-      value.TimeSlots.PushBack(new)
+      kStr := Key{
+        UserID: UserID,
+        SubID: SubID,
+      }
 
-      result, _ := json.Marshal(value)
+      key, _ := json.Marshal(kStr)
 
-      err = ctx.GetStub().PutState(string(key), result)
+      query_result, err := ctx.GetStub().GetState(string(key))
 
       if err != nil {
-          return errors.New("Unable to interact with world state")
+        return errors.New("Unable to interact with world state")
       }
 
-    } else {
-      ts := TimeSlot{
-        StartTime: StartTime,
-        EndTime: EndTime,
-      }
+      if query_result != nil {
 
-      l := list.New()
-      l.PushBack(ts)
+        value := Subscription{}
 
-      vStr := Subscription{
-        ProviderID: ProviderID,
-        TimeSlots: *l,
+        _ = json.Unmarshal(query_result, value)
+
+        new := TimeSlot{
+          StartTime: StartTime,
+          EndTime: EndTime,
         }
 
-      value, _ := json.Marshal(vStr)
+        // possibiliti to merge with previous slots or owerride them in future
 
-      err = ctx.GetStub().PutState(string(key), value)
+        value.TimeSlots  = append(value.TimeSlots,new)
 
-      if err != nil {
-          return errors.New("Unable to interact with world state")
+        result, _ := json.Marshal(value)
+
+        err = ctx.GetStub().PutState(string(key), result)
+
+        if err != nil {
+            return errors.New("Unable to interact with world state")
+        }
+
+      } else {
+        ts := TimeSlot{
+          StartTime: StartTime,
+          EndTime: EndTime,
+        }
+
+        timeSlot := make([]TimeSlot,10)
+        timeSlot = append(timeSlot, ts)
+
+        vStr := Subscription{
+          ProviderID: ProviderID,
+          TimeSlots: timeSlot,
+          }
+
+        value, _ := json.Marshal(vStr)
+
+        err = ctx.GetStub().PutState(string(key), value)
+
+        if err != nil {
+            return errors.New("Unable to interact with world state")
+        }
       }
-    }
 
 
-    return nil
-}
-
+      return nil
+  }
 
 // Remove the time slot that has been added to the offer world state from the user
-func (sc *SubscriptionContract) SplitSub(ctx contractapi.TransactionContextInterface, UserID string, SubID string, ProviderID string, StartTime time.Time, EndTime time.Time) error {
+func (sc *SubscriptionContract) SplitSubscription(ctx contractapi.TransactionContextInterface, UserID string, SubID string, ProviderID string, StartTime time.Time, EndTime time.Time) error {
 
     if EndTime.Before(StartTime) {
       return errors.New("Error in time format")
@@ -189,7 +183,6 @@ func (sc *SubscriptionContract) SplitSub(ctx contractapi.TransactionContextInter
     }
 
     key, _ := json.Marshal(kStr)
-
 
     query_result, err := ctx.GetStub().GetState(string(key))
 
@@ -205,11 +198,11 @@ func (sc *SubscriptionContract) SplitSub(ctx contractapi.TransactionContextInter
 
     _ = json.Unmarshal(query_result, value)
 
-    l := value.TimeSlots
+    //now := time.Now() possible to add later to clean the slice
 
-    now := time.Now()
+    found := false
 
-    for it := l.Front(); it != nil ; it = it.Next(){
+    for i, it := range value.TimeSlots{
 
         //remove comment if want to clean the list from old Subscription
         /*if it.EndTime.Before(Now){
@@ -217,45 +210,50 @@ func (sc *SubscriptionContract) SplitSub(ctx contractapi.TransactionContextInter
           continue
         }*/
 
-        strc := TimeSlot{}
-
-        strc = it.Value
-
         //case in which the renting slot is completly inside another slot
-        if StartTime.After(strc.StartTime) && EndTime.Before(strc.EndTime) {
+        if StartTime.After(it.StartTime) && EndTime.Before(it.EndTime) {
 
           new := TimeSlot{
             StartTime: EndTime,
-            EndTime: strc.EndTime,
+            EndTime: it.EndTime,
           }
 
-          strc.EndTime = StartTime
-          l.InsertAfter(new,it)
-
+          it.EndTime = StartTime
+          value.TimeSlots  = append(value.TimeSlots,new)
+          found = true
           break
         }
 
         //case in which the renting slot perfectly fits with one in the lsit
-        if StartTime.Equal(strc.StartTime) && EndTime.Equal(strc.EndTime) {
-          l.Remove(new,it)
+        if StartTime.Equal(it.StartTime) && EndTime.Equal(it.EndTime) {
+
+          value.TimeSlots[i] = value.TimeSlots[len(value.TimeSlots)-1] // Copy last element to index i.
+          value.TimeSlots[len(value.TimeSlots)-1] = TimeSlot{}  // Erase last element (write zero value).
+          value.TimeSlots = value.TimeSlots[:len(value.TimeSlots)-1]   // Truncate slice.
+          found = true
           break
         }
 
         //case in which the rentig slot start at same time
-        if StartTime.Equal(strc.StartTime) && EndTime.Before(strc.EndTime) {
-          strc.StartTime = EndTime  //posticipate the start time of the element in the list
+        if StartTime.Equal(it.StartTime) && EndTime.Before(it.EndTime) {
+          it.StartTime = EndTime  //posticipate the start time of the element in the list
+          found = true
           break
         }
 
         //case in which bot slots end at the same time
-        if StartTime.After(strc.StartTime) && EndTime.Equal(strc.EndTime) {
-          strc.EndTime = StartTime //anticipate the EndTime of the slot in the listS
+        if StartTime.After(it.StartTime) && EndTime.Equal(it.EndTime) {
+          it.EndTime = StartTime //anticipate the EndTime of the slot in the listS
+          found = true
           break
         }
 
     }
 
-    value.TimeSlots = l
+    //add not IsNotFound
+    if found == false{
+      return errors.New("Interval not found")
+    }
 
     result, _ := json.Marshal(value)
 
@@ -270,7 +268,7 @@ func (sc *SubscriptionContract) SplitSub(ctx contractapi.TransactionContextInter
 
 
 // Read returns the value at key in the world state
-func (sc *SubscriptionContract) getInfoOwner(ctx contractapi.TransactionContextInterface, UserID string, SubID string) (*WorldState, error) {
+func (sc *SubscriptionContract) getInfoOwner(ctx contractapi.TransactionContextInterface, UserID string, SubID string) (*Subscription, error) {
 
     kStr := Key{
       UserID: UserID,
@@ -293,13 +291,5 @@ func (sc *SubscriptionContract) getInfoOwner(ctx contractapi.TransactionContextI
 
     _ = json.Unmarshal(query_result, value)
 
-    ws := WorldState{
-      UserID: UserID,
-      SubID: SubID,
-      ProviderID: value.ProviderID,
-      TimeSlots: value.TimeSlots,
-    }
-
-
-    return &ws, nil
+    return &value, nil
 }
