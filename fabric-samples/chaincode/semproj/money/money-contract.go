@@ -14,7 +14,7 @@ type MoneyContract struct {
 
 type MoneyAccount struct {
 	UserId string `json:"userId"`
-	AmountOfMoney  int `json:"amountOfMoney"`
+	AmountOfMoney  uint `json:"amountOfMoney"`
   LastPaymentDate time.Time `json:"lastPaymentDate"`
 }
 
@@ -104,6 +104,10 @@ func (sc *MoneyContract) SubMoney(ctx contractapi.TransactionContextInterface, u
 	if err != nil {
 		return fmt.Errorf("Data retrieved from world state for key %s was not of type MoneyAccount", userId)
 	}
+
+  if valueAdd > ma.AmountOfMoney {
+    return errors.New("You don't have enough money to perform this operation.")
+  }
 
 	ma.AmountOfMoney -= valueAdd
 
