@@ -19,7 +19,7 @@ type MoneyAccount struct {
 }
 
 
-func (sc *MoneyContract) NewMoneyAccount(ctx contractapi.TransactionContextInterface, userId string, amountOfMoney int, lastPaymentDate time.Time) error {
+func (sc *MoneyContract) NewMoneyAccount(ctx contractapi.TransactionContextInterface, userId string, amountOfMoney uint, lastPaymentDate time.Time) error {
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
@@ -46,7 +46,7 @@ func (sc *MoneyContract) NewMoneyAccount(ctx contractapi.TransactionContextInter
 	return nil
 }
 
-func (sc *MoneyContract) AddMoney(ctx contractapi.TransactionContextInterface, userId string, valueAdd int) error {
+func (sc *MoneyContract) AddMoney(ctx contractapi.TransactionContextInterface, userId string, valueAdd uint) error {
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
@@ -82,7 +82,7 @@ func (sc *MoneyContract) AddMoney(ctx contractapi.TransactionContextInterface, u
 	return nil
 }
 
-func (sc *MoneyContract) SubMoney(ctx contractapi.TransactionContextInterface, userId string, valueAdd int) error {
+func (sc *MoneyContract) SubMoney(ctx contractapi.TransactionContextInterface, userId string, valueAdd uint) error {
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
@@ -176,7 +176,7 @@ func (sc *MoneyContract) GetMoneyAccount(ctx contractapi.TransactionContextInter
 	return ma, nil
 }
 
-func (sc *MoneyContract) VerifyPaymentForMoney(ctx contractapi.TransactionContextInterface, userId string, pop int, boughtMoney int) error {
+func (sc *MoneyContract) VerifyPaymentForMoney(ctx contractapi.TransactionContextInterface, userId string, pop int, boughtMoney uint) error {
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
