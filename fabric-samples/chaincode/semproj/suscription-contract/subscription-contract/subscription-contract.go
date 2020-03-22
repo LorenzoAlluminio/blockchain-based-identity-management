@@ -54,7 +54,7 @@ func (sc *SubscriptionContract) IssueSubscription(ctx contractapi.TransactionCon
 
       value := Subscription{}
 
-      _ = json.Unmarshal(query_result, value)
+      _ = json.Unmarshal(query_result, &value)
 
       new := TimeSlot{
         StartTime: StartTime,
@@ -124,7 +124,7 @@ func (sc *SubscriptionContract) RentSubscription(ctx contractapi.TransactionCont
 
         value := Subscription{}
 
-        _ = json.Unmarshal(query_result, value)
+        _ = json.Unmarshal(query_result, &value)
 
         new := TimeSlot{
           StartTime: StartTime,
@@ -196,7 +196,7 @@ func (sc *SubscriptionContract) SplitSubscription(ctx contractapi.TransactionCon
 
     value := Subscription{}
 
-    _ = json.Unmarshal(query_result, value)
+    _ = json.Unmarshal(query_result, &value)
 
     //now := time.Now() possible to add later to clean the slice
 
@@ -289,7 +289,7 @@ func (sc *SubscriptionContract) getInfoOwner(ctx contractapi.TransactionContextI
 
     value := Subscription{}
 
-    _ = json.Unmarshal(query_result, value)
+    _ = json.Unmarshal(query_result, &value)
 
     return &value, nil
 }
