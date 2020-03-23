@@ -15,8 +15,8 @@ type MoneyContract struct {
 type MoneyAccount struct {
 	UserId string `json:"userId"`
 	AmountOfMoney  uint `json:"amountOfMoney"`
-  startDate time.Time `json:"startDate"`
-  endDate time.Time `json:"endDate"`
+  StartDate time.Time `json:"startDate"`
+  EndDate time.Time `json:"endDate"`
 }
 
 
@@ -34,8 +34,8 @@ func (sc *MoneyContract) NewMoneyAccount(ctx contractapi.TransactionContextInter
 	ma := new(MoneyAccount)
 	ma.UserId = userId
 	ma.AmountOfMoney = amountOfMoney
-	ma.startDate = startDate
-  ma.endDate = endDate
+	ma.StartDate = startDate
+  ma.EndDate = endDate
 
 	maBytes, _ := json.Marshal(ma)
 
@@ -155,8 +155,8 @@ func (sc *MoneyContract) UpdateDates(ctx contractapi.TransactionContextInterface
 		return fmt.Errorf("Data retrieved from world state for key %s was not of type MoneyAccount", userId)
 	}
 
-	ma.startDate = startDate
-  ma.endDate = endDate
+	ma.StartDate = startDate
+  ma.EndDate = endDate
 
 	maBytes, _ := json.Marshal(ma)
 
