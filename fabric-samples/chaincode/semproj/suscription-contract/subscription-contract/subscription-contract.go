@@ -54,7 +54,7 @@ func (sc *SubscriptionContract) IssueSubscription(ctx contractapi.TransactionCon
 
       value := Subscription{}
 
-      _ = json.Unmarshal(query_result, value)
+      _ = json.Unmarshal(query_result, &value)
 
       new := TimeSlot{
         StartTime: StartTime,
@@ -124,7 +124,7 @@ func (sc *SubscriptionContract) RentSubscription(ctx contractapi.TransactionCont
 
         value := Subscription{}
 
-        _ = json.Unmarshal(query_result, value)
+        _ = json.Unmarshal(query_result, &value)
 
         new := TimeSlot{
           StartTime: StartTime,
@@ -196,7 +196,7 @@ func (sc *SubscriptionContract) SplitSubscription(ctx contractapi.TransactionCon
 
     value := Subscription{}
 
-    _ = json.Unmarshal(query_result, value)
+    _ = json.Unmarshal(query_result, &value)
 
     //now := time.Now() possible to add later to clean the slice
 
@@ -214,11 +214,11 @@ func (sc *SubscriptionContract) SplitSubscription(ctx contractapi.TransactionCon
         if StartTime.After(it.StartTime) && EndTime.Before(it.EndTime) {
 
           new := TimeSlot{
-            StartTime: EndTime,
+            StartTime: EndTime.Add(time.Second * 1),
             EndTime: it.EndTime,
           }
 
-          it.EndTime = StartTime
+          value.TimeSlots[i].EndTime = StartTime.Add(time.Second *(-1))
           value.TimeSlots  = append(value.TimeSlots,new)
           found = true
           break
@@ -236,14 +236,14 @@ func (sc *SubscriptionContract) SplitSubscription(ctx contractapi.TransactionCon
 
         //case in which the rentig slot start at same time
         if StartTime.Equal(it.StartTime) && EndTime.Before(it.EndTime) {
-          it.StartTime = EndTime  //posticipate the start time of the element in the list
+          value.TimeSlots[i].StartTime = EndTime.Add(time.Second *1)  //posticipate the start time of the element in the list
           found = true
           break
         }
 
         //case in which bot slots end at the same time
         if StartTime.After(it.StartTime) && EndTime.Equal(it.EndTime) {
-          it.EndTime = StartTime //anticipate the EndTime of the slot in the listS
+          value.TimeSlots[i].EndTime = StartTime.Add(time.Second *(-1)) //anticipate the EndTime of the slot in the listS
           found = true
           break
         }
@@ -268,7 +268,7 @@ func (sc *SubscriptionContract) SplitSubscription(ctx contractapi.TransactionCon
 
 
 // Read returns the value at key in the world state
-func (sc *SubscriptionContract) getInfoOwner(ctx contractapi.TransactionContextInterface, UserID string, SubID string) (*Subscription, error) {
+func (sc *SubscriptionContract) GetInfoUser(ctx contractapi.TransactionContextInterface, UserID string, SubID string) (*Subscription, error) {
 
     kStr := Key{
       UserID: UserID,
@@ -289,7 +289,7 @@ func (sc *SubscriptionContract) getInfoOwner(ctx contractapi.TransactionContextI
 
     value := Subscription{}
 
-    _ = json.Unmarshal(query_result, value)
+    _ = json.Unmarshal(query_result, &value)
 
     return &value, nil
 }
