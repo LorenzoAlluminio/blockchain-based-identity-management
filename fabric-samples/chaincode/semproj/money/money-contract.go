@@ -22,6 +22,8 @@ type MoneyAccount struct {
 func (sc *MoneyContract) NewMoneyAccount(ctx contractapi.TransactionContextInterface, userId string, amountOfMoney uint, lastPaymentDate time.Time) error {
   existing, err := ctx.GetStub().GetState(userId)
 
+
+
   if err != nil {
       return errors.New("Unable to interact with world state")
   }
@@ -120,6 +122,18 @@ func (sc *MoneyContract) SubMoney(ctx contractapi.TransactionContextInterface, u
 	}
 
 	return nil
+}
+
+func (sc *MoneyContract) TransferMoney(ctx contractapi.TransactionContextInterface, userId1 string, userId2 string, value uint) error {
+  err = SubMoney(ctx,userId1,value);
+  if err != nil {
+    return err;
+  }
+  err = AddMoney(ctx,userId2,value);
+  if err != nil {
+    return err;
+  }
+  return nil;
 }
 
 func (sc *MoneyContract) UpdateLastPaymentDate(ctx contractapi.TransactionContextInterface, userId string, newDate time.Time) error {
