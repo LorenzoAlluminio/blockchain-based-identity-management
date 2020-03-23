@@ -22,8 +22,6 @@ type MoneyAccount struct {
 func (sc *MoneyContract) NewMoneyAccount(ctx contractapi.TransactionContextInterface, userId string, amountOfMoney uint, lastPaymentDate time.Time) error {
   existing, err := ctx.GetStub().GetState(userId)
 
-
-
   if err != nil {
       return errors.New("Unable to interact with world state")
   }
