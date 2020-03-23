@@ -1,0 +1,30 @@
+Installation
+
+peer chaincode install -p chaincodedev/chaincode/semproj/suscription-contract/subscription-contract -n mycc -v 0
+
+
+
+POPOLA CHAIN
+
+peer chaincode invoke -n mycc -c '{"Args":["IssueSubscription", "U1", "S1", "Net", "2020-01-02T15:04:05Z", "2020-03-02T15:04:04Z"]}' -C myc
+peer chaincode invoke -n mycc -c '{"Args":["IssueSubscription", "U1", "S1", "Net", "2010-03-02T15:04:05Z", "2010-05-02T15:04:04Z"]}' -C myc
+peer chaincode invoke -n mycc -c '{"Args":["IssueSubscription", "U1", "S2", "Prime", "2019-12-17T10:00:00Z", "2020-01-17T09:59:59Z"]}' -C myc
+peer chaincode invoke -n mycc -c '{"Args":["IssueSubscription", "U2", "S3", "vpn", "2019-07-15T15:04:05Z", "2020-07-15T15:04:04Z"]}' -C myc
+peer chaincode invoke -n mycc -c '{"Args":["IssueSubscription", "U3", "S4", "Net", "2020-01-01T12:00:00Z", "2022-01-01T11:59:59Z"]}' -C myc
+
+
+TEST CHAIN
+
+U1
+peer chaincode invoke -n mycc -c '{"Args":["SplitSubscription", "U1", "S1", "Net", "2020-01-10T10:00:00Z", "2020-01-10T10:59:59Z"]}' -C myc
+peer chaincode invoke -n mycc -c '{"Args":["SplitSubscription", "U1", "S1", "Net", "2020-01-10T11:00:00Z", "2020-01-10T11:30:00Z"]}' -C myc
+peer chaincode invoke -n mycc -c '{"Args":["SplitSubscription", "U1", "S1", "Net", "2020-03-02T14:00:00Z", "2020-03-02T15:04:04Z"]}' -C myc
+peer chaincode invoke -n mycc -c '{"Args":["SplitSubscription", "U1", "S1", "Net", "2020-03-02T12:59:59Z", "2020-03-02T13:59:59Z"]}' -C myc
+
+
+peer chaincode query -n mycc -c '{"Args":["GetInfoUser", "U1", "S1"]}' -C myc
+
+
+U2
+peer chaincode invoke -n mycc -c '{"Args":["SplitSubscription", "U2", "S3", "Net", "2019-07-15T15:04:05Z", "2019-07-15T16:04:05Z"]}' -C myc
+peer chaincode query -n mycc -c '{"Args":["getInfoUser", "U2", "S3"]}' -C myc

@@ -5,9 +5,9 @@ import (
 )
 
 func main() {
-    simpleContract := new(SubscriptionContract)
+    subscriptionContract := new(SubscriptionContract)
 
-    cc, err := contractapi.NewChaincode(simpleContract)
+    cc, err := contractapi.NewChaincode(subscriptionContract)
 
     if err != nil {
         panic(err.Error())
