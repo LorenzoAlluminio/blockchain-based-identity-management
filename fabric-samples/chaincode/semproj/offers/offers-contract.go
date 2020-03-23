@@ -66,7 +66,7 @@ func (s *OffersContract) NewOffer(ctx contractapi.TransactionContextInterface, U
 
   // Arbitrarily set to be able to test even if subscriptions does 
   // not work correctly
-  status = 200
+  //status = 200
 
   if (status != 200) {
     return fmt.Errorf("It was not possible to create the offer. Do you own the subscription over that interval?")
@@ -102,9 +102,6 @@ func (s *OffersContract) NewOffer(ctx contractapi.TransactionContextInterface, U
 // BuyerID does not own enough HyperCash currency, the transaction fails.
 // TODO:  BuyerID should be recovered via getCreator() in order to make sure 
 //        that access control is correctly performed.
-// TODO:  Using a specific function from the money chaincode to transfer
-//        currency between two accounts would probably be safer than separately
-//        using AddMoney and SubMoney
 func (s *OffersContract) AcceptOffer(ctx contractapi.TransactionContextInterface, BuyerID string, SellerID string, SubID string, StartTime time.Time) error {
   // Extract offer data from the world state, if present, else return 
   // an error
@@ -132,19 +129,11 @@ func (s *OffersContract) AcceptOffer(ctx contractapi.TransactionContextInterface
 
   // Remove the offer's price from BuyerID's balance, if possible, else
   // return an error
-  invokeArgs := util.ToChaincodeArgs("SubMoney", BuyerID, strconv.FormatUint(uint64(value.Price), 10))
+  invokeArgs := util.ToChaincodeArgs("TransferMoney", BuyerID, SellerID, strconv.FormatUint(uint64(value.Price), 10))
   resp := ctx.GetStub().InvokeChaincode("money", invokeArgs, ctx.GetStub().GetChannelID())
 
   if resp.GetStatus() != 200 {
-    return fmt.Errorf("It was not possible to accept the offer. Do you own enough HyperCash?\n")
-  }
-
-  // Add the offer's price to SellerID's balance
-  invokeArgs = util.ToChaincodeArgs("AddMoney", SellerID, strconv.FormatUint(uint64(value.Price), 10))
-  resp = ctx.GetStub().InvokeChaincode("money", invokeArgs, ctx.GetStub().GetChannelID())
-
-  if resp.GetStatus() != 200 {
-    return fmt.Errorf("An error occurred while trying to transfer HyperCash to the seller.\n")
+    return fmt.Errorf("It was not possible to transfer HyperCash. Do you own enough HyperCash?\n")
   }
 
   // Transfer the rights to BuyerID
@@ -155,7 +144,7 @@ func (s *OffersContract) AcceptOffer(ctx contractapi.TransactionContextInterface
 
   // Arbitrarily set to be able to test even if subscriptions does not 
   // work correctly
-  status = 200
+  //status = 200
 
   if status != 200 {
     return fmt.Errorf("An error occurred while re-assigning the subscription.\n")
