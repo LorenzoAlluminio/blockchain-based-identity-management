@@ -15,11 +15,12 @@ type MoneyContract struct {
 type MoneyAccount struct {
 	UserId string `json:"userId"`
 	AmountOfMoney  uint `json:"amountOfMoney"`
-  LastPaymentDate time.Time `json:"lastPaymentDate"`
+  startDate time.Time `json:"startDate"`
+  endDate time.Time `json:"endDate"`
 }
 
 
-func (sc *MoneyContract) NewMoneyAccount(ctx contractapi.TransactionContextInterface, userId string, amountOfMoney uint, lastPaymentDate time.Time) error {
+func (sc *MoneyContract) NewMoneyAccount(ctx contractapi.TransactionContextInterface, userId string, amountOfMoney uint, startDate time.Time, endDate time.Time) error {
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
@@ -33,7 +34,8 @@ func (sc *MoneyContract) NewMoneyAccount(ctx contractapi.TransactionContextInter
 	ma := new(MoneyAccount)
 	ma.UserId = userId
 	ma.AmountOfMoney = amountOfMoney
-	ma.LastPaymentDate = lastPaymentDate
+	ma.startDate = startDate
+  ma.endDate = endDate
 
 	maBytes, _ := json.Marshal(ma)
 
@@ -134,7 +136,7 @@ func (sc *MoneyContract) TransferMoney(ctx contractapi.TransactionContextInterfa
   return nil;
 }
 
-func (sc *MoneyContract) UpdateLastPaymentDate(ctx contractapi.TransactionContextInterface, userId string, newDate time.Time) error {
+func (sc *MoneyContract) UpdateDates(ctx contractapi.TransactionContextInterface, userId string, startDate time.Time, endDate time.Time) error {
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
@@ -153,7 +155,8 @@ func (sc *MoneyContract) UpdateLastPaymentDate(ctx contractapi.TransactionContex
 		return fmt.Errorf("Data retrieved from world state for key %s was not of type MoneyAccount", userId)
 	}
 
-	ma.LastPaymentDate = newDate
+	ma.startDate = startDate
+  ma.endDate = endDate
 
 	maBytes, _ := json.Marshal(ma)
 
@@ -207,7 +210,7 @@ func (sc *MoneyContract) VerifyPaymentForMoney(ctx contractapi.TransactionContex
 	return sc.AddMoney(ctx,userId,boughtMoney)
 }
 
-func (sc *MoneyContract) VerifyPaymentForDate(ctx contractapi.TransactionContextInterface, userId string, pop int, newDate time.Time) error {
+func (sc *MoneyContract) VerifyPaymentForDate(ctx contractapi.TransactionContextInterface, userId string, pop int, startDate time.Time, endDate time.Time) error {
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
@@ -223,5 +226,5 @@ func (sc *MoneyContract) VerifyPaymentForDate(ctx contractapi.TransactionContext
     return errors.New("Proof of payment is not valid")
   }
 
-	return sc.UpdateLastPaymentDate(ctx,userId,newDate)
+	return sc.UpdateDates(ctx,userId,startDate,endDate)
 }
