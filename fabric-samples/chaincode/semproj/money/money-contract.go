@@ -125,7 +125,7 @@ func (sc *MoneyContract) SubMoney(ctx contractapi.TransactionContextInterface, u
 }
 
 func (sc *MoneyContract) TransferMoney(ctx contractapi.TransactionContextInterface, userId1 string, userId2 string, value uint) error {
-  err = SubMoney(ctx,userId1,value);
+  err := SubMoney(ctx,userId1,value);
   if err != nil {
     return err;
   }
