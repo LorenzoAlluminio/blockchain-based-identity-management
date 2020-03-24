@@ -111,7 +111,7 @@ UserId | Provider | SubscriptionId|startTime|endTime | price
 ---- | ---- | ---- | ---- | ---- | ----
 A|Provider 1|001|07/07/2020 13.00 |07/07/2020 14.00 | 50 HC
 
-### interaction between smart contracts
+### Interactions between smart contracts
 
 - login with hyperledger
 
