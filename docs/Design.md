@@ -111,6 +111,36 @@ UserId | Provider | SubscriptionId|startTime|endTime | price
 ---- | ---- | ---- | ---- | ---- | ----
 A|Provider 1|001|07/07/2020 13.00 |07/07/2020 14.00 | 50 HC
 
+### interaction between smart contracts
+
+- login with hyperledger
+
+![Login](../img/sci_login.png "Login")
+
+- Insert new subscription
+
+![new subscription](../img/sci_newsub.png "New subscription")
+
+- Register to the network
+
+![register](../img/sci_regist.png "register")
+
+- Proof of payment
+
+![Pop](../img/sci_pop.png "Pop")
+
+- Publish an offer
+
+![Publish](../img/sci_pub.png "Publish")
+
+- Accept an offer
+
+![Accept](../img/sci_acc.png "Accept")
+
+- Remove an offer
+
+![Remove](../img/sci_rem.png "Remove")
+
 ## Economic returns
 The use of the network will require the payment of a monthly fee for all the users. Moreover, each user can buy extra coins to rent subscriptions using real money.  Therefore, to prevent an excess of coin in the network, which would prevent the user from buying new ones, at each transaction is applied a tax.
 
