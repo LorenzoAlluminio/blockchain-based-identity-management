@@ -248,7 +248,7 @@ func (sc *MoneyContract) HasAccess(ctx contractapi.TransactionContextInterface, 
     return fmt.Errorf("Data retrieved from world state for userId %s was not of type MoneyAccount", userId)
   }
 
-  if currentTime.Before(ma.StartDate) || currentTime.Equal(ma.StartDate) {
+  if currentTime.Before(ma.StartDate){
     return fmt.Errorf("userId %s has not access to the network in this period of time", userId)
   }
 
