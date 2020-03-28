@@ -13,3 +13,8 @@
 vendor/
 .vscode
 .gradle
+
+#chaincodes executables
+fabric-samples/chaincode/semproj/money/money
+fabric-samples/chaincode/semproj/offers/offers
+fabric-samples/chaincode/semproj/subscriptions/subscriptions
