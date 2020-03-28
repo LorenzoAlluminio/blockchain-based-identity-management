@@ -229,7 +229,7 @@ func (sc *MoneyContract) VerifyPaymentForDate(ctx contractapi.TransactionContext
 	return sc.UpdateDates(ctx,userId,startDate,endDate)
 }
 
-func (sc *MoneyContract) hasAccess(ctx contractapi.TransactionContextInterface, userId string, currentTime time.Time) error {
+func (sc *MoneyContract) HasAccess(ctx contractapi.TransactionContextInterface, userId string, currentTime time.Time) error {
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
