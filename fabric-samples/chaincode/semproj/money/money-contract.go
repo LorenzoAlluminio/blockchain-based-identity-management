@@ -228,3 +228,33 @@ func (sc *MoneyContract) VerifyPaymentForDate(ctx contractapi.TransactionContext
 
 	return sc.UpdateDates(ctx,userId,startDate,endDate)
 }
+
+func (sc *MoneyContract) hasAccess(ctx contractapi.TransactionContextInterface, userId string, currentTime time.Time) error {
+  existing, err := ctx.GetStub().GetState(userId)
+
+  if err != nil {
+      return errors.New("Unable to interact with world state")
+  }
+
+  if existing == nil {
+      return fmt.Errorf("Cannot verify access with userId %s. It doesn't exists", userId)
+  }
+
+  ma := new(MoneyAccount)
+
+  err = json.Unmarshal(existing, ma)
+
+  if err != nil {
+    return fmt.Errorf("Data retrieved from world state for userId %s was not of type MoneyAccount", userId)
+  }
+
+  if currentTime.Before(ms.StartDate) || currentTime.Equal(ms.StartDate) {
+    return fmt.Errorf("userId %s has not access to the network in this period of time", userId)
+  }
+
+  if currentTime.After(ms.EndDate) || currentTime.Equal(ms.EndDate) {
+    return fmt.Errorf("userId %s has not access to the network in this period of time", userId)
+  }
+
+	return nil
+}
