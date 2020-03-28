@@ -19,6 +19,19 @@ type MoneyAccount struct {
   EndDate time.Time `json:"endDate"`
 }
 
+func (sc *MoneyContract) GetUserId(ctx contractapi.TransactionContextInterface) (string,error) {
+  mspid, err := ctx.GetClientIdentity().GetMSPID()
+  if err != nil {
+      return "",errors.New("Unable to get the MSPID")
+  }
+  id, err := ctx.GetClientIdentity().GetID()
+  if err != nil {
+      return "",errors.New("Unable to get the ID")
+  }
+
+  userId := mspid+id
+  return userId,nil
+}
 
 func (sc *MoneyContract) NewMoneyAccount(ctx contractapi.TransactionContextInterface, userId string, amountOfMoney uint, startDate time.Time, endDate time.Time) error {
   existing, err := ctx.GetStub().GetState(userId)
