@@ -44,6 +44,14 @@ func (sc *MoneyContract) NewMoneyAccount(ctx contractapi.TransactionContextInter
       return fmt.Errorf("Cannot create world state pair with key %s. Already exists", userId)
   }
 
+  if amountOfMoney < 0 {
+    return errors.New("Money can't be negative")
+  }
+
+  if endDate.Before(startDate) || endDate.Equal(startDate) {
+    return errors.New("endDate must be after startDate!")
+  }
+
 	ma := new(MoneyAccount)
 	ma.UserId = userId
 	ma.AmountOfMoney = amountOfMoney
@@ -138,6 +146,11 @@ func (sc *MoneyContract) SubMoney(ctx contractapi.TransactionContextInterface, u
 }
 
 func (sc *MoneyContract) TransferMoney(ctx contractapi.TransactionContextInterface, userId1 string, userId2 string, value uint) error {
+
+  if value < 0 {
+    return errors.New("Cannot transfer negative amount of money")
+  }
+
   err := sc.SubMoney(ctx,userId1,value);
   if err != nil {
     return err;
@@ -158,6 +171,10 @@ func (sc *MoneyContract) UpdateDates(ctx contractapi.TransactionContextInterface
 
   if existing == nil {
       return fmt.Errorf("Cannot update money account with key %s. It doesn't exists", userId)
+  }
+
+  if endDate.Before(startDate) || endDate.Equal(startDate) {
+    return errors.New("endDate must be after startDate!!!")
   }
 
 	ma := new(MoneyAccount)
@@ -215,6 +232,10 @@ func (sc *MoneyContract) VerifyPaymentForMoney(ctx contractapi.TransactionContex
       return fmt.Errorf("Cannot verify payment with userId %s. It doesn't exists", userId)
   }
 
+  if boughtMoney < 0 {
+    return errors.New("Bought money can't be negative")
+  }
+
   // TODO properly check for proof of payment
   if pop != 1 {
     return errors.New("Proof of payment is not valid")
@@ -232,6 +253,10 @@ func (sc *MoneyContract) VerifyPaymentForDate(ctx contractapi.TransactionContext
 
   if existing == nil {
       return fmt.Errorf("Cannot verify payment with userId %s. It doesn't exists", userId)
+  }
+
+  if endDate.Before(startDate) || endDate.Equal(startDate) {
+    return errors.New("endDate must be after startDate!!!")
   }
 
   // TODO properly check for proof of payment
