@@ -1,4 +1,4 @@
-#USING THE NETWORK
+# USING THE NETWORK
 
 1.  Launch the network with ./byfn.sh up; the script will load the chaincodes
     and perform all the setup operations    
