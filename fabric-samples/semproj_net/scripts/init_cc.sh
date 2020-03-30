@@ -22,6 +22,7 @@ done
 
 echo $PEER_STRING
 
+# Initialize the chaincodes
 peer chaincode invoke -o orderer.example.com:7050 --isInit --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n money ${PEER_STRING} -c '{"Args":[]}' --waitForEvent
 
 peer chaincode invoke -o orderer.example.com:7050 --isInit --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n offers ${PEER_STRING} -c '{"Args":[]}' --waitForEvent

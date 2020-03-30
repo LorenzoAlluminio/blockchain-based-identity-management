@@ -13,6 +13,7 @@ TIMEOUT=10
 
 export CHANNEL_NAME=mychannel
 
+# Package, install, approve for all organizations and commit on the channel the money chaincode
 peer lifecycle chaincode package money.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode/semproj/money --lang golang --label money_1
 
 for i in {1..5}; do
@@ -38,6 +39,8 @@ done
 
 peer lifecycle chaincode commit -o orderer.example.com:7050 --channelID $CHANNEL_NAME --name money --version 1.0 --sequence 1 --init-required --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem $PEER_STRING
 
+
+# Package, install, approve for all organizations and commit on the channel the offers chaincode
 peer lifecycle chaincode package offers.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode/semproj/offers --lang golang --label offers_1
 
 for i in {1..5}; do
@@ -63,6 +66,8 @@ done
 
 peer lifecycle chaincode commit -o orderer.example.com:7050 --channelID $CHANNEL_NAME --name offers --version 1.0 --sequence 1 --init-required --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem $PEER_STRING
 
+
+# Package, install, approve for all organizations and commit on the channel the subscriptions chaincode
 peer lifecycle chaincode package subscriptions.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode/semproj/subscriptions --lang golang --label subscriptions_1
 
 for i in {1..5}; do

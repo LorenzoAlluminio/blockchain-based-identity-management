@@ -57,10 +57,35 @@ type QueryResult struct {
 //        that access control is correctly performed.
 // TODO:  how to handle offers involving intervals which have already 
 //        expired?
+// TODO:  parameter check should also take into account time granularity,
+//        time boundaries, max duration, min StartTime distance...
 func (s *OffersContract) NewOffer(ctx contractapi.TransactionContextInterface, UserID string, SubID string, ProviderID string, StartTime time.Time, EndTime time.Time, Price uint) error {
+  // Check if user has the right to access the blockchain
+  now := time.Now()
+  invokeArgs := util.ToChaincodeArgs("HasAccess", UserID, now.Format("2006-01-02T15:04:05Z"))
+  resp := ctx.GetStub().InvokeChaincode("money", invokeArgs, ctx.GetStub().GetChannelID())
+
+  if (resp.GetStatus() != 200) {
+    return fmt.Errorf("You have currently no access to the blockchain. Please subscribe.\n")
+  }
+
+  // Check on correctness of parameters
+  if (!EndTime.After(StartTime)) {
+    return fmt.Errorf("The specified offer interval is malformed.\n")
+  }
+
+  // Check if the offer's interval is included within the duration of the
+  // user's subscription to the blockchain
+  invokeArgs = util.ToChaincodeArgs("HasAccess", UserID, EndTime.Format("2006-01-02T15:04:05Z"))
+  resp = ctx.GetStub().InvokeChaincode("money", invokeArgs, ctx.GetStub().GetChannelID())
+
+  if (resp.GetStatus() != 200) {
+    return fmt.Errorf("You must be subscribed to the blockchain for the entire duration of your offer.\n")
+  }
+
   // Invoke the subscription chaincode
-  invokeArgs := util.ToChaincodeArgs("SplitSubscription", UserID, SubID, ProviderID, StartTime.Format("2006-01-02T15:04:05Z"), EndTime.Format("2006-01-02T15:04:05Z"))
-  resp := ctx.GetStub().InvokeChaincode("subscriptions", invokeArgs, ctx.GetStub().GetChannelID())
+  invokeArgs = util.ToChaincodeArgs("SplitSubscription", UserID, SubID, ProviderID, StartTime.Format("2006-01-02T15:04:05Z"), EndTime.Format("2006-01-02T15:04:05Z"))
+  resp = ctx.GetStub().InvokeChaincode("subscriptions", invokeArgs, ctx.GetStub().GetChannelID())
 
   status := resp.GetStatus()
 
@@ -69,7 +94,7 @@ func (s *OffersContract) NewOffer(ctx contractapi.TransactionContextInterface, U
   //status = 200
 
   if (status != 200) {
-    return fmt.Errorf("It was not possible to create the offer. Do you own the subscription over that interval?")
+    return fmt.Errorf("It was not possible to create the offer. Do you own the subscription over that interval?\n")
   }
 
   // Create the key and value objects and write to the ledger
@@ -103,6 +128,15 @@ func (s *OffersContract) NewOffer(ctx contractapi.TransactionContextInterface, U
 // TODO:  BuyerID should be recovered via getCreator() in order to make sure 
 //        that access control is correctly performed.
 func (s *OffersContract) AcceptOffer(ctx contractapi.TransactionContextInterface, BuyerID string, SellerID string, SubID string, StartTime time.Time) error {
+  // Check if BuyerID has the right to access the blockchain
+  now := time.Now()
+  invokeArgs := util.ToChaincodeArgs("HasAccess", BuyerID, now.Format("2006-01-02T15:04:05Z"))
+  resp := ctx.GetStub().InvokeChaincode("money", invokeArgs, ctx.GetStub().GetChannelID())
+
+  if (resp.GetStatus() != 200) {
+    return fmt.Errorf("You have currently no access to the blockchain. Please subscribe.\n")
+  }
+
   // Extract offer data from the world state, if present, else return 
   // an error
   keyObj := OfferKey{
@@ -129,8 +163,8 @@ func (s *OffersContract) AcceptOffer(ctx contractapi.TransactionContextInterface
 
   // Remove the offer's price from BuyerID's balance, if possible, else
   // return an error
-  invokeArgs := util.ToChaincodeArgs("TransferMoney", BuyerID, SellerID, strconv.FormatUint(uint64(value.Price), 10))
-  resp := ctx.GetStub().InvokeChaincode("money", invokeArgs, ctx.GetStub().GetChannelID())
+  invokeArgs = util.ToChaincodeArgs("TransferMoney", BuyerID, SellerID, strconv.FormatUint(uint64(value.Price), 10))
+  resp = ctx.GetStub().InvokeChaincode("money", invokeArgs, ctx.GetStub().GetChannelID())
 
   if resp.GetStatus() != 200 {
     return fmt.Errorf("It was not possible to transfer HyperCash. Do you own enough HyperCash?\n")
@@ -164,6 +198,15 @@ func (s *OffersContract) AcceptOffer(ctx contractapi.TransactionContextInterface
 // TODO:  UserID should be recovered via getCreator() in order to make sure
 //        that access control is correctly performed.
 func (s *OffersContract) RemoveOffer(ctx contractapi.TransactionContextInterface, UserID string, SubID string, StartTime time.Time) error {
+  // Check if user has the right to access the blockchain
+  now := time.Now()
+  invokeArgs := util.ToChaincodeArgs("HasAccess", UserID, now.Format("2006-01-02T15:04:05Z"))
+  resp := ctx.GetStub().InvokeChaincode("money", invokeArgs, ctx.GetStub().GetChannelID())
+
+  if (resp.GetStatus() != 200) {
+    return fmt.Errorf("You have currently no access to the blockchain. Please subscribe.\n")
+  }
+
   keyObj := OfferKey{
     UserID:     UserID,
     SubID:      SubID,
@@ -212,3 +255,5 @@ func (s *OffersContract) QueryAllOffers(ctx contractapi.TransactionContextInterf
 
   return results, nil
 }
+
+// TODO:  DeleteAllOffers function

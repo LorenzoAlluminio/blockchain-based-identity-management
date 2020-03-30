@@ -12,7 +12,11 @@ DELAY=3
 TIMEOUT=10
 
 export CHANNEL_NAME=mychannel
+
+# Create channel from the configuration artifact
 peer channel create -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+
+# For all organizations update channel definition to define anchor peers
 for i in {1..5}; do
   for j in 0 1; do
      setGlobals $j $i
