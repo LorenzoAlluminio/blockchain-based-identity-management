@@ -13,13 +13,15 @@ type TimeSlot struct{
     EndTime time.Time `json:"EndTime"`
 }
 
+//struct that take care of the constraction of the key (User + Prvoider)
 type Key struct{
   UserID string `json:"UserID"`
-  SubID string `json:"SubID"`
+  ProviderID string `json:"ProviderID"`
 }
 
+//structure of the value stored in the DB (Sub + array of time slot)
 type Subscription struct {
-	ProviderID  string `json:"ProviderID"`
+	SubID  string `json:"SubID"`
 	TimeSlots []TimeSlot `json:"TimeSlots"`
 }
 
@@ -28,8 +30,60 @@ type SubscriptionContract struct {
     contractapi.Contract
 }
 
+// handle the access to a service through the service blockchain
+// return a time interval which represent the period in which the user has access
+func (sc *SubscriptionContract) IssueSubscription(ctx contractapi.TransactionContextInterface, UserID string, ProviderID string) (*TimeSlot,error) {
+
+      kStr := Key{
+        UserID: UserID,
+        ProviderID: ProviderID,
+      }
+
+      key, _ := json.Marshal(kStr)
+
+      query_result, err := ctx.GetStub().GetState(string(key))
+
+      if err != nil {
+          return nil, errors.New("Unable to interact with world state")
+      }
+
+      if query_result == nil {
+          return nil, fmt.Errorf("Cannot read world state pair with key %s. Does not exist", key)
+      }
+
+      now = time.Now() // getting the current time to use it as time interval check
+
+      invokeArgs := util.ToChaincodeArgs("HasAccess", UserID, now)
+      resp := ctx.GetStub().InvokeChaincode("subscriptions", invokeArgs, ctx.GetStub().GetChannelID())
+
+      status := resp.GetStatus()
+
+      if (status != 200) {
+        return fmt.Errorf("Impossible to login, user does not have access to the blockchain")
+      }
+
+      // need to re-add expired time intervarls
+      /*
+      invokeArgs := util.ToChaincodeArgs("HasAccess", UserID, now)
+      resp := ctx.GetStub().InvokeChaincode("subscriptions", invokeArgs, ctx.GetStub().GetChannelID())
+
+      */
 
 
+      value := Subscription{}
+
+      _ = json.Unmarshal(query_result, &value)
+
+
+      for i, it := range value.TimeSlots{
+        if (now.After(it.StartTime) || now.Equal(it.StartTime)) && now.Before(it.EndTime){
+            return &it, nil
+        }
+      }
+
+      return nil, errors.New("The provided key does not have an active subscripton")
+
+}
 // Create or update the state of a subscription for a user (called only from the service provider)
 func (sc *SubscriptionContract) IssueSubscription(ctx contractapi.TransactionContextInterface, UserID string, SubID string, ProviderID string, StartTime time.Time, EndTime time.Time) error {
 
@@ -39,7 +93,7 @@ func (sc *SubscriptionContract) IssueSubscription(ctx contractapi.TransactionCon
 
     kStr := Key{
       UserID: UserID,
-      SubID: SubID,
+      ProviderID: ProviderID,
     }
 
     key, _ := json.Marshal(kStr)
@@ -47,7 +101,7 @@ func (sc *SubscriptionContract) IssueSubscription(ctx contractapi.TransactionCon
     query_result, err := ctx.GetStub().GetState(string(key))
 
     if err != nil {
-      return errors.New("Unable to interact with world state")
+      return errors.New("Unable to get info from world state")
     }
 
     if query_result != nil {
@@ -70,7 +124,7 @@ func (sc *SubscriptionContract) IssueSubscription(ctx contractapi.TransactionCon
       err = ctx.GetStub().PutState(string(key), result)
 
       if err != nil {
-          return errors.New("Unable to interact with world state")
+          return errors.New("Unable to update the world state")
       }
 
     } else {
@@ -83,7 +137,7 @@ func (sc *SubscriptionContract) IssueSubscription(ctx contractapi.TransactionCon
       timeSlot = append(timeSlot, ts)
 
       vStr := Subscription{
-        ProviderID: ProviderID,
+        SubID: SubID,
         TimeSlots: timeSlot,
         }
 
@@ -92,7 +146,7 @@ func (sc *SubscriptionContract) IssueSubscription(ctx contractapi.TransactionCon
       err = ctx.GetStub().PutState(string(key), value)
 
       if err != nil {
-          return errors.New("Unable to interact with world state")
+          return errors.New("Unable to add a new element with world state")
       }
     }
 
@@ -109,7 +163,7 @@ func (sc *SubscriptionContract) RentSubscription(ctx contractapi.TransactionCont
 
       kStr := Key{
         UserID: UserID,
-        SubID: SubID,
+        ProviderID: ProviderID,
       }
 
       key, _ := json.Marshal(kStr)
@@ -153,7 +207,7 @@ func (sc *SubscriptionContract) RentSubscription(ctx contractapi.TransactionCont
         timeSlot = append(timeSlot, ts)
 
         vStr := Subscription{
-          ProviderID: ProviderID,
+          SubID: SubID,
           TimeSlots: timeSlot,
           }
 
@@ -179,7 +233,7 @@ func (sc *SubscriptionContract) SplitSubscription(ctx contractapi.TransactionCon
 
     kStr := Key{
       UserID: UserID,
-      SubID: SubID,
+      ProviderID: ProviderID,
     }
 
     key, _ := json.Marshal(kStr)
@@ -266,13 +320,12 @@ func (sc *SubscriptionContract) SplitSubscription(ctx contractapi.TransactionCon
     return nil
 }
 
-
 // Read returns the value at key in the world state
-func (sc *SubscriptionContract) GetInfoUser(ctx contractapi.TransactionContextInterface, UserID string, SubID string) (*Subscription, error) {
+func (sc *SubscriptionContract) GetInfoUser(ctx contractapi.TransactionContextInterface, UserID string, ProviderID string) (*Subscription, error) {
 
     kStr := Key{
       UserID: UserID,
-      SubID: SubID,
+      ProviderID: ProviderID,
     }
 
     key, _ := json.Marshal(kStr)
