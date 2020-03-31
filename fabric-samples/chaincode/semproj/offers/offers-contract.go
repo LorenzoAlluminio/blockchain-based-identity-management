@@ -8,6 +8,7 @@ import (
 
   "github.com/hyperledger/fabric-contract-api-go/contractapi"
   "github.com/hyperledger/fabric/common/util"
+  "github.com/hyperledger/fabric-chaincode-go/pkg/cid"
 )
 
 type OffersContract struct {
@@ -257,3 +258,9 @@ func (s *OffersContract) QueryAllOffers(ctx contractapi.TransactionContextInterf
 }
 
 // TODO:  DeleteAllOffers function
+func (s *OffersContract) PrintCert(ctx contractapi.TransactionContextInterface) (string, error) {
+  _, err := cid.GetMSPID(ctx.GetStub())
+  id, err := cid.GetID(ctx.GetStub())
+
+  return id, err
+}
