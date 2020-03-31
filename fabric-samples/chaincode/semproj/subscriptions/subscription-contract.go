@@ -3,6 +3,7 @@ package main
 import (
     "errors"
     "fmt"
+    "github.com/hyperledger/fabric/common/util"
     "encoding/json"
     "time"
     "github.com/hyperledger/fabric-contract-api-go/contractapi"
@@ -32,7 +33,7 @@ type SubscriptionContract struct {
 
 // handle the access to a service through the service blockchain
 // return a time interval which represent the period in which the user has access
-func (sc *SubscriptionContract) IssueSubscription(ctx contractapi.TransactionContextInterface, UserID string, ProviderID string) (*TimeSlot,error) {
+func (sc *SubscriptionContract) ServiceAccess(ctx contractapi.TransactionContextInterface, UserID string, ProviderID string) (*TimeSlot,error) {
 
       kStr := Key{
         UserID: UserID,
@@ -51,15 +52,13 @@ func (sc *SubscriptionContract) IssueSubscription(ctx contractapi.TransactionCon
           return nil, fmt.Errorf("Cannot read world state pair with key %s. Does not exist", key)
       }
 
-      now = time.Now() // getting the current time to use it as time interval check
+      now := time.Now() // getting the current time to use it as time interval check
 
-      invokeArgs := util.ToChaincodeArgs("HasAccess", UserID, now)
-      resp := ctx.GetStub().InvokeChaincode("subscriptions", invokeArgs, ctx.GetStub().GetChannelID())
+      invokeArgs := util.ToChaincodeArgs("HasAccess", UserID, now.Format("2006-01-02T15:04:05Z"))
+      resp := ctx.GetStub().InvokeChaincode("money", invokeArgs, ctx.GetStub().GetChannelID())
 
-      status := resp.GetStatus()
-
-      if (status != 200) {
-        return fmt.Errorf("Impossible to login, user does not have access to the blockchain")
+      if (resp.GetStatus() != 200) {
+        return nil, fmt.Errorf("Impossible to login, user does not have access to the blockchain %d time: %s", resp.GetStatus(), now.Format("2006-01-02T15:04:05Z"))
       }
 
       // need to re-add expired time intervarls
@@ -75,10 +74,12 @@ func (sc *SubscriptionContract) IssueSubscription(ctx contractapi.TransactionCon
       _ = json.Unmarshal(query_result, &value)
 
 
-      for i, it := range value.TimeSlots{
+      for _, it := range value.TimeSlots{
+
         if (now.After(it.StartTime) || now.Equal(it.StartTime)) && now.Before(it.EndTime){
             return &it, nil
         }
+
       }
 
       return nil, errors.New("The provided key does not have an active subscripton")
