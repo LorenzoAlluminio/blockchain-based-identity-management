@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Turn of the containers and clean everything
+# Turn off the containers and clean everything
 if [ "$1" == "down" ]; then
   docker-compose -f docker-compose-cli.yaml -f docker-compose-etcdraft2.yaml down --volumes --remove-orphans
   rm -r channel-artifacts
