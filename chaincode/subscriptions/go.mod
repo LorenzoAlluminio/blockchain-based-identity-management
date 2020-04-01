@@ -1,4 +1,4 @@
-module github.com/hyperledger/fabric-samples/chaincode/subscriptions
+module github.com/chaincode/subscriptions
 
 go 1.13
 

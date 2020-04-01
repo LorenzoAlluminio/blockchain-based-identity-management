@@ -1,4 +1,4 @@
-module github.com/hyperledger/fabric-samples/chaincode/money
+module github.com/chaincode/money
 
 go 1.14
 

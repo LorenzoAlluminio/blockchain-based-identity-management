@@ -1,4 +1,4 @@
-module github.com/hyperledger/fabric-samples/chaincode/offers
+module github.com/chaincode/offers
 
 go 1.14
 
