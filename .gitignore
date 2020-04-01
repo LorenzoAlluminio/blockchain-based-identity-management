@@ -15,10 +15,10 @@ vendor/
 .gradle
 
 #chaincodes executables
-fabric-samples/chaincode/semproj/money/money
-fabric-samples/chaincode/semproj/offers/offers
-fabric-samples/chaincode/semproj/subscriptions/subscriptions
+chaincode/semproj/money/money
+chaincode/semproj/offers/offers
+chaincode/semproj/subscriptions/subscriptions
 
 #network artifacts
-fabric-samples/semproj_net/channel-artifacts/
-fabric-samples/semproj_net/crypto-config/
+semproj_net/channel-artifacts/
+semproj_net/crypto-config/
