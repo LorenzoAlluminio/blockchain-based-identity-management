@@ -18,3 +18,7 @@ vendor/
 fabric-samples/chaincode/semproj/money/money
 fabric-samples/chaincode/semproj/offers/offers
 fabric-samples/chaincode/semproj/subscriptions/subscriptions
+
+#network artifacts
+fabric-samples/semproj_net/channel-artifacts/
+fabric-samples/semproj_net/crypto-config/
