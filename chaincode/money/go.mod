@@ -1,4 +1,4 @@
-module github.com/chaincode/money
+module github.com/semproj/chaincode/money
 
 go 1.14
 

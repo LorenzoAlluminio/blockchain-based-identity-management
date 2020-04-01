@@ -1,4 +1,4 @@
-module github.com/chaincode/subscriptions
+module github.com/semproj/chaincode/subscriptions
 
 go 1.13
 

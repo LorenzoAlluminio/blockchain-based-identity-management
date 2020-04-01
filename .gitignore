@@ -15,9 +15,9 @@ vendor/
 .gradle
 
 #chaincodes executables
-chaincode/semproj/money/money
-chaincode/semproj/offers/offers
-chaincode/semproj/subscriptions/subscriptions
+chaincode/money/money
+chaincode/offers/offers
+chaincode/subscriptions/subscriptions
 
 #network artifacts
 semproj_net/channel-artifacts/

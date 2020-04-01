@@ -1,4 +1,4 @@
-module github.com/chaincode/offers
+module github.com/semproj/chaincode/offers
 
 go 1.14
 
