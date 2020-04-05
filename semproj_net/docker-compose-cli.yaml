@@ -6,7 +6,11 @@
 version: '2'
 
 volumes:
-  orderer.example.com:
+  orderer.org1.example.com:
+  orderer.org2.example.com:
+  orderer.org3.example.com:
+  orderer.org4.example.com:
+  orderer.org5.example.com:
   peer0.org1.example.com:
   peer1.org1.example.com:
   peer0.org2.example.com:
@@ -23,13 +27,41 @@ networks:
 
 services:
 
-  orderer.example.com:
+  orderer.org1.example.com:
     extends:
       file:   base/docker-compose-base.yaml
-      service: orderer.example.com
-    container_name: orderer.example.com
+      service: orderer.org1.example.com
+    container_name: orderer.org1.example.com
     networks:
       - byfn
+  orderer.org2.example.com:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer.org2.example.com
+    container_name: orderer.org2.example.com
+    networks:
+      - byfn
+    orderer.org3.example.com:
+      extends:
+        file:   base/docker-compose-base.yaml
+        service: orderer.org3.example.com
+      container_name: orderer.org3.example.com
+      networks:
+        - byfn
+    orderer.org4.example.com:
+      extends:
+        file:   base/docker-compose-base.yaml
+        service: orderer.org4.example.com
+      container_name: orderer.org4.example.com
+      networks:
+        - byfn
+    orderer.org5.example.com:
+      extends:
+        file:   base/docker-compose-base.yaml
+        service: orderer.org5.example.com
+      container_name: orderer.org5.example.com
+      networks:
+        - byfn
 
   peer0.org1.example.com:
     container_name: peer0.org1.example.com
@@ -138,7 +170,11 @@ services:
         - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
         - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     depends_on:
-      - orderer.example.com
+      - orderer.org1.example.com
+      - orderer.org2.example.com
+      - orderer.org3.example.com
+      - orderer.org4.example.com
+      - orderer.org5.example.com
       - peer0.org1.example.com
       - peer1.org1.example.com
       - peer0.org2.example.com
