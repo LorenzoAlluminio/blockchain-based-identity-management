@@ -32,12 +32,12 @@ PEER_STRING=""
 for i in {1..5}; do
 	for j in 0 1; do
 		setGlobals $j $i
-		peer lifecycle chaincode approveformyorg --channelID $CHANNEL_NAME --name money --version 1.0 --init-required --package-id $CC_PACKAGE_ID --sequence 1 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+		peer lifecycle chaincode approveformyorg --channelID $CHANNEL_NAME --name money --version 1.0 --init-required --package-id $CC_PACKAGE_ID --sequence 1 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org1.example.com/orderers/orderer.org1.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 		PEER_STRING=$PEER_STRING" --peerAddresses ${CORE_PEER_ADDRESS} --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org${i}.example.com/peers/peer${j}.org${i}.example.com/tls/ca.crt"
 	done
 done
 
-peer lifecycle chaincode commit -o orderer.example.com:7050 --channelID $CHANNEL_NAME --name money --version 1.0 --sequence 1 --init-required --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem $PEER_STRING
+peer lifecycle chaincode commit -o orderer.org1.example.com:7050 --channelID $CHANNEL_NAME --name money --version 1.0 --sequence 1 --init-required --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org1.example.com/orderers/orderer.org1.example.com/msp/tlscacerts/tlsca.example.com-cert.pem $PEER_STRING
 
 
 # Package, install, approve for all organizations and commit on the channel the offers chaincode
@@ -59,12 +59,12 @@ PEER_STRING=""
 for i in {1..5}; do
 	for j in 0 1; do
 		setGlobals $j $i
-		peer lifecycle chaincode approveformyorg --channelID $CHANNEL_NAME --name offers --version 1.0 --init-required --package-id $CC_PACKAGE_ID --sequence 1 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+		peer lifecycle chaincode approveformyorg --channelID $CHANNEL_NAME --name offers --version 1.0 --init-required --package-id $CC_PACKAGE_ID --sequence 1 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org1.example.com/orderers/orderer.org1.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 		PEER_STRING=$PEER_STRING" --peerAddresses ${CORE_PEER_ADDRESS} --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org${i}.example.com/peers/peer${j}.org${i}.example.com/tls/ca.crt"
 	done
 done
 
-peer lifecycle chaincode commit -o orderer.example.com:7050 --channelID $CHANNEL_NAME --name offers --version 1.0 --sequence 1 --init-required --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem $PEER_STRING
+peer lifecycle chaincode commit -o orderer.org1.example.com:7050 --channelID $CHANNEL_NAME --name offers --version 1.0 --sequence 1 --init-required --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org1.example.com/orderers/orderer.org1.example.com/msp/tlscacerts/tlsca.example.com-cert.pem $PEER_STRING
 
 
 # Package, install, approve for all organizations and commit on the channel the subscriptions chaincode
@@ -86,9 +86,9 @@ PEER_STRING=""
 for i in {1..5}; do
 	for j in 0 1; do
 		setGlobals $j $i
-		peer lifecycle chaincode approveformyorg --channelID $CHANNEL_NAME --name subscriptions --version 1.0 --init-required --package-id $CC_PACKAGE_ID --sequence 1 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+		peer lifecycle chaincode approveformyorg --channelID $CHANNEL_NAME --name subscriptions --version 1.0 --init-required --package-id $CC_PACKAGE_ID --sequence 1 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org1.example.com/orderers/orderer.org1.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 		PEER_STRING=$PEER_STRING" --peerAddresses ${CORE_PEER_ADDRESS} --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org${i}.example.com/peers/peer${j}.org${i}.example.com/tls/ca.crt"
 	done
 done
 
-peer lifecycle chaincode commit -o orderer.example.com:7050 --channelID $CHANNEL_NAME --name subscriptions --version 1.0 --sequence 1 --init-required --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem $PEER_STRING
+peer lifecycle chaincode commit -o orderer.org1.example.com:7050 --channelID $CHANNEL_NAME --name subscriptions --version 1.0 --sequence 1 --init-required --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org1.example.com/orderers/orderer.org1.example.com/msp/tlscacerts/tlsca.example.com-cert.pem $PEER_STRING
