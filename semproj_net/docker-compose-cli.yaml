@@ -34,6 +34,7 @@ services:
     container_name: orderer.org1.example.com
     networks:
       - byfn
+
   orderer.org2.example.com:
     extends:
       file:   base/docker-compose-base.yaml
@@ -41,6 +42,7 @@ services:
     container_name: orderer.org2.example.com
     networks:
       - byfn
+
     orderer.org3.example.com:
       extends:
         file:   base/docker-compose-base.yaml
@@ -48,6 +50,7 @@ services:
       container_name: orderer.org3.example.com
       networks:
         - byfn
+
     orderer.org4.example.com:
       extends:
         file:   base/docker-compose-base.yaml
@@ -55,6 +58,7 @@ services:
       container_name: orderer.org4.example.com
       networks:
         - byfn
+        
     orderer.org5.example.com:
       extends:
         file:   base/docker-compose-base.yaml
