@@ -17,11 +17,10 @@ Organizations:
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
         Name: Org1MSP
-
         # ID to load the MSP definition as
         ID: Org1MSP
 
-        MSPDir: crypto-config/try/org1.example.com/msp
+        MSPDir: crypto-config/peerOrganizations/org1.example.com/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -251,7 +250,12 @@ Orderer: &OrdererDefaults
     OrdererType: etcdraft
 
     Addresses:
-        - orderer.example.com:7050
+        - orderer.org1.example.com:7050
+        - orderer.org2.example.com:8050
+        - orderer.org3.example.com:9050
+        - orderer.org4.example.com:10050
+        - orderer.org5.example.com:11050
+
 
     # Batch Timeout: The amount of time to wait before creating a batch
     BatchTimeout: 2s
@@ -359,41 +363,49 @@ Profiles:
             OrdererType: etcdraft
             EtcdRaft:
                 Consenters:
-                - Host: orderer.example.com
+                - Host: orderer.org1.example.com
                   Port: 7050
-                  ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
-                  ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
-                - Host: orderer2.example.com
+                  ClientTLSCert: crypto-config/ordererOrganizations/org1.example.com/orderers/orderer.org1.example.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/org1.example.com/orderers/orderer.org1.example.com/tls/server.crt
+                - Host: orderer.org2.example.com
                   Port: 8050
-                  ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/server.crt
-                  ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/server.crt
-                - Host: orderer3.example.com
+                  ClientTLSCert: crypto-config/ordererOrganizations/org2.example.com/orderers/orderer.org2.example.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/org2.example.com/orderers/orderer.org2.example.com/tls/server.crt
+                - Host: orderer.org3.example.com
                   Port: 9050
-                  ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.crt
-                  ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.crt
-                - Host: orderer4.example.com
+                  ClientTLSCert: crypto-config/ordererOrganizations/org3.example.com/orderers/orderer.org3.example.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/org3.example.com/orderers/orderer.org3.example.com/tls/server.crt
+                - Host: orderer.org4.example.com
                   Port: 10050
-                  ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer4.example.com/tls/server.crt
-                  ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer4.example.com/tls/server.crt
-                - Host: orderer5.example.com
+                  ClientTLSCert: crypto-config/ordererOrganizations/org4.example.com/orderers/orderer.org4.example.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/org4.example.com/orderers/orderer.org4.example.com/tls/server.crt
+                - Host: orderer.org5.example.com
                   Port: 11050
-                  ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer5.example.com/tls/server.crt
-                  ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer5.example.com/tls/server.crt
+                  ClientTLSCert: crypto-config/ordererOrganizations/org5.example.com/orderers/orderer.org5.example.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/org5.example.com/orderers/orderer.org5.example.com/tls/server.crt
             Addresses:
-                - orderer.example.com:7050
-                - orderer2.example.com:8050
-                - orderer3.example.com:9050
-                - orderer4.example.com:10050
-                - orderer5.example.com:11050
+                - orderer.org1.example.com:7050
+                - orderer.org2.example.com:8050
+                - orderer.org3.example.com:9050
+                - orderer.org4.example.com:10050
+                - orderer.org5.example.com:11050
 
             Organizations:
-            - *OrdererOrg
+            - *Org1
+            - *Org2
+            - *Org3
+            - *Org4
+            - *Org5
             Capabilities:
                 <<: *OrdererCapabilities
         Application:
             <<: *ApplicationDefaults
             Organizations:
-            - <<: *OrdererOrg
+            - <<: *Org1
+            - <<: *Org2
+            - <<: *Org3
+            - <<: *Org4
+            - <<: *Org5
         Consortiums:
             SampleConsortium:
                 Organizations:

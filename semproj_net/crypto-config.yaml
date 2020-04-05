@@ -10,7 +10,7 @@ OrdererOrgs:
   # ---------------------------------------------------------------------------
   # Orderer
   # ---------------------------------------------------------------------------
-  - Name: Orderer
+  - Name: Org1
     Domain: org1.example.com
     # ---------------------------------------------------------------------------
     # "Specs" - See PeerOrgs below for complete description
@@ -18,25 +18,25 @@ OrdererOrgs:
     Specs:
       - Hostname: orderer
 
-    - Name: Orderer
-        Domain: org2.example.com
-        Specs:
-          - Hostname: orderer
+  - Name: Org2
+    Domain: org2.example.com
+    Specs:
+      - Hostname: orderer
 
-    - Name: Orderer
-        Domain: org3.example.com
-        Specs:
-          - Hostname: orderer
+  - Name: Org3
+    Domain: org3.example.com
+    Specs:
+      - Hostname: orderer
 
-    - Name: Orderer
-        Domain: org4.example.com
-        Specs:
-          - Hostname: orderer
-          
-    - Name: Orderer
-        Domain: org5.example.com
-        Specs:
-          - Hostname: orderer
+  - Name: Org4
+    Domain: org4.example.com
+    Specs:
+      - Hostname: orderer
+
+  - Name: Org5
+    Domain: org5.example.com
+    Specs:
+      - Hostname: orderer
 
 # ---------------------------------------------------------------------------
 # "PeerOrgs" - Definition of organizations managing peer nodes
