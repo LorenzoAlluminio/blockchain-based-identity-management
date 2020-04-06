@@ -22,6 +22,7 @@ services:
       service: orderer-base
     environment:
       - ORDERER_GENERAL_LISTENPORT=7050
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP1
     container_name: orderer.org1.example.com
     networks:
       - byfn
@@ -38,6 +39,7 @@ services:
       service: orderer-base
     environment:
       - ORDERER_GENERAL_LISTENPORT=8050
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP2
     container_name: orderer.org2.example.com
     networks:
       - byfn
@@ -54,6 +56,7 @@ services:
       service: orderer-base
     environment:
       - ORDERER_GENERAL_LISTENPORT=9050
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP3
     container_name: orderer.org3.example.com
     networks:
       - byfn
@@ -70,6 +73,7 @@ services:
       service: orderer-base
     environment:
       - ORDERER_GENERAL_LISTENPORT=10050
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP4
     container_name: orderer.org4.example.com
     networks:
       - byfn
@@ -86,6 +90,7 @@ services:
       service: orderer-base
     environment:
       - ORDERER_GENERAL_LISTENPORT=11050
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP5
     container_name: orderer.org5.example.com
     networks:
       - byfn
