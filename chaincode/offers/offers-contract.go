@@ -48,6 +48,21 @@ type QueryResult struct {
   Data  *OfferData          `json:"Data"`
 }
 
+func (s *OffersContract) GetUserId(ctx contractapi.TransactionContextInterface) (string,error) {
+  mspid, err := ctx.GetClientIdentity().GetMSPID()
+  if err != nil {
+      return "", fmt.Errorf("Unable to get the MSPID")
+  }
+  id, err := ctx.GetClientIdentity().GetID()
+  if err != nil {
+      return "", fmt.Errorf("Unable to get the ID")
+  }
+
+  userId := mspid+id
+  return userId,nil
+}
+
+
 // Generate a new offer for user identified by UserID. Notice that 
 // SplitSubscription is invoked when the offer is generated, which means
 // that until he decides to remove the offer the seller will not have
@@ -60,8 +75,10 @@ type QueryResult struct {
 //        expired?
 // TODO:  parameter check should also take into account time granularity,
 //        time boundaries, max duration, min StartTime distance...
-func (s *OffersContract) NewOffer(ctx contractapi.TransactionContextInterface, UserID string, SubID string, ProviderID string, StartTime time.Time, EndTime time.Time, Price uint) error {
+func (s *OffersContract) NewOffer(ctx contractapi.TransactionContextInterface, SubID string, ProviderID string, StartTime time.Time, EndTime time.Time, Price uint) error {
   // Check if user has the right to access the blockchain
+  UserID, _ := s.GetUserId(ctx)
+
   now := time.Now()
   invokeArgs := util.ToChaincodeArgs("HasAccess", UserID, now.Format("2006-01-02T15:04:05Z"))
   resp := ctx.GetStub().InvokeChaincode("money", invokeArgs, ctx.GetStub().GetChannelID())
@@ -128,8 +145,10 @@ func (s *OffersContract) NewOffer(ctx contractapi.TransactionContextInterface, U
 // BuyerID does not own enough HyperCash currency, the transaction fails.
 // TODO:  BuyerID should be recovered via getCreator() in order to make sure 
 //        that access control is correctly performed.
-func (s *OffersContract) AcceptOffer(ctx contractapi.TransactionContextInterface, BuyerID string, SellerID string, SubID string, StartTime time.Time) error {
+func (s *OffersContract) AcceptOffer(ctx contractapi.TransactionContextInterface, SellerID string, SubID string, StartTime time.Time) error {
   // Check if BuyerID has the right to access the blockchain
+  BuyerID, _ := s.GetUserId(ctx)
+
   now := time.Now()
   invokeArgs := util.ToChaincodeArgs("HasAccess", BuyerID, now.Format("2006-01-02T15:04:05Z"))
   resp := ctx.GetStub().InvokeChaincode("money", invokeArgs, ctx.GetStub().GetChannelID())
@@ -198,8 +217,10 @@ func (s *OffersContract) AcceptOffer(ctx contractapi.TransactionContextInterface
 // Remove an offer posted by UserID from the world state.
 // TODO:  UserID should be recovered via getCreator() in order to make sure
 //        that access control is correctly performed.
-func (s *OffersContract) RemoveOffer(ctx contractapi.TransactionContextInterface, UserID string, SubID string, StartTime time.Time) error {
+func (s *OffersContract) RemoveOffer(ctx contractapi.TransactionContextInterface, SubID string, StartTime time.Time) error {
   // Check if user has the right to access the blockchain
+  UserID, _ := s.GetUserId(ctx)
+
   now := time.Now()
   invokeArgs := util.ToChaincodeArgs("HasAccess", UserID, now.Format("2006-01-02T15:04:05Z"))
   resp := ctx.GetStub().InvokeChaincode("money", invokeArgs, ctx.GetStub().GetChannelID())
@@ -259,8 +280,8 @@ func (s *OffersContract) QueryAllOffers(ctx contractapi.TransactionContextInterf
 
 // TODO:  DeleteAllOffers function
 func (s *OffersContract) PrintCert(ctx contractapi.TransactionContextInterface) (string, error) {
-  _, err := cid.GetMSPID(ctx.GetStub())
+  mspid, err := cid.GetMSPID(ctx.GetStub())
   id, err := cid.GetID(ctx.GetStub())
 
-  return id, err
+  return mspid+id, err
 }
