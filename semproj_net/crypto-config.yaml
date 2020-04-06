@@ -10,7 +10,7 @@ OrdererOrgs:
   # ---------------------------------------------------------------------------
   # Orderer
   # ---------------------------------------------------------------------------
-  - Name: Org1
+  - Name: OrdererOrg1
     Domain: org1.example.com
     # ---------------------------------------------------------------------------
     # "Specs" - See PeerOrgs below for complete description
@@ -18,22 +18,22 @@ OrdererOrgs:
     Specs:
       - Hostname: orderer
 
-  - Name: Org2
+  - Name: OrdererOrg2
     Domain: org2.example.com
     Specs:
       - Hostname: orderer
 
-  - Name: Org3
+  - Name: OrdererOrg3
     Domain: org3.example.com
     Specs:
       - Hostname: orderer
 
-  - Name: Org4
+  - Name: OrdererOrg4
     Domain: org4.example.com
     Specs:
       - Hostname: orderer
 
-  - Name: Org5
+  - Name: OrdererOrg5
     Domain: org5.example.com
     Specs:
       - Hostname: orderer
