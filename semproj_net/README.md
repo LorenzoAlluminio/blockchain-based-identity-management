@@ -1,9 +1,8 @@
 # USING THE NETWORK
 
-1.  Launch the network with ./byfn.sh up; the script will load the chaincodes
+1.  Launch the network with `./byfn.sh up`. the script will load the chaincodes
     and perform all the setup operations    
-2.  Enter the CLI with  
-```docker exec -it cli bash```
+2.  Enter the CLI with  `docker exec -it cli bash`
 3.  Inside the cli, define these two environment variables, which are necessary
     to reach the orderer and the organization peers:
     ```
