@@ -13,6 +13,106 @@
 #
 ################################################################################
 Organizations:
+
+    # SampleOrg defines an MSP using the sampleconfig.  It should never be used
+    # in production but may be used as a template for other definitions
+    - &OrdererOrg1
+        # DefaultOrg defines the organization which is used in the sampleconfig
+        # of the fabric.git development environment
+        Name: OrdererOrg1
+
+        # ID to load the MSP definition as
+        ID: OrdererMSP1
+
+        # MSPDir is the filesystem path which contains the MSP configuration
+        MSPDir: crypto-config/ordererOrganizations/org1.example.com/msp
+
+        # Policies defines the set of policies at this level of the config tree
+        # For organization policies, their canonical path is usually
+        #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('OrdererMSP1.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('OrdererMSP1.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('OrdererMSP1.admin')"
+
+    - &OrdererOrg2
+        Name: OrdererOrg2
+
+        ID: OrdererMSP2
+
+        MSPDir: crypto-config/ordererOrganizations/org2.example.com/msp
+
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('OrdererMSP2.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('OrdererMSP2.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('OrdererMSP2.admin')"
+
+    - &OrdererOrg3
+        Name: OrdererOrg3
+
+        ID: OrdererMSP3
+
+        MSPDir: crypto-config/ordererOrganizations/org3.example.com/msp
+
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('OrdererMSP3.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('OrdererMSP3.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('OrdererMSP3.admin')"
+
+    - &OrdererOrg4
+        Name: OrdererOrg4
+
+        ID: OrdererMSP4
+
+        MSPDir: crypto-config/ordererOrganizations/org4.example.com/msp
+
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('OrdererMSP4.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('OrdererMSP4.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('OrdererMSP4.admin')"
+
+    - &OrdererOrg5
+        Name: OrdererOrg5
+
+        ID: OrdererMSP5
+
+        MSPDir: crypto-config/ordererOrganizations/org5.example.com/msp
+
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('OrdererMSP5.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('OrdererMSP5.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('OrdererMSP5.admin')"
+
     - &Org1
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
@@ -391,21 +491,21 @@ Profiles:
                 - orderer.org5.example.com:11050
 
             Organizations:
-            - *Org1
-            - *Org2
-            - *Org3
-            - *Org4
-            - *Org5
+            - *OrdererOrg1
+            - *OrdererOrg2
+            - *OrdererOrg3
+            - *OrdererOrg4
+            - *OrdererOrg5
             Capabilities:
                 <<: *OrdererCapabilities
         Application:
             <<: *ApplicationDefaults
             Organizations:
-            - <<: *Org1
-            - <<: *Org2
-            - <<: *Org3
-            - <<: *Org4
-            - <<: *Org5
+            - <<: *OrdererOrg1
+            - <<: *OrdererOrg2
+            - <<: *OrdererOrg3
+            - <<: *OrdererOrg4
+            - <<: *OrdererOrg5
         Consortiums:
             SampleConsortium:
                 Organizations:
