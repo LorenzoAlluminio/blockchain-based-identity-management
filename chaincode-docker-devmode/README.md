@@ -1,6 +1,6 @@
 1. go in the chaincode-docker-devmode folder
 ```bash
-cd semester_project/fabric-samples/chaincode-docker-devmode
+cd semester_project/chaincode-docker-devmode
 ```
 
 2. start the network
@@ -17,21 +17,21 @@ to remove the previously created artifacts. Then run again the first command.
 3. Open another shell and enter the following command
 ```bash
 docker exec -it chaincode sh
-cd semproj/money
+cd money
 go mod vendor
 go build
 CORE_CHAINCODE_ID_NAME=money:0 CORE_PEER_TLS_ENABLED=false ./money -peer.address peer:7052
 ```
 This commands will run the money chaincode. It should not exit.
-If it gives permission error grant permissions recursively to the semproj folder like this:
+If it gives permissions error grant permissions recursively to the chaincode folder like this:
 ```bash
-chmod +R 777 semproj
+chmod +R 777 chaincode
 ```
 
 4. Open another shell and enter the following command
 ```bash
 docker exec -it chaincode sh
-cd semproj/subscriptions/
+cd subscriptions/
 go mod vendor
 go build
 CORE_CHAINCODE_ID_NAME=subscriptions:0 CORE_PEER_TLS_ENABLED=false ./subscriptions -peer.address peer:7052
@@ -42,7 +42,7 @@ These commands will run the subscriptions chaincode. It should not exit.
 5. Open another shell and enter the following command
 ```bash
 docker exec -it chaincode sh
-cd semproj/offers/
+cd offers/
 go mod vendor
 go build
 CORE_CHAINCODE_ID_NAME=offers:0 CORE_PEER_TLS_ENABLED=false ./offers -peer.address peer:7052
@@ -52,18 +52,25 @@ This commands will run the offers chaincode. It should not exit.
 6. Open another shell and enter the following command
 ```bash
 docker exec -it cli sh
-peer chaincode install -p chaincodedev/chaincode/semproj/money -n money -v 0
-peer chaincode install -p chaincodedev/chaincode/semproj/subscriptions -n subscriptions -v 0
-peer chaincode install -p chaincodedev/chaincode/semproj/offers -n offers -v 0
+peer chaincode install -p chaincodedev/chaincode/money -n money -v 0
+peer chaincode install -p chaincodedev/chaincode/subscriptions -n subscriptions -v 0
+peer chaincode install -p chaincodedev/chaincode/offers -n offers -v 0
 peer chaincode instantiate -n money -v 0 -c '{"Args":[]}' -C myc
 peer chaincode instantiate -n subscriptions -v 0 -c '{"Args":[]}' -C myc
 peer chaincode instantiate -n offers -v 0 -c '{"Args":[]}' -C myc
 ```
 This commands will install & instantiate all the 3 chaincodes.
 
-7. Now from this shell we can call all the functions defined in the 3 chaincodes. Here are some examples. For the full list of functionalities see the chaincodes in the folder /chaincode/semproj.
+7.  Now you can perform query and invoke operations on the ledger with commands of the type:  
+    ```bash
+    peer chaincode <query/invoke> -n <money/offers/subscriptions> -c <params> -C myc
+    ```
 
 **N.B. Since the blockchain has to reach consensus and update the world state, to see the results of a command that updates the world state you will have to wait some seconds.**
+
+#### Examples
+
+**N.B. We are changing constantly the interfaces and methods so some command may not work/have slightly different parameters**
 
 These commands will populate the Subscription chaincode with some examples subscriptions:
 ```bash
