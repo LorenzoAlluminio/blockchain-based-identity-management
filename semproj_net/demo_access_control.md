@@ -41,7 +41,7 @@ After completing the setup described in the readme:
     ```
 9.  Now switch to User1@org1:  
     ```bash
-    CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp"
+    CORE_PEER_MSPCONFIGPATH="/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp"
     ```  
     and  
     ```bash
@@ -69,3 +69,7 @@ After completing the setup described in the readme:
     ```bash
     peer chaincode query -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions -c '{"Args":["GetInfoUser", '"\"$USR1ORG2\""', "Prov1"]}'
     ```
+16. Show that Usr1@org2 can login with the subscription he bought
+```bash
+peer chaincode query -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions -c '{"Args":["ServiceAccess", '"\"$USR1ORG2\""', "Prov1"]}'
+```
