@@ -21,4 +21,5 @@ chmod +R 777 chaincode
     ```bash
     peer chaincode <query/invoke> -o orderer.example.com:7050 $ORD_STRING -C mychannel -n <money/offers/subscriptions> $PEER_STRING -c <params> --waitForEvent
     ```
-5.  When finished, exit the CLI and run `./byfn.sh down` to turn off the network and clean everything.
+5.  It is also possible to add a new org org6.example.com at runtime; run the script `./eyfn.sh`, which will add the org's peers to the channel and install the chaincodes on them. If you add the new org, it is recommended to interact with the network using a different cli, Org6cli. To access this cli, run the command `docker exec -it Org6cli bash`  
+6.  When finished, exit the CLI and run `./byfn.sh down` to turn off the network and clean everything. You might still need to run the command `docker volume prune` in case some volumes are not deleted.
