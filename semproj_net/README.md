@@ -3,7 +3,7 @@
 1.  Launch the network with `./byfn.sh up`.  The script will load the chaincodes and perform all the setup operations.
 If it gives permissions error grant permissions recursively to the chaincode folder like this:
     ```bash
-chmod +R 777 chaincode
+    chmod +R 777 chaincode
     ```   
 
 2.  Enter the CLI with  `docker exec -it cli bash`
