@@ -70,6 +70,6 @@ After completing the setup described in the readme:
     peer chaincode query -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions -c '{"Args":["GetInfoUser", '"\"$USR1ORG2\""', "Prov1"]}'
     ```
 16. Show that Usr1@org2 can login with the subscription he bought
-```bash
-peer chaincode query -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions -c '{"Args":["ServiceAccess", '"\"$USR1ORG2\""', "Prov1"]}'
-```
+    ```bash
+    peer chaincode query -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions -c '{"Args":["ServiceAccess", '"\"$USR1ORG2\""', "Prov1"]}'
+    ```
