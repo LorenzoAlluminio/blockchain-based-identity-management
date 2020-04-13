@@ -1,6 +1,6 @@
 # Demo on certificate-based access control
 
-After completing the setup described in the readme:
+After completing the setup described in README.md:
 1.  Select User1@org1 by setting the env var  
     ```bash
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp
