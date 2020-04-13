@@ -15,7 +15,7 @@
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["PrintCert"]}' --waitForEvent
     ```  
     and show that as the endorsement policy is by majority the invocation is successful.  
-5.  Exit the cli and from the folder containing this file run the command `.\eyfn.sh` to add org6 to the network.
+5.  Exit the cli and from the folder containing this file run the command `./eyfn.sh` to add org6 to the network.
 6.  Run the command `docker exec -it Org6cli bash`
 7.  Set ORD_STRING as in step 2, and PEER_STRING as in step 3.
 8.  Try to run the same command as in step 4; this time it will fail, because only 3 organizations out of 6 are validating the transaction.
