@@ -13,6 +13,25 @@
 #
 ################################################################################
 Organizations:
+    - &OrdererOrg6
+        Name: OrdererOrg6
+
+        ID: OrdererMSP6
+
+        MSPDir: crypto-config/ordererOrganizations/org6.example.com/msp
+
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('OrdererMSP6.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('OrdererMSP6.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('OrdererMSP6.admin')"
+
+
     - &Org6
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment

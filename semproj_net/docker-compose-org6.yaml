@@ -6,6 +6,7 @@
 version: '2'
 
 volumes:
+#  orderer.org6.example.com:
   peer0.org6.example.com:
   peer1.org6.example.com:
 
@@ -13,6 +14,24 @@ networks:
   byfn:
 
 services:
+
+#  orderer.org6.example.com:
+#    extends:
+#      file: base/peer-base.yaml
+#      service: orderer-base
+#    environment:
+#      - ORDERER_GENERAL_LISTENPORT=12050
+#      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP6
+#    container_name: orderer.org6.example.com
+#    networks:
+#      - byfn
+#    volumes:
+#      - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+#      - ./org6-artifacts/crypto-config/ordererOrganizations/org6.example.com/orderers/orderer.org6.example.com/msp:/var/hyperledger/orderer/msp
+#      - ./org6-artifacts/crypto-config/ordererOrganizations/org6.example.com/orderers/orderer.org6.example.com/tls/:/var/hyperledger/orderer/tls
+#      - orderer.org6.example.com:/var/hyperledger/production/orderer
+#    ports:
+#      - 12050:12050
 
   peer0.org6.example.com:
     container_name: peer0.org6.example.com
@@ -92,8 +111,16 @@ services:
         - ./crypto-config/peerOrganizations/org3.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3.example.com
         - ./crypto-config/peerOrganizations/org4.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org4.example.com
         - ./crypto-config/peerOrganizations/org5.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org5.example.com
+        - ./crypto-config/ordererOrganizations/org1.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org1.example.com
+        - ./crypto-config/ordererOrganizations/org2.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org2.example.com
+        - ./crypto-config/ordererOrganizations/org3.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org3.example.com
+        - ./crypto-config/ordererOrganizations/org4.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org4.example.com
+        - ./crypto-config/ordererOrganizations/org5.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org5.example.com
         - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+
     depends_on:
+#      - orderer.org6.example.com
       - peer0.org6.example.com
       - peer1.org6.example.com
     networks:

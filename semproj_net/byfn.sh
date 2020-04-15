@@ -8,6 +8,7 @@ if [ "$1" == "down" ]; then
   fi
   docker-compose -f docker-compose-cli.yaml -f docker-compose-etcdraft2.yaml down --volumes --remove-orphans
   docker rm $(docker ps -aq)
+  docker volume prune -f
   rm -rf channel-artifacts
   rm -rf crypto-config
   exit 0
