@@ -7,7 +7,7 @@ After completing the setup described in the readme:
     ```  
 2.  Print the user's id with  
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["PrintCert"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["GetUserId"]}' --waitForEvent
     ```  
     and copy it to the env var USR1ORG1
 3.  Create the money account for User1@org1 with  
@@ -16,7 +16,7 @@ After completing the setup described in the readme:
     ```
 4.  Issue a subscription for User1@org1 with  
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["IssueSubscription", '"\"$USR1ORG1\""', "Prov1", "Prov1", "2020-04-02T15:00:00Z", "2020-07-02T15:00:00Z"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["IssueSubscription", '"\"$USR1ORG1\""', "Prov1", "2020-04-02T15:00:00Z", "2020-07-02T15:00:00Z"]}' --waitForEvent
     ```
 5.  Now select User1@org2 by setting  
     ```bash
