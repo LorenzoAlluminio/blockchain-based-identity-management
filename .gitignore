@@ -21,4 +21,3 @@ chaincode/subscriptions/subscriptions
 #network artifacts
 semproj_net/channel-artifacts/
 semproj_net/crypto-config/
-semproj_net/organizations/
