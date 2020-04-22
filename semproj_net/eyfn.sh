@@ -1,8 +1,22 @@
 #!/bin/bash
 
-(cd org6-artifacts
-../../bin/cryptogen generate --config=./org6-crypto.yaml
-)
+# include functions to create crypto material through fabric-ca
+. scripts/registerEnroll.sh
+
+# generation of crypto material with cryptogen
+#(cd org6-artifacts
+#../../bin/cryptogen generate --config=./org6-crypto.yaml
+#)
+
+# generation of crypto material with fabric CA
+docker-compose -f docker-compose-ca-org6.yaml up -d
+sleep 2
+cur_uid=$(id -u)
+cur_gid=$(id -g)
+docker exec ca_org6 sh -c "chown -R $cur_uid:$cur_gid /etc/hyperledger/fabric-ca-server"
+docker exec ca_orderer_org6 sh -c "chown -R $cur_uid:$cur_gid /etc/hyperledger/fabric-ca-server"
+createOrg 6 12054
+createOrderer 6 12055
 
 #cp -r crypto-config/ordererOrganizations org6-artifacts/crypto-config/
 

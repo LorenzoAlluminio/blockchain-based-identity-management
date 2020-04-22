@@ -133,6 +133,8 @@ createOrg(){
 	fabric-ca-client enroll -u https://user1:user1pw@localhost:$2 --caname ca-org$1 -M ${PWD}/crypto-config/peerOrganizations/org$1.example.com/users/User1@org$1.example.com/msp --tls.certfiles ${PWD}/crypto-config/fabric-ca/org$1/tls-cert.pem
   set +x
 
+  cp ${PWD}/crypto-config/peerOrganizations/org$1.example.com/msp/config.yaml ${PWD}/crypto-config/peerOrganizations/org$1.example.com/users/User1@org$1.example.com/msp/config.yaml
+
   mkdir -p crypto-config/peerOrganizations/org$1.example.com/users/Admin@org$1.example.com
 
   echo
