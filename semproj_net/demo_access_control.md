@@ -10,10 +10,15 @@ After completing the setup described in README.md:
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["GetUserId"]}' --waitForEvent
     ```  
     and copy it to the env var USR1ORG1
-3.  Create the money account for User1@org1 with  
+3.  Try to create the money account for User1@org1 with  
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["NewMoneyAccount", '"\"$USR1ORG1\""', "0", "2020-04-01T15:00:00Z", "2020-06-01T15:00:00Z"]}' --waitForEvent
     ```
+    this opeartion will fail since we are logged as a normal user but this operation require admin privileges. To became admin use
+    ```bash
+    CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+    ```
+    Now repeat operation 3 and then go on.
 4.  Issue a subscription for User1@org1 with  
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["IssueSubscription", '"\"$USR1ORG1\""', "Prov1", "2020-04-02T15:00:00Z", "2020-07-02T15:00:00Z"]}' --waitForEvent
@@ -31,7 +36,11 @@ After completing the setup described in README.md:
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["GetUserId"]}' --waitForEvent
     ```  
     and copy it to the env var USR1ORG2
-7.  Create the money account for User1@org2 with  
+7.  To create the money account for User1@org2 as we have done with User1 we have to switch to admin with
+    ```bash
+    CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp
+    ```
+    and then we execute
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["NewMoneyAccount", '"\"$USR1ORG2\""', "100", "2020-04-01T15:00:00Z", "2020-06-01T15:00:00Z"]}' --waitForEvent
     ```
