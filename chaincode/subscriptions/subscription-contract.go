@@ -6,6 +6,7 @@ import (
     "github.com/hyperledger/fabric/common/util"
     "encoding/json"
     "time"
+    "strings"
     "github.com/hyperledger/fabric-contract-api-go/contractapi"
     "github.com/hyperledger/fabric-chaincode-go/pkg/cid"
 )
@@ -172,12 +173,11 @@ func (sc *SubscriptionContract) IssueSubscription(ctx contractapi.TransactionCon
 // Create or update the state of a subscription for a user (called from offerts smartContract)
 func (sc *SubscriptionContract) RentSubscription(ctx contractapi.TransactionContextInterface, UserID string, SubID string, ProviderID string, StartTime time.Time, EndTime time.Time) error {
 
-  stub := ctx.GetStub()
+  err := sc.checkCaller(ctx,"RentSubscription")
 
-  creator, err := stub.GetCreator()
-
-  return fmt.Errorf("creator: %s",creator)
-
+  if err != nil {
+    return err
+  }
 
 
   if EndTime.Before(StartTime) {
@@ -248,23 +248,12 @@ func (sc *SubscriptionContract) RentSubscription(ctx contractapi.TransactionCont
 // Remove the time slot that has been added to the offer world state from the user
 func (sc *SubscriptionContract) SplitSubscription(ctx contractapi.TransactionContextInterface, UserID string, SubID string, ProviderID string, StartTime time.Time, EndTime time.Time) error {
 
+  err := sc.checkCaller(ctx,"SplitSubscription")
 
-/*  stub := ctx.GetStub()
+  if err != nil {
+    return err
+  }
 
-  proposal,err := stub.GetSignedProposal()
-
-  fmt.Printf("Proposal message: %s",proposal)
-
-  signature := proposal.GetSignature()
-
-  fmt.Printf("Proposal message: %s",signature)
-
-  //header := proposal.GetHeader()
-
-  //fmt.Printf("Proposal message: %s", header)
-
-  return fmt.Errorf("Creator: %s", signature)
-*/
   if EndTime.Before(StartTime) {
     return errors.New("Error in time format")
   }
@@ -406,5 +395,26 @@ func (sc *SubscriptionContract) CheckAdmin(ctx contractapi.TransactionContextInt
   }
 
   return mspid,nil
+
+}
+
+func (sc *SubscriptionContract) checkCaller(ctx contractapi.TransactionContextInterface, find string) (error) {
+
+  stub := ctx.GetStub()
+
+  proposal,err := stub.GetSignedProposal()
+
+  if err != nil {
+    return fmt.Errorf("Impossible to retrive the signed proposal")
+  }
+
+  str := fmt.Sprintf("%s",proposal)
+
+  res := strings.Contains(str,find)
+
+  if res{
+    return fmt.Errorf("You are not allowed to directly call this chaincode")
+  }
+  return nil
 
 }
