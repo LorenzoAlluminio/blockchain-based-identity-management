@@ -216,10 +216,10 @@ function createOrderer(){
   cp ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/orderers/orderer.org$1.example.com/tls/keystore/* ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/orderers/orderer.org$1.example.com/tls/server.key
 
   mkdir ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/orderers/orderer.org$1.example.com/msp/tlscacerts
-  cp ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/orderers/orderer.org$1.example.com/tls/tlscacerts/* ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/orderers/orderer.org$1.example.com/msp/tlscacerts/tlsca.org1.example.com-cert.pem
+  cp ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/orderers/orderer.org$1.example.com/tls/tlscacerts/* ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/orderers/orderer.org$1.example.com/msp/tlscacerts/tlsca.org$1.example.com-cert.pem
 
   mkdir ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/msp/tlscacerts
-  cp ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/orderers/orderer.org$1.example.com/tls/tlscacerts/* ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/msp/tlscacerts/tlsca.org1.example.com-cert.pem
+  cp ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/orderers/orderer.org$1.example.com/tls/tlscacerts/* ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/msp/tlscacerts/tlsca.org$1.example.com-cert.pem
 
   mkdir -p crypto-config/ordererOrganizations/org$1.example.com/users
   mkdir -p crypto-config/ordererOrganizations/org$1.example.com/users/Admin@org$1.example.com
