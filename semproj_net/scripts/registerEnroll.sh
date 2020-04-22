@@ -222,16 +222,16 @@ function createOrderer(){
   cp ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/orderers/orderer.org$1.example.com/tls/tlscacerts/* ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/msp/tlscacerts/tlsca.org1.example.com-cert.pem
 
   mkdir -p crypto-config/ordererOrganizations/org$1.example.com/users
-  mkdir -p crypto-config/ordererOrganizations/org$1.example.com/users/Admin@example.com
+  mkdir -p crypto-config/ordererOrganizations/org$1.example.com/users/Admin@org$1.example.com
 
   echo
   echo "## Generate the admin msp"
   echo
   set -x
-	fabric-ca-client enroll -u https://ordererAdmin:ordererAdminpw@localhost:$2 --caname ca-orderer-org$1 -M ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/users/Admin@example.com/msp --tls.certfiles ${PWD}/crypto-config/fabric-ca/orderer-org$1/tls-cert.pem
+	fabric-ca-client enroll -u https://ordererAdmin:ordererAdminpw@localhost:$2 --caname ca-orderer-org$1 -M ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/users/Admin@org$1.example.com/msp --tls.certfiles ${PWD}/crypto-config/fabric-ca/orderer-org$1/tls-cert.pem
   set +x
 
-  cp ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/msp/config.yaml ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/users/Admin@example.com/msp/config.yaml
+  cp ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/msp/config.yaml ${PWD}/crypto-config/ordererOrganizations/org$1.example.com/users/Admin@org$1.example.com/msp/config.yaml
 
 
 }

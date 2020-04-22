@@ -5,11 +5,8 @@
 
 # Turn off the containers and clean everything
 if [ "$1" == "down" ]; then
-  if [ -d  org6-artifacts/crypto-config ]; then
-    docker-compose -f docker-compose-org6.yaml -f docker-compose-ca-org6.yaml down --volumes
-    rm -rf org6-artifacts/crypto-config
-  fi
   docker-compose -f docker-compose-cli.yaml -f docker-compose-etcdraft2.yaml down -f docker-compose-ca.yaml --volumes --remove-orphans
+  docker-compose -f docker-compose-org6.yaml -f docker-compose-ca-org6.yaml -f docker-compose-orderer6.yaml down --volumes --remove-orphans
   docker rm $(docker ps -aq)
   docker volume prune -f
   rm -rf channel-artifacts
