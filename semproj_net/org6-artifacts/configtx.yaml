@@ -18,7 +18,7 @@ Organizations:
 
         ID: OrdererMSP6
 
-        MSPDir: crypto-config/ordererOrganizations/org6.example.com/msp
+        MSPDir: ../crypto-config/ordererOrganizations/org6.example.com/msp
 
         Policies:
             Readers:
@@ -40,7 +40,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: Org6MSP
 
-        MSPDir: crypto-config/peerOrganizations/org6.example.com/msp
+        MSPDir: ../crypto-config/peerOrganizations/org6.example.com/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually

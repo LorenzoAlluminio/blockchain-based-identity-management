@@ -49,8 +49,8 @@ services:
       - CORE_PEER_LOCALMSPID=Org6MSP
     volumes:
         - /var/run/:/host/var/run/
-        - ./org6-artifacts/crypto-config/peerOrganizations/org6.example.com/peers/peer0.org6.example.com/msp:/etc/hyperledger/fabric/msp
-        - ./org6-artifacts/crypto-config/peerOrganizations/org6.example.com/peers/peer0.org6.example.com/tls:/etc/hyperledger/fabric/tls
+        - ./crypto-config/peerOrganizations/org6.example.com/peers/peer0.org6.example.com/msp:/etc/hyperledger/fabric/msp
+        - ./crypto-config/peerOrganizations/org6.example.com/peers/peer0.org6.example.com/tls:/etc/hyperledger/fabric/tls
         - peer0.org6.example.com:/var/hyperledger/production
     ports:
       - 17051:17051
@@ -73,8 +73,8 @@ services:
       - CORE_PEER_LOCALMSPID=Org6MSP
     volumes:
         - /var/run/:/host/var/run/
-        - ./org6-artifacts/crypto-config/peerOrganizations/org6.example.com/peers/peer1.org6.example.com/msp:/etc/hyperledger/fabric/msp
-        - ./org6-artifacts/crypto-config/peerOrganizations/org6.example.com/peers/peer1.org6.example.com/tls:/etc/hyperledger/fabric/tls
+        - ./crypto-config/peerOrganizations/org6.example.com/peers/peer1.org6.example.com/msp:/etc/hyperledger/fabric/msp
+        - ./crypto-config/peerOrganizations/org6.example.com/peers/peer1.org6.example.com/tls:/etc/hyperledger/fabric/tls
         - peer1.org6.example.com:/var/hyperledger/production
     ports:
       - 18051:18051
@@ -105,7 +105,7 @@ services:
     volumes:
         - /var/run/:/host/var/run/
         - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode
-        - ./org6-artifacts/crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
         - ./crypto-config/peerOrganizations/org1.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com
         - ./crypto-config/peerOrganizations/org2.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com
         - ./crypto-config/peerOrganizations/org3.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3.example.com

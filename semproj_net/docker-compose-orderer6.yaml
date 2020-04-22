@@ -20,9 +20,8 @@ services:
       - byfn
     volumes:
       - ./channel-artifacts/ord6.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ./org6-artifacts/crypto-config/ordererOrganizations/org6.example.com/orderers/orderer.org6.example.com/msp:/var/hyperledger/orderer/msp
-      - ./org6-artifacts/crypto-config/ordererOrganizations/org6.example.com/orderers/orderer.org6.example.com/tls/:/var/hyperledger/orderer/tls
+      - ./crypto-config/ordererOrganizations/org6.example.com/orderers/orderer.org6.example.com/msp:/var/hyperledger/orderer/msp
+      - ./crypto-config/ordererOrganizations/org6.example.com/orderers/orderer.org6.example.com/tls/:/var/hyperledger/orderer/tls
       - orderer.org6.example.com:/var/hyperledger/production/orderer
     ports:
       - 12050:12050
-
