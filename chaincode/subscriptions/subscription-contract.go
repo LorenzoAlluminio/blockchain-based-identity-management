@@ -102,7 +102,6 @@ func (sc *SubscriptionContract) IssueSubscription(ctx contractapi.TransactionCon
       return err
     }
 
-
     if EndTime.Before(StartTime) {
       return errors.New("Error in time format")
     }

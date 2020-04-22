@@ -157,7 +157,7 @@ func (sc *MoneyContract) subMoney(ctx contractapi.TransactionContextInterface, u
 
 func (sc *MoneyContract) TransferMoney(ctx contractapi.TransactionContextInterface, userId1 string, userId2 string, value uint) error {
 
-  err := sc.checkCaller(ctx,"SplitSubscription")
+  err := sc.checkCaller(ctx,"TransferMoney")
 
   if err != nil {
     return err
@@ -178,9 +178,7 @@ func (sc *MoneyContract) TransferMoney(ctx contractapi.TransactionContextInterfa
   return nil;
 }
 
-func (sc *MoneyContract) UpdateDates(ctx contractapi.TransactionContextInterface, userId string, startDate time.Time, endDate time.Time) error {
-
-  _, err := sc.CheckAdmin(ctx)
+func (sc *MoneyContract) updateDates(ctx contractapi.TransactionContextInterface, userId string, startDate time.Time, endDate time.Time) error {
 
   if err != nil{
     return err
@@ -222,16 +220,9 @@ func (sc *MoneyContract) UpdateDates(ctx contractapi.TransactionContextInterface
 	return nil
 }
 
-func (sc *MoneyContract) GetMoneyAccount(ctx contractapi.TransactionContextInterface, userId string) (*MoneyAccount, error) {
+func (sc *MoneyContract) GetMoneyAccount(ctx contractapi.TransactionContextInterface) (*MoneyAccount, error) {
 
-  // TODO Uncomment this line in further update to deny direct call to the function
-  /*
-  err := sc.checkCaller(ctx,"GetMoneyAccount")
-
-  if err != nil {
-    return err
-  }
-  */
+  userId := ctx.GetStub().GetUserId()
 
   existing, err := ctx.GetStub().GetState(userId)
 
@@ -254,16 +245,9 @@ func (sc *MoneyContract) GetMoneyAccount(ctx contractapi.TransactionContextInter
 	return ma, nil
 }
 
-func (sc *MoneyContract) VerifyPaymentForMoney(ctx contractapi.TransactionContextInterface, userId string, pop int, boughtMoney uint) error {
+func (sc *MoneyContract) VerifyPaymentForMoney(ctx contractapi.TransactionContextInterface,  pop int, boughtMoney uint) error {
 
-  // TODO Uncomment this line in further update to deny direct call to the function
-  /*
-  err := sc.checkCaller(ctx,"VerifyPaymentForMoney")
-
-  if err != nil {
-    return err
-  }
-  */
+  userId := ctx.GetStub().GetUserId()
 
   existing, err := ctx.GetStub().GetState(userId)
 
@@ -287,15 +271,9 @@ func (sc *MoneyContract) VerifyPaymentForMoney(ctx contractapi.TransactionContex
 	return sc.addMoney(ctx,userId,boughtMoney)
 }
 
-func (sc *MoneyContract) VerifyPaymentForDate(ctx contractapi.TransactionContextInterface, userId string, pop int, startDate time.Time, endDate time.Time) error {
-  // TODO Uncomment this line in further update to deny direct call to the function
-  /*
-  err := sc.checkCaller(ctx,"VerifyPaymentForDate")
+func (sc *MoneyContract) VerifyPaymentForDate(ctx contractapi.TransactionContextInterface, pop int, startDate time.Time, endDate time.Time) error {
 
-  if err != nil {
-    return err
-  }
-  */
+  userId := ctx.GetStub().GetUserId()
 
   existing, err := ctx.GetStub().GetState(userId)
 
@@ -316,18 +294,16 @@ func (sc *MoneyContract) VerifyPaymentForDate(ctx contractapi.TransactionContext
     return errors.New("Proof of payment is not valid")
   }
 
-	return sc.UpdateDates(ctx,userId,startDate,endDate)
+	return sc.updateDates(ctx,userId,startDate,endDate)
 }
 
 func (sc *MoneyContract) HasAccess(ctx contractapi.TransactionContextInterface, userId string, currentTime time.Time) error {
-  // TODO Uncomment this line in further update to deny direct call to the function
-  /*
+
   err := sc.checkCaller(ctx,"HasAccess")
 
   if err != nil {
     return err
   }
-  */
 
   existing, err := ctx.GetStub().GetState(userId)
 
