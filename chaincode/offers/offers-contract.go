@@ -23,7 +23,7 @@ type OffersContract struct {
 // TODO UserID might be the hash of the user's certificate on the
 //      blockchain
 // TODO SubID is unique for all providers, possibly use higher bits to
-//      identify the provider? In this case would not need the 
+//      identify the provider? In this case would not need the
 //      ProviderID field in OfferData anymore...
 type OfferKey struct {
   UserID      string      `json:"UserID"`
@@ -49,11 +49,14 @@ type QueryResult struct {
 }
 
 func (s *OffersContract) GetUserId(ctx contractapi.TransactionContextInterface) (string,error) {
-  mspid, err := ctx.GetClientIdentity().GetMSPID()
+  stub := ctx.GetStub();
+
+  mspid, err := cid.GetMSPID(stub)
   if err != nil {
       return "", fmt.Errorf("Unable to get the MSPID")
   }
-  id, err := ctx.GetClientIdentity().GetID()
+
+  id, err := cid.GetID(stub)
   if err != nil {
       return "", fmt.Errorf("Unable to get the ID")
   }
@@ -63,15 +66,15 @@ func (s *OffersContract) GetUserId(ctx contractapi.TransactionContextInterface) 
 }
 
 
-// Generate a new offer for user identified by UserID. Notice that 
+// Generate a new offer for user identified by UserID. Notice that
 // SplitSubscription is invoked when the offer is generated, which means
 // that until he decides to remove the offer the seller will not have
 // access to the subscription over the specified time interval even if
 // no one has bought it. If the user does not actually own the specified
 // subscription over the given time interval, an error is returned.
-// TODO:  UserID should be recovered via getCreator() in order to make sure 
+// TODO:  UserID should be recovered via getCreator() in order to make sure
 //        that access control is correctly performed.
-// TODO:  how to handle offers involving intervals which have already 
+// TODO:  how to handle offers involving intervals which have already
 //        expired?
 // TODO:  parameter check should also take into account time granularity,
 //        time boundaries, max duration, min StartTime distance...
@@ -107,11 +110,12 @@ func (s *OffersContract) NewOffer(ctx contractapi.TransactionContextInterface, S
 
   status := resp.GetStatus()
 
-  // Arbitrarily set to be able to test even if subscriptions does 
+  // Arbitrarily set to be able to test even if subscriptions does
   // not work correctly
   //status = 200
 
   if (status != 200) {
+    //return fmt.Errorf("resp: " + resp.Message)
     return fmt.Errorf("It was not possible to create the offer. Do you own the subscription over that interval?\n")
   }
 
@@ -137,13 +141,13 @@ func (s *OffersContract) NewOffer(ctx contractapi.TransactionContextInterface, S
   return nil
 }
 
-// This function allows the user identified by BuyerID to buy the offer 
+// This function allows the user identified by BuyerID to buy the offer
 // identified by SellerID, SubID and StartTime. If the offer does exist,
 // an amount of HyperCash corresponding to its price is transferred from
 // BuyerID's account to SellerID's account, and the rights over the given
 // subscription in the given time interval are tranferred to BuyerID. If
 // BuyerID does not own enough HyperCash currency, the transaction fails.
-// TODO:  BuyerID should be recovered via getCreator() in order to make sure 
+// TODO:  BuyerID should be recovered via getCreator() in order to make sure
 //        that access control is correctly performed.
 func (s *OffersContract) AcceptOffer(ctx contractapi.TransactionContextInterface, SellerID string, SubID string, StartTime time.Time) error {
   // Check if BuyerID has the right to access the blockchain
@@ -157,7 +161,7 @@ func (s *OffersContract) AcceptOffer(ctx contractapi.TransactionContextInterface
     return fmt.Errorf("You have currently no access to the blockchain. Please subscribe.\n")
   }
 
-  // Extract offer data from the world state, if present, else return 
+  // Extract offer data from the world state, if present, else return
   // an error
   keyObj := OfferKey{
     UserID:     SellerID,
@@ -196,7 +200,7 @@ func (s *OffersContract) AcceptOffer(ctx contractapi.TransactionContextInterface
 
   status := resp.GetStatus()
 
-  // Arbitrarily set to be able to test even if subscriptions does not 
+  // Arbitrarily set to be able to test even if subscriptions does not
   // work correctly
   //status = 200
 
@@ -279,9 +283,3 @@ func (s *OffersContract) QueryAllOffers(ctx contractapi.TransactionContextInterf
 }
 
 // TODO:  DeleteAllOffers function
-func (s *OffersContract) PrintCert(ctx contractapi.TransactionContextInterface) (string, error) {
-  mspid, err := cid.GetMSPID(ctx.GetStub())
-  id, err := cid.GetID(ctx.GetStub())
-
-  return mspid+id, err
-}

@@ -1,0 +1,127 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+volumes:
+#  orderer.org6.example.com:
+  peer0.org6.example.com:
+  peer1.org6.example.com:
+
+networks:
+  byfn:
+
+services:
+
+#  orderer.org6.example.com:
+#    extends:
+#      file: base/peer-base.yaml
+#      service: orderer-base
+#    environment:
+#      - ORDERER_GENERAL_LISTENPORT=12050
+#      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP6
+#    container_name: orderer.org6.example.com
+#    networks:
+#      - byfn
+#    volumes:
+#      - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+#      - ./org6-artifacts/crypto-config/ordererOrganizations/org6.example.com/orderers/orderer.org6.example.com/msp:/var/hyperledger/orderer/msp
+#      - ./org6-artifacts/crypto-config/ordererOrganizations/org6.example.com/orderers/orderer.org6.example.com/tls/:/var/hyperledger/orderer/tls
+#      - orderer.org6.example.com:/var/hyperledger/production/orderer
+#    ports:
+#      - 12050:12050
+
+  peer0.org6.example.com:
+    container_name: peer0.org6.example.com
+    extends:
+      file: base/peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.org6.example.com
+      - CORE_PEER_ADDRESS=peer0.org6.example.com:17051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:17051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.org6.example.com:17052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:17052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org6.example.com:18051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org6.example.com:17051
+      - CORE_PEER_LOCALMSPID=Org6MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./crypto-config/peerOrganizations/org6.example.com/peers/peer0.org6.example.com/msp:/etc/hyperledger/fabric/msp
+        - ./crypto-config/peerOrganizations/org6.example.com/peers/peer0.org6.example.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.org6.example.com:/var/hyperledger/production
+    ports:
+      - 17051:17051
+    networks:
+      - byfn
+
+  peer1.org6.example.com:
+    container_name: peer1.org6.example.com
+    extends:
+      file: base/peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.org6.example.com
+      - CORE_PEER_ADDRESS=peer1.org6.example.com:18051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:18051
+      - CORE_PEER_CHAINCODEADDRESS=peer1.org6.example.com:18052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:18052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org6.example.com:17051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org6.example.com:18051
+      - CORE_PEER_LOCALMSPID=Org6MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./crypto-config/peerOrganizations/org6.example.com/peers/peer1.org6.example.com/msp:/etc/hyperledger/fabric/msp
+        - ./crypto-config/peerOrganizations/org6.example.com/peers/peer1.org6.example.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.org6.example.com:/var/hyperledger/production
+    ports:
+      - 18051:18051
+    networks:
+      - byfn
+
+
+  Org6cli:
+    container_name: Org6cli
+    image: hyperledger/fabric-tools:$IMAGE_TAG
+    tty: true
+    stdin_open: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_ID=Org6cli
+      - CORE_PEER_ADDRESS=peer0.org6.example.com:17051
+      - CORE_PEER_LOCALMSPID=Org6MSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org6.example.com/peers/peer0.org6.example.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org6.example.com/peers/peer0.org6.example.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org6.example.com/peers/peer0.org6.example.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org6.example.com/users/Admin@org6.example.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./crypto-config/peerOrganizations/org1.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com
+        - ./crypto-config/peerOrganizations/org2.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com
+        - ./crypto-config/peerOrganizations/org3.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3.example.com
+        - ./crypto-config/peerOrganizations/org4.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org4.example.com
+        - ./crypto-config/peerOrganizations/org5.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org5.example.com
+        - ./crypto-config/ordererOrganizations/org1.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org1.example.com
+        - ./crypto-config/ordererOrganizations/org2.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org2.example.com
+        - ./crypto-config/ordererOrganizations/org3.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org3.example.com
+        - ./crypto-config/ordererOrganizations/org4.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org4.example.com
+        - ./crypto-config/ordererOrganizations/org5.example.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org5.example.com
+        - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+
+    depends_on:
+#      - orderer.org6.example.com
+      - peer0.org6.example.com
+      - peer1.org6.example.com
+    networks:
+      - byfn

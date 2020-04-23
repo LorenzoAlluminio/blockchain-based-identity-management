@@ -1,0 +1,78 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+################################################################################
+#
+#   Section: Organizations
+#
+#   - This section defines the different organizational identities which will
+#   be referenced later in the configuration.
+#
+################################################################################
+Organizations:
+    - &OrdererOrg6
+        Name: OrdererOrg6
+
+        ID: OrdererMSP6
+
+        MSPDir: ../crypto-config/ordererOrganizations/org6.example.com/msp
+
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('OrdererMSP6.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('OrdererMSP6.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('OrdererMSP6.admin')"
+
+
+    - &Org6
+        # DefaultOrg defines the organization which is used in the sampleconfig
+        # of the fabric.git development environment
+        Name: Org6MSP
+
+        # ID to load the MSP definition as
+        ID: Org6MSP
+
+        MSPDir: ../crypto-config/peerOrganizations/org6.example.com/msp
+
+        # Policies defines the set of policies at this level of the config tree
+        # For organization policies, their canonical path is usually
+        #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('Org6MSP.admin', 'Org6MSP.peer', 'Org6MSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('Org6MSP.admin', 'Org6MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('Org6MSP.admin')"
+
+        AnchorPeers:
+            # AnchorPeers defines the location of peers which can be used
+            # for cross org gossip communication.  Note, this value is only
+            # encoded in the genesis block in the Application section context
+            - Host: peer0.org6.example.com
+              Port: 17051
+
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('Org6MSP.admin', 'Org6MSP.peer', 'Org6MSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('Org6MSP.admin', 'Org6MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('Org6MSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('Org6MSP.peer')"

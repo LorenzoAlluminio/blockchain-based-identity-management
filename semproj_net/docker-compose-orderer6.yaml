@@ -1,0 +1,27 @@
+version: '2'
+
+volumes:
+  orderer.org6.example.com:
+
+networks:
+  byfn:
+
+services:
+
+  orderer.org6.example.com:
+    extends:
+      file: base/peer-base.yaml
+      service: orderer-base
+    environment:
+      - ORDERER_GENERAL_LISTENPORT=12050
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP6
+    container_name: orderer.org6.example.com
+    networks:
+      - byfn
+    volumes:
+      - ./channel-artifacts/ord6.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ./crypto-config/ordererOrganizations/org6.example.com/orderers/orderer.org6.example.com/msp:/var/hyperledger/orderer/msp
+      - ./crypto-config/ordererOrganizations/org6.example.com/orderers/orderer.org6.example.com/tls/:/var/hyperledger/orderer/tls
+      - orderer.org6.example.com:/var/hyperledger/production/orderer
+    ports:
+      - 12050:12050

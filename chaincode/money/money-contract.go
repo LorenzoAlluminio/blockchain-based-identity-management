@@ -5,7 +5,9 @@ import (
     "errors"
     "fmt"
     "time"
+    "strings"
     "github.com/hyperledger/fabric-contract-api-go/contractapi"
+    "github.com/hyperledger/fabric-chaincode-go/pkg/cid"
 )
 
 type MoneyContract struct {
@@ -34,6 +36,13 @@ func (sc *MoneyContract) GetUserId(ctx contractapi.TransactionContextInterface) 
 }
 
 func (sc *MoneyContract) NewMoneyAccount(ctx contractapi.TransactionContextInterface, userId string, amountOfMoney uint, startDate time.Time, endDate time.Time) error {
+
+  _, err := sc.CheckAdmin(ctx)
+
+  if err != nil{
+    return err
+  }
+
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
@@ -69,7 +78,8 @@ func (sc *MoneyContract) NewMoneyAccount(ctx contractapi.TransactionContextInter
 	return nil
 }
 
-func (sc *MoneyContract) AddMoney(ctx contractapi.TransactionContextInterface, userId string, valueAdd uint) error {
+func (sc *MoneyContract) addMoney(ctx contractapi.TransactionContextInterface, userId string, valueAdd uint) error {
+
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
@@ -105,7 +115,7 @@ func (sc *MoneyContract) AddMoney(ctx contractapi.TransactionContextInterface, u
 	return nil
 }
 
-func (sc *MoneyContract) SubMoney(ctx contractapi.TransactionContextInterface, userId string, valueAdd uint) error {
+func (sc *MoneyContract) subMoney(ctx contractapi.TransactionContextInterface, userId string, valueAdd uint) error {
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
@@ -147,22 +157,30 @@ func (sc *MoneyContract) SubMoney(ctx contractapi.TransactionContextInterface, u
 
 func (sc *MoneyContract) TransferMoney(ctx contractapi.TransactionContextInterface, userId1 string, userId2 string, value uint) error {
 
+  err := sc.checkCaller(ctx,"TransferMoney")
+
+  if err != nil {
+    return err
+  }
+
   if value < 0 {
     return errors.New("Cannot transfer negative amount of money")
   }
 
-  err := sc.SubMoney(ctx,userId1,value);
+  err = sc.subMoney(ctx,userId1,value);
   if err != nil {
     return err;
   }
-  err = sc.AddMoney(ctx,userId2,value);
+  err = sc.addMoney(ctx,userId2,value);
   if err != nil {
     return err;
   }
   return nil;
 }
 
-func (sc *MoneyContract) UpdateDates(ctx contractapi.TransactionContextInterface, userId string, startDate time.Time, endDate time.Time) error {
+func (sc *MoneyContract) updateDates(ctx contractapi.TransactionContextInterface, userId string, startDate time.Time, endDate time.Time) error {
+
+
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
@@ -199,7 +217,10 @@ func (sc *MoneyContract) UpdateDates(ctx contractapi.TransactionContextInterface
 	return nil
 }
 
-func (sc *MoneyContract) GetMoneyAccount(ctx contractapi.TransactionContextInterface, userId string) (*MoneyAccount, error) {
+func (sc *MoneyContract) GetMoneyAccount(ctx contractapi.TransactionContextInterface) (*MoneyAccount, error) {
+
+  userId,_ := sc.GetUserId(ctx)
+
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
@@ -221,7 +242,10 @@ func (sc *MoneyContract) GetMoneyAccount(ctx contractapi.TransactionContextInter
 	return ma, nil
 }
 
-func (sc *MoneyContract) VerifyPaymentForMoney(ctx contractapi.TransactionContextInterface, userId string, pop int, boughtMoney uint) error {
+func (sc *MoneyContract) VerifyPaymentForMoney(ctx contractapi.TransactionContextInterface,  pop int, boughtMoney uint) error {
+
+  userId,_ := sc.GetUserId(ctx)
+
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
@@ -241,10 +265,13 @@ func (sc *MoneyContract) VerifyPaymentForMoney(ctx contractapi.TransactionContex
     return errors.New("Proof of payment is not valid")
   }
 
-	return sc.AddMoney(ctx,userId,boughtMoney)
+	return sc.addMoney(ctx,userId,boughtMoney)
 }
 
-func (sc *MoneyContract) VerifyPaymentForDate(ctx contractapi.TransactionContextInterface, userId string, pop int, startDate time.Time, endDate time.Time) error {
+func (sc *MoneyContract) VerifyPaymentForDate(ctx contractapi.TransactionContextInterface, pop int, startDate time.Time, endDate time.Time) error {
+
+  userId,_ := sc.GetUserId(ctx)
+
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
@@ -264,10 +291,17 @@ func (sc *MoneyContract) VerifyPaymentForDate(ctx contractapi.TransactionContext
     return errors.New("Proof of payment is not valid")
   }
 
-	return sc.UpdateDates(ctx,userId,startDate,endDate)
+	return sc.updateDates(ctx,userId,startDate,endDate)
 }
 
 func (sc *MoneyContract) HasAccess(ctx contractapi.TransactionContextInterface, userId string, currentTime time.Time) error {
+
+  err := sc.checkCaller(ctx,"HasAccess")
+
+  if err != nil {
+    return err
+  }
+
   existing, err := ctx.GetStub().GetState(userId)
 
   if err != nil {
@@ -295,4 +329,49 @@ func (sc *MoneyContract) HasAccess(ctx contractapi.TransactionContextInterface, 
   }
 
 	return nil
+}
+
+func (sc *MoneyContract) CheckAdmin(ctx contractapi.TransactionContextInterface) (string,error) {
+
+  stub := ctx.GetStub()
+
+  mspid, err := cid.GetMSPID(stub)
+  if err != nil {
+      return "", fmt.Errorf("Unable to get the MSPID")
+  }
+
+
+  found, err := cid.HasOUValue(stub, "admin")
+  if err != nil {
+      return "", fmt.Errorf("error retriving OU")
+     // Return an error
+  }
+  if !found {
+    return "", fmt.Errorf("Requires to be admin to perform this action")
+     // The client identity is not part of the Organizational Unit admin
+  }
+
+  return mspid,nil
+
+}
+
+func (sc *MoneyContract) checkCaller(ctx contractapi.TransactionContextInterface, find string) (error) {
+
+  stub := ctx.GetStub()
+
+  proposal,err := stub.GetSignedProposal()
+
+  if err != nil {
+    return fmt.Errorf("Impossible to retrive the signed proposal")
+  }
+
+  str := fmt.Sprintf("%s",proposal)
+
+  res := strings.Contains(str,find)
+
+  if res{
+    return fmt.Errorf("You are not allowed to directly call this chaincode")
+  }
+  return nil
+
 }
