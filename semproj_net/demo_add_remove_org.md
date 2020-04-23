@@ -55,7 +55,7 @@
     so that the next chaincode invocation will only be validated by 3 organizations out of 5.
 11.  Invoke the PrintCert function of the offers chaincode with the command  
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["PrintCert"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["GetUserId"]}' --waitForEvent
     ```  
     and show that as the endorsement policy is by majority the invocation is successful.  
 12.  Exit the cli and from the folder containing this file run the command `./eyfn.sh` to add org6 to the network.  
