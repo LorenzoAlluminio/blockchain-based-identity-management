@@ -45,8 +45,8 @@
     ```
     it will succed.  
 10.  Set ORD_STRING:  
-    ```bash    
-    ORD_STRING="--tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org1.example.com/orderers/orderer.org1.example.com/msp/tlscacerts/tlsca.org1.example.com-cert.pem"  
+    ```bash
+    ORD_STRING="--tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org1.example.com/orderers/orderer.org1.example.com/msp/tlscacerts/tlsca.org1.example.com-cert.pem"
     ```
 11.  Set PEER_STRING to the value below:  
     ```bash
