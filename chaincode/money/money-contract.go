@@ -180,9 +180,6 @@ func (sc *MoneyContract) TransferMoney(ctx contractapi.TransactionContextInterfa
 
 func (sc *MoneyContract) updateDates(ctx contractapi.TransactionContextInterface, userId string, startDate time.Time, endDate time.Time) error {
 
-  if err != nil{
-    return err
-  }
 
   existing, err := ctx.GetStub().GetState(userId)
 
@@ -222,7 +219,7 @@ func (sc *MoneyContract) updateDates(ctx contractapi.TransactionContextInterface
 
 func (sc *MoneyContract) GetMoneyAccount(ctx contractapi.TransactionContextInterface) (*MoneyAccount, error) {
 
-  userId := ctx.GetStub().GetUserId()
+  userId,_ := sc.GetUserId(ctx)
 
   existing, err := ctx.GetStub().GetState(userId)
 
@@ -247,7 +244,7 @@ func (sc *MoneyContract) GetMoneyAccount(ctx contractapi.TransactionContextInter
 
 func (sc *MoneyContract) VerifyPaymentForMoney(ctx contractapi.TransactionContextInterface,  pop int, boughtMoney uint) error {
 
-  userId := ctx.GetStub().GetUserId()
+  userId,_ := sc.GetUserId(ctx)
 
   existing, err := ctx.GetStub().GetState(userId)
 
@@ -273,7 +270,7 @@ func (sc *MoneyContract) VerifyPaymentForMoney(ctx contractapi.TransactionContex
 
 func (sc *MoneyContract) VerifyPaymentForDate(ctx contractapi.TransactionContextInterface, pop int, startDate time.Time, endDate time.Time) error {
 
-  userId := ctx.GetStub().GetUserId()
+  userId,_ := sc.GetUserId(ctx)
 
   existing, err := ctx.GetStub().GetState(userId)
 
