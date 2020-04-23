@@ -63,7 +63,7 @@ and show that as the endorsement policy is by majority the invocation is success
 14.  Set ORD_STRING as in step 2, and PEER_STRING as in step 3.
 15.  Try to run the same command as in step 4; this time it will fail, because only 3 organizations out of 6 are validating the transaction.
 16.  Set PEER_STRING to the value  
-    ```bash
+```bash
     PEER_STRING="--peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt --peerAddresses peer0.org3.example.com:11051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/tls/ca.crt --peerAddresses peer0.org6.example.com:17051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org6.example.com/peers/peer0.org6.example.com/tls/ca.crt"
 ```
 so that now also one of the peers belonging to org6 will be performing the validation.
@@ -76,8 +76,8 @@ so that now also one of the peers belonging to org6 will be performing the valid
 19. Set ORD_STRING as in step 2, and PEER_STRING as in step 3.
 20. Run the command as in step 4; it will fail because org2 is no more a part of the network and therefore its peers are no more able to perform validation. As the cli will be stuck waiting for an answer from org2, kill the command with Ctrl+C.
 21. Set PEER_STRING to the value
-    ```bash
+```bash
     PEER_STRING="--peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org3.example.com:11051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/tls/ca.crt --peerAddresses peer0.org6.example.com:17051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org6.example.com/peers/peer0.org6.example.com/tls/ca.crt"
-    ```  
-    so that organizations 1, 3 and 6 will be validating the transaction.
+```  
+so that organizations 1, 3 and 6 will be validating the transaction.
 22. Now the command from step 4 will again work with just 3 organizations performing the validation.
