@@ -21,7 +21,7 @@
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["NewMoneyAccount", '"\"$USR1ORG1\""', "0", "2020-04-01T15:00:00Z", "2020-06-01T15:00:00Z"]}' --waitForEvent
     ```
-    this opeartion will fail since we are logged as a normal user but this operation require admin privileges. 
+    this opeartion will fail since we are logged as a normal user but this operation require admin privileges.
 6.  To became admin use
     ```bash
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
@@ -43,7 +43,7 @@
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", "Org1MSP", "2020-04-02T15:00:00Z", "2020-05-02T15:00:00Z", "30"]}' --waitForEvent
     ```
-    it will succed. 
+    it will succed.
 9.  Set ORD_STRING:
     ```bash
     ORD_STRING="--tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org1.example.com/orderers/orderer.org1.example.com/msp/tlscacerts/tlsca.org1.example.com-cert.pem"
@@ -54,7 +54,7 @@
 ```
 so that the next chaincode invocation will only be validated by 3 organizations out of 5.
 11.  Invoke the PrintCert function of the offers chaincode with the command  
-    ```bash
+```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["PrintCert"]}' --waitForEvent
 ```  
 and show that as the endorsement policy is by majority the invocation is successful.  
@@ -71,7 +71,7 @@ so that now also one of the peers belonging to org6 will be performing the valid
 18. Exit the cli and from the folder containing this file run the command  
     ```bash
     docker exec Org6cli ./scripts/org2-remove.sh
-    ``` 
+    ```
     to remove org2 from the network, then reopen the cli with the command in step 6
 19. Set ORD_STRING as in step 2, and PEER_STRING as in step 3.
 20. Run the command as in step 4; it will fail because org2 is no more a part of the network and therefore its peers are no more able to perform validation. As the cli will be stuck waiting for an answer from org2, kill the command with Ctrl+C.
