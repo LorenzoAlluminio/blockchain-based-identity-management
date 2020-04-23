@@ -26,7 +26,7 @@
     ```bash
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
     ```
-    Now repeat operation 3 and then go on.
+    Now repeat operation 5 and then go on.
 7.  Issue a subscription for User1@org1 with  
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["IssueSubscription", '"\"$USR1ORG1\""', "Prov1", "2020-04-02T15:00:00Z", "2020-07-02T15:00:00Z"]}' --waitForEvent
