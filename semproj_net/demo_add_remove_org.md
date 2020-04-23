@@ -37,7 +37,7 @@
     ```  
 8.  Try to remove a time slot from a target user
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["SplitSubscrition","U1", "Prov1", "Prov1", "2020-04-02T15:00:00Z", "2020-05-02T15:00:00Z"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["SplitSubscription","U1", "Prov1", "Prov1", "2020-04-02T15:00:00Z", "2020-05-02T15:00:00Z"]}' --waitForEvent
     ```
     this will fail since the SmartContract will be exectued only if is called by another one. Indeed if we can rent our subscription through the NewOffer method (operation that will call the SplitSubscrition method)
     ```bash
