@@ -46,7 +46,7 @@ createOrderer 3 9055
 createOrderer 4 10055
 createOrderer 5 11055
 
-../bin/cryptogen extend --input="crypto-config"
+../bin/cryptogen generate --output="crypto-config" --config=./crypto-config2.yaml
 cp -R crypto-config/peerOrganizations/global.example.com .
 
 cd ../bin
