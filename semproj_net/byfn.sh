@@ -46,6 +46,9 @@ createOrderer 3 9055
 createOrderer 4 10055
 createOrderer 5 11055
 
+# add cryptographic material for global MSP
+cp -R ./global.example.com ./crypto-config/peerOrganizations/
+
 # Create orderer genesis block, the channel transaction artifact and define anchor peers on the channel based on the configuration in configtxgen.yaml
 export FABRIC_CFG_PATH=$PWD
 ../bin/configtxgen -profile SampleMultiNodeEtcdRaft -channelID byfn-sys-channel -outputBlock ./channel-artifacts/genesis.block
