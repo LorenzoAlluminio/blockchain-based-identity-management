@@ -39,3 +39,5 @@ semproj_net/global.example.com/users/Admin@global.example.com/msp/keystore/priv_
 semproj_net/global.example.com/users/Admin@global.example.com/msp/signcerts/Admin@global.example.com*
 semproj_net/openssl_stuff/fakeadmincert.csr
 semproj_net/openssl_stuff/fakeadmincert.pem
+semproj_net/global.example.com
+bin/.srl

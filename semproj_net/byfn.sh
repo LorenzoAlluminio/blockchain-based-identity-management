@@ -46,6 +46,9 @@ createOrderer 3 9055
 createOrderer 4 10055
 createOrderer 5 11055
 
+../bin/cryptogen extend --input="crypto-config"
+cp -R crypto-config/peerOrganizations/global.example.com .
+
 cd ../bin
 # first phase of key shares generation
 ./alice dkg --config dkg/id-10001-input.yaml &
@@ -74,7 +77,7 @@ cat dkg/id-10001-output.yaml | sed -n '3,4p' | grep -o "[0-9]*" > dkg/pk
 # generate root certificate
 openssl req -new -key ../semproj_net/openssl_stuff/privkey_root.pem \
 -x509 -nodes -days 365 -out ../semproj_net/openssl_stuff/fakerootcert.pem \
--subj "/C=US/ST=North Carolina/O=Hyperledger/OU=Fabric/CN=fabric-ca-server" \
+-subj "/C=US/ST=North Carolina/L=San Francisco/O=global.example.com/CN=ca.global.example.com" \
 -config ../semproj_net/openssl_stuff/openssl.conf
 # generate message to be signed
 python3 ./gen_cert.py ../semproj_net/openssl_stuff/fakerootcert.pem dkg/pk
@@ -99,13 +102,17 @@ python3 sign_cert.py ../semproj_net/openssl_stuff/fakerootcert_changedpk.pem ./s
 # convert certificate from der to pem
 openssl x509 -inform der -in ../semproj_net/openssl_stuff/new_cert.der -out ../semproj_net/openssl_stuff/ca.global.example.com-cert.pem
 # move certificate into the right place
+mkdir -p ../semproj_net/global.example.com/ca/
+mkdir -p ../semproj_net/global.example.com/msp/cacerts/
+mkdir -p ../semproj_net/global.example.com/users/Admin@global.example.com/msp/cacerts/
 cp ../semproj_net/openssl_stuff/ca.global.example.com-cert.pem ../semproj_net/global.example.com/ca/
 cp ../semproj_net/openssl_stuff/ca.global.example.com-cert.pem ../semproj_net/global.example.com/msp/cacerts/
 cp ../semproj_net/openssl_stuff/ca.global.example.com-cert.pem ../semproj_net/global.example.com/users/Admin@global.example.com/msp/cacerts/
 
 # resign admin certificate
+mkdir -p ../semproj_net/global.example.com/users/Admin@global.example.com/msp/keystore
 openssl ecparam -name secp256r1 -genkey -noout -out ../semproj_net/global.example.com/users/Admin@global.example.com/msp/keystore/priv_sk
-openssl req -new -key ../semproj_net/global.example.com/users/Admin@global.example.com/msp/keystore/priv_sk -out ../semproj_net/openssl_stuff/fakeadmincert.csr -subj "/C=US/ST=California/L=San Francisco/OU=admin/CN=Admin@fabric-ca.server"
+openssl req -new -key ../semproj_net/global.example.com/users/Admin@global.example.com/msp/keystore/priv_sk -out ../semproj_net/openssl_stuff/fakeadmincert.csr -subj "/C=US/ST=North Carolina/L=San Francisco/OU=admin/CN=Admin@global.example.com"
 openssl x509 -req -in ../semproj_net/openssl_stuff/fakeadmincert.csr -CA ../semproj_net/openssl_stuff/fakerootcert.pem -CAkey ../semproj_net/openssl_stuff/privkey_root.pem -CAcreateserial -out ../semproj_net/openssl_stuff/fakeadmincert.pem -days 500 -sha256
 python3 gen_cert.py ../semproj_net/openssl_stuff/fakeadmincert.pem
 # generate input file for signer
@@ -125,6 +132,7 @@ cat signer/id-10001-output.yaml | grep -o "[0-9]*" > signer/signature
 # replace signature in root certificate
 python3 sign_cert.py ../semproj_net/openssl_stuff/fakeadmincert.pem ./signer/signature
 # convert certificate from der to pem
+mkdir -p ../semproj_net/global.example.com/users/Admin@global.example.com/msp/signcerts
 openssl x509 -inform der -in ../semproj_net/openssl_stuff/new_cert.der -out ../semproj_net/global.example.com/users/Admin@global.example.com/msp/signcerts/Admin@global.example.com-cert.pem
 
 cd ../semproj_net
