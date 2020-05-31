@@ -29,7 +29,7 @@ sig = int(binascii.hexlify(sig), 16)
 cert.setComponentByName("signatureValue", "00"+bin(sig)[2:])
 
 #Store the new Certificate
-f = open("openssl_stuff/new_cert.der", "wb")
+f = open("../semproj_net/openssl_stuff/new_cert.der", "wb")
 f.write(encoder.encode(cert))
 f.close()
 # Rember to convert in pem after
