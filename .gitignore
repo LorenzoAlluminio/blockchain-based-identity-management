@@ -30,3 +30,4 @@ bin/signer/*
 
 semproj_net/openssl_stuff/fakerootcert*
 semproj_net/openssl_stuff/new_cert.der
+semproj_net/openssl_stuff/ca.global.example.com-cert.pem
