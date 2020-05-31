@@ -25,4 +25,5 @@ semproj_net/crypto-config/
 bin/dkg/*-output.yaml
 bin/dkg/pk
 bin/dkg/preamb*
+bin/dkg/post*
 bin/signer/*
