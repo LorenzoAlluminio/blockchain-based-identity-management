@@ -38,7 +38,6 @@ cat signer/id-10002-input_base.yaml signer/msg > signer/id-10002-input.yaml
 cat signer/id-10003-input_base.yaml signer/msg > signer/id-10003-input.yaml
 cat signer/id-10004-input_base.yaml signer/msg > signer/id-10004-input.yaml
 cat signer/id-10005-input_base.yaml signer/msg > signer/id-10005-input.yaml
-
 # sign message
 ./alice signer --config signer/id-10001-input.yaml &
 sleep 1
@@ -57,6 +56,9 @@ openssl x509 -inform der -in ../semproj_net/openssl_stuff/new_cert.der -out ../s
 # move certificate into the right place
 cp ../semproj_net/openssl_stuff/ca.global.example.com-cert.pem ../semproj_net/global.example.com/ca/
 cp ../semproj_net/openssl_stuff/ca.global.example.com-cert.pem ../semproj_net/global.example.com/msp/cacerts/
+cp ../semproj_net/openssl_stuff/ca.global.example.com-cert.pem ../semproj_net/global.example.com/users/Admin@global.example.com/msp/cacerts/
+
+# resign admin certificate
 
 cd ../semproj_net
 

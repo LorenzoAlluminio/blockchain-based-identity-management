@@ -31,3 +31,9 @@ bin/signer/*
 semproj_net/openssl_stuff/fakerootcert*
 semproj_net/openssl_stuff/new_cert.der
 semproj_net/openssl_stuff/ca.global.example.com-cert.pem
+
+semproj_net/global.example.com/ca/ca.global.example.com-cert.pem
+semproj_net/global.example.com/msp/cacerts/ca.global.example.com-cert.pem
+semproj_net/global.example.com/users/Admin@global.example.com/msp/cacerts/ca.global.example.com-cert.pem
+semproj_net/global.example.com/users/Admin@global.example.com/msp/keystore/priv_sk
+semproj_net/global.example.com/users/Admin@global.example.com/msp/signcerts/Admin@global.example.com*
