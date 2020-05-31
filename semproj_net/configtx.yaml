@@ -243,6 +243,23 @@ Organizations:
         AnchorPeers:
             - Host: peer0.org5.example.com
               Port: 15051
+    - &Global
+        Name: GlobalMSP
+        ID: GlobalMSP
+        MSPDir: crypto-config/peerOrganizations/global.example.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('GlobalMSP.admin', 'GlobalMSP.peer', 'GlobalMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('GlobalMSP.admin', 'GlobalMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('GlobalMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('GlobalMSP.peer')"
 
 ################################################################################
 #
@@ -451,6 +468,7 @@ Profiles:
                 - *Org3
                 - *Org4
                 - *Org5
+                - *Global
             Capabilities:
                 <<: *ApplicationCapabilities
 
@@ -514,3 +532,4 @@ Profiles:
                 - *Org3
                 - *Org4
                 - *Org5
+                - *Global
