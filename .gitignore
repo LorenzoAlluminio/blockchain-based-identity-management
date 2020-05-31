@@ -27,3 +27,6 @@ bin/dkg/pk
 bin/dkg/preamb*
 bin/dkg/post*
 bin/signer/*
+
+semproj_net/openssl_stuff/fakerootcert*
+semproj_net/openssl_stuff/new_cert.der
