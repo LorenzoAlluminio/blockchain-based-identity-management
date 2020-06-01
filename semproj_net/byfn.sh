@@ -79,10 +79,10 @@ cat dkg/preamb5 dkg/post5 > signer/id-10005-input_base.yaml
 # extract public key
 cat dkg/id-10001-output.yaml | sed -n '3,4p' | grep -o "[0-9]*" > dkg/pk
 # generate root certificate
-openssl req -new -key ../semproj_net/openssl_stuff/privkey_root.pem \
+openssl req -new -key ../semproj_net/openssl_perm/privkey_root.pem \
 -x509 -nodes -days 365 -out ../semproj_net/openssl_stuff/fakerootcert.pem \
 -subj "/C=US/ST=North Carolina/L=San Francisco/O=global.example.com/CN=ca.global.example.com" \
--config ../semproj_net/openssl_stuff/openssl.conf
+-config ../semproj_net/openssl_perm/openssl.conf
 # generate message to be signed
 python3 ./gen_cert.py ../semproj_net/openssl_stuff/fakerootcert.pem dkg/pk
 # generate input file for signer
@@ -117,7 +117,7 @@ cp ../semproj_net/openssl_stuff/ca.global.example.com-cert.pem ../semproj_net/gl
 mkdir -p ../semproj_net/global.example.com/users/Admin@global.example.com/msp/keystore
 openssl ecparam -name secp256r1 -genkey -noout -out ../semproj_net/global.example.com/users/Admin@global.example.com/msp/keystore/priv_sk
 openssl req -new -key ../semproj_net/global.example.com/users/Admin@global.example.com/msp/keystore/priv_sk -out ../semproj_net/openssl_stuff/fakeadmincert.csr -subj "/C=US/ST=North Carolina/L=San Francisco/OU=admin/CN=Admin@global.example.com"
-openssl x509 -req -in ../semproj_net/openssl_stuff/fakeadmincert.csr -CA ../semproj_net/openssl_stuff/fakerootcert.pem -CAkey ../semproj_net/openssl_stuff/privkey_root.pem -CAcreateserial -out ../semproj_net/openssl_stuff/fakeadmincert.pem -days 500 -sha256
+openssl x509 -req -in ../semproj_net/openssl_stuff/fakeadmincert.csr -CA ../semproj_net/openssl_stuff/fakerootcert.pem -CAkey ../semproj_net/openssl_perm/privkey_root.pem -CAcreateserial -out ../semproj_net/openssl_stuff/fakeadmincert.pem -days 500 -sha256
 python3 gen_cert.py ../semproj_net/openssl_stuff/fakeadmincert.pem
 # generate input file for signer
 cat signer/id-10001-input_base.yaml signer/msg > signer/id-10001-input.yaml
