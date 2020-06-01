@@ -50,6 +50,7 @@ createOrderer 5 11055
 
 ../bin/cryptogen generate --output="crypto-config" --config=./crypto-config2.yaml
 cp -R crypto-config/peerOrganizations/global.example.com .
+mkdir openssl_stuff
 
 cd ../bin
 # first phase of key shares generation
