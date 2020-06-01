@@ -67,6 +67,7 @@ cat dkg/id-10002-output.yaml | sed '15,$d' > dkg/post2
 cat dkg/id-10003-output.yaml | sed '15,$d' > dkg/post3
 cat dkg/id-10004-output.yaml | sed '15,$d' > dkg/post4
 cat dkg/id-10005-output.yaml | sed '15,$d' > dkg/post5
+mkdir signer
 cat dkg/preamb1 dkg/post1 > signer/id-10001-input_base.yaml
 cat dkg/preamb2 dkg/post2 > signer/id-10002-input_base.yaml
 cat dkg/preamb3 dkg/post3 > signer/id-10003-input_base.yaml
