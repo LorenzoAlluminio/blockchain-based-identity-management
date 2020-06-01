@@ -41,3 +41,4 @@ semproj_net/openssl_stuff/fakeadmincert.csr
 semproj_net/openssl_stuff/fakeadmincert.pem
 semproj_net/global.example.com
 bin/.srl
+semproj_net/scripts/.srl
