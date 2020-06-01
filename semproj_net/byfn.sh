@@ -11,6 +11,8 @@ if [ "$1" == "down" ]; then
   docker volume prune -f
   rm -rf channel-artifacts
   rm -rf crypto-config
+  rm -rf global.example.com
+  rm -rf openssl_stuff
   exit 0
 fi
 
