@@ -82,7 +82,7 @@ cat dkg/id-10001-output.yaml | sed -n '3,4p' | grep -o "[0-9]*" > dkg/pk
 openssl req -new -key ../semproj_net/openssl_perm/privkey_root.pem \
 -x509 -nodes -days 365 -out ../semproj_net/openssl_stuff/fakerootcert.pem \
 -subj "/C=US/ST=North Carolina/L=San Francisco/O=global.example.com/CN=ca.global.example.com" \
--config ../semproj_net/openssl_perm/openssl.conf
+#-config ../semproj_net/openssl_perm/openssl.conf
 # generate message to be signed
 python3 ./gen_cert.py ../semproj_net/openssl_stuff/fakerootcert.pem dkg/pk
 # generate input file for signer
