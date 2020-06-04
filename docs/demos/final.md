@@ -9,3 +9,8 @@
   - Integrate all demo with Access Control
 
 # TODO for Slide:
+  - presentation of project
+  - building block
+  - blockchain & tbs
+  - scenario
+  - demo with scenario
