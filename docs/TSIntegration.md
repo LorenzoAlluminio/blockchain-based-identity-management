@@ -20,10 +20,10 @@ The only negative aspect of TS is that for mathematical reasons it is not possib
 
 ### How we use Threshold Signatures with Hyperledger
 
-Given our decision to make use of ECDSA Threshold signatures, the [alice](https://github.com/getamis/alice) library came to our help to provide an implementation. This library actually implements a more general concept, called Hierarchical TS, which allows to assign different weights to each private share; in our use case this is not necessary but it is very simple to fall back to non-hierarchical TS by simply assigning the same rank to all shares.
+Given our decision to make use of ECDSA Threshold signatures, the [alice](https://github.com/getamis/alice) library came to our help to provide an implementation. This library actually implements a more general concept, called Hierarchical TS, which allows to assign different weights to each private share; in our use case this is not necessary but it is very simple to fallback to non-hierarchical TS by simply assigning the same rank to all shares.
 
 Concerning how this library and scheme are actually used to solve the issues mentioned above:
-- The companies initially run the DKG to retrieve the shared public key and their private shares;
+- The companies initially run the DKG to generate the shared public key and their private shares;
 - A "global" MSP is defined within the Hyperledger Network; its root certificate contains the shared public key from the DKG and is self-signed (therefore the signature is a TS computed in a distributed way by the Organizations using the private shares from the DKG);
 - When a new user is enrolled, he/she is assigned to the global MSP and is provided with a certificate again signed with a TS using the Organizations' private shares.
 
