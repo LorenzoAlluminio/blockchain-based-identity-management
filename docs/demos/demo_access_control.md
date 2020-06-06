@@ -74,7 +74,7 @@
 14. Then create a new offert
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", "Prov1", "2021-04-02T15:00:00Z", "2021-05-02T15:00:00Z", "30"]}' --waitForEvent
-    ````
+    ```
 15. Create another offer with price that Anna cannot afford to buy:  
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", "Prov1", "2021-05-03T15:00:00Z", "2021-05-04T15:00:00Z", "120"]}' --waitForEvent
