@@ -46,7 +46,7 @@ this will fail since the SmartContract will be exectued only if is called by ano
 ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", "GlobalMSP", "2021-04-02T15:00:00Z", "2021-05-02T15:00:00Z", "30"]}' --waitForEvent
 ```
-    it will succed. 
+it will succed. 
 
 10.  Now select Anna by setting 
 ```bash
@@ -56,13 +56,13 @@ this will fail since the SmartContract will be exectued only if is called by ano
 ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["GetUserId"]}' --waitForEvent
 ```  
-    and copy it to the env var ANNA
+and copy it to the env var ANNA
 12.  To create the money account for Anna as we have done with Bob we have to switch to admin with
     ```bash
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Admin@global.example.com/msp
     ```
     
-    and then we execute
+and then we execute
     
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["NewMoneyAccount", '"\"$ANNA\""', "100", "2020-04-01T15:00:00Z", "2030-06-01T15:00:00Z"]}' --waitForEvent
