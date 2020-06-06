@@ -12,7 +12,7 @@
 - End users
     - they will use the WebApp to interact to the hyperledger blockchain.
 
-- External CA, which will use a threshold signature between all the organization to create the user certificate
+- Distributed CA, which will use a threshold signature scheme between all the organization to create the user certificate
 - Common payment account, external to the Hyperledger blockchain.
 
 The network is composed by one application channel on which are deployed three chaincodes (one related to subscriptions, one related to money and one which controls the rent offers). Each service provider will have a peer which executes the three smart contracts (SCS, SCM and SCO respectively) and keeps an updated version of the three world states (WS, WM and WO). The endorsement policies and the access control are different based on the type of the transaction. Each provider will also have 1 ordering node, and they will reach consensus through Raft.
