@@ -145,6 +145,13 @@ cd ../semproj_net
 cp -R ./global.example.com ./crypto-config/peerOrganizations/
 chmod -R 775 ./crypto-config/peerOrganizations/global.example.com
 
+# add Anna and Bob
+cd scripts
+./addUser_th.sh Anna
+sleep 1
+./addUser_th.sh Bob
+cd ..
+
 # Create orderer genesis block, the channel transaction artifact and define anchor peers on the channel based on the configuration in configtxgen.yaml
 export FABRIC_CFG_PATH=$PWD
 ../bin/configtxgen -profile SampleMultiNodeEtcdRaft -channelID byfn-sys-channel -outputBlock ./channel-artifacts/genesis.block
