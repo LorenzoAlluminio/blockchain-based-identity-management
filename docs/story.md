@@ -1,7 +1,7 @@
 # User story
 
 - Joe is a student and doesn't have much money
-
+```
                        .,aaad88888888888baaaa,
                 .,aad88888888888888888888888888888ba,
             ,ad8888888888888888888888888888888888888888ba,
@@ -68,3 +68,4 @@
                           8I ,ad8""'
                           888""
 
+```
