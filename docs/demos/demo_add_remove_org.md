@@ -1,4 +1,4 @@
-# Demo on organization addition and removal
+# Demo on organization addition and removal of an organization
 
 1.  Run `./byfn.sh` to setup the network and `docker exec -it cli bash`.
 2.  Set ORD_STRING and PEER_STRING:
