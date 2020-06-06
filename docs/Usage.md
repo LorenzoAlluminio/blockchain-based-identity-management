@@ -17,7 +17,7 @@ export PATH=<path to semester_project>/bin:$PATH
 bash bootstrap.sh -sb
 ```
 
-Now you can launch the `semproj_net` network. It is a realistic network composed of 5 organization, each one with 2 nodes and 1 orderer node.
+Now you can launch the `semproj_net` network. It is a realistic network composed of 5 organization, each one with 2 peer nodes, 1 orderer node and a CA.
 
 5.  Launch the network with `./byfn.sh up`.  The script will load the chaincodes and perform all the setup operations.
 If it gives permissions error grant permissions recursively to the chaincode folder like this:
