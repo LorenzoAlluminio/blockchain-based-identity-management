@@ -70,7 +70,8 @@ and then we execute
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["NewMoneyAccount", '"\"$ANNA\""', "100", "2020-04-01T15:00:00Z", "2030-06-01T15:00:00Z"]}' --waitForEvent
    ```
 13.  Now switch to Bob:  
-    ```bash
+    
+```bash
     CORE_PEER_MSPCONFIGPATH="/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Bob@global.example.com/msp"
    ```  
 14. Create another offer with price that Anna cannot afford to buy:  
