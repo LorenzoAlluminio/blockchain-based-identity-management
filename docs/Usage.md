@@ -48,7 +48,7 @@ You should also add at least one of the new peers to PEER_STRING:
     ``` 
     The script will add the new peer org and also the corresponding orderer org (OrdererOrg6). A way of verifying that the new ordering node is working is to open its logs (run the command `docker logs orderer.org6.example.com -f`), invoke a chaincode and check that it is actually writing the new blocks to the ledger.
     
-10.  Whether you did step 5 or not, it is possible to test the removal of one of the orgs (org2.example.com) at runtime; just run the command `docker exec cli ./scripts/org2-remove.sh` from the folder containing this file. This script will also remove the corresponding orderer org (OrdererOrg2) from both the system and the application channel.
+10.  Whether you did step 9 or not, it is possible to test the removal of one of the orgs (org2.example.com) at runtime; just run the command `docker exec cli ./scripts/org2-remove.sh` from the folder containing this file. This script will also remove the corresponding orderer org (OrdererOrg2) from both the system and the application channel.
 11.  When finished, exit the CLI and run `./byfn.sh down` to turn off the network and clean everything. You might still need to run the command `docker volume prune` in case some volumes are not deleted.  
 
 A couple of demos scripts can be found under [demos](docs/demos)
