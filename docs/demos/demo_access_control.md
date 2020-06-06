@@ -55,7 +55,7 @@
 11.  Print the user's id with  
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["GetUserId"]}' --waitForEvent
- ````  
+ ```  
     and copy it to the env var ANNA
 12.  To create the money account for Anna as we have done with Bob we have to switch to admin with
     ```bash
