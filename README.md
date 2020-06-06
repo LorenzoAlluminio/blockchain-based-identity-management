@@ -35,6 +35,9 @@ How the provider will benefit from this technology?
 - In each rent transaction there will be a fee payed in Hypercash. This will not directly bring an economic benefit to the providers, but it will lead to a reduction of the amount of HC of the users, that will be "obliged" to buy more if he wants to continue to use the service.
 The amount of this fee can be decided by the organizations.
 
+How the access control on users is performed?
+- The providers will provide the option to "log in with hyperledger", they will retrieve the id of the user from his certificate and they will check if the user has access to the service by querying the blockchain.
+
 ## Design of the project
 
 - [Network architecture & interactions](docs/Design.md)
