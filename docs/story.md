@@ -14,9 +14,9 @@ _(____nm_______ /____\____
 
 ```
 
-- Joe watches some series on netflix, but there is also a serie that he would like to watch on Amazon Prime.
-Usually since he doesn't have a lot of money, he retrieve this serie in "other ways"
-```
+- Joe watches some series on netflix, but there is also a series that he would like to watch on Amazon Prime.
+Due to his rather poor finances, he is used to looking for "other ways" to retrieve this kind of goodies...
+ ```
      ___
      \_/
       |._
