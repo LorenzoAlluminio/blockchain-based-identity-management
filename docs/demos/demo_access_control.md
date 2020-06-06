@@ -22,7 +22,7 @@
     and copy it to the env var BOB
 5.  Try to create the money account for Bob with  
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["NewMoneyAccount", '"\"$BOB\""', "0", "2020-04-01T15:00:00Z", "2020-06-01T15:00:00Z"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["NewMoneyAccount", '"\"$BOB\""', "0", "2020-04-01T15:00:00Z", "2030-06-01T15:00:00Z"]}' --waitForEvent
     ```
     this opeartion will fail since we are logged as a normal user but this operation require admin privileges.
 6.  To became admin use
@@ -32,7 +32,7 @@
     Now repeat operation 5 and then go on.
 7.  Issue a subscription for Bob with  
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["IssueSubscription", '"\"$BOB\""', "Prov1", "2020-04-02T15:00:00Z", "2020-07-02T15:00:00Z"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["IssueSubscription", '"\"$BOB\""', "Prov1", "2021-04-02T15:00:00Z", "2021-07-02T15:00:00Z"]}' --waitForEvent
     ```
 8.  Now we select back normal user with:
     ```bash
@@ -40,11 +40,11 @@
     ```  
 9.  Try to remove a time slot from a target user
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["SplitSubscription","U1", "Prov1", "Prov1", "2020-04-02T15:00:00Z", "2020-05-02T15:00:00Z"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["SplitSubscription","U1", "Prov1", "Prov1", "2021-04-02T15:00:00Z", "2021-05-02T15:00:00Z"]}' --waitForEvent
     ```
     this will fail since the SmartContract will be exectued only if is called by another one. Indeed if we can rent our subscription through the NewOffer method (operation that will call the SplitSubscrition method)
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", "Org1MSP", "2020-04-02T15:00:00Z", "2020-05-02T15:00:00Z", "30"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", "Org1MSP", "2021-04-02T15:00:00Z", "2021-05-02T15:00:00Z", "30"]}' --waitForEvent
     ```
     it will succed. 
 
@@ -65,7 +65,7 @@
     and then we execute
     
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["NewMoneyAccount", '"\"$ANNA\""', "100", "2020-04-01T15:00:00Z", "2020-06-01T15:00:00Z"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["NewMoneyAccount", '"\"$ANNA\""', "100", "2020-04-01T15:00:00Z", "2030-06-01T15:00:00Z"]}' --waitForEvent
    ```
 13.  Now switch to Bob:  
     ```bash
@@ -73,20 +73,20 @@
    ```  
 14. Then create a new offert
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", "Prov1", "2020-04-02T15:00:00Z", "2020-05-02T15:00:00Z", "30"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", "Prov1", "2021-04-02T15:00:00Z", "2021-05-02T15:00:00Z", "30"]}' --waitForEvent
     ````
 15. Create another offer with price that Anna cannot afford to buy:  
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", "Prov1", "2020-05-03T15:00:00Z", "2020-05-04T15:00:00Z", "120"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", "Prov1", "2021-05-03T15:00:00Z", "2021-05-04T15:00:00Z", "120"]}' --waitForEvent
     ```
 16. Select Anna again as in point 10  
 17. Try to accept the second offer and see it fail with  
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["AcceptOffer", '"\"$BOB\""', "Prov1", "2020-05-03T15:00:00Z"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["AcceptOffer", '"\"$BOB\""', "Prov1", "2021-05-03T15:00:00Z"]}' --waitForEvent
     ```
 18. Accept the first offer with  
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["AcceptOffer", '"\"$BOB\""', "Prov1", "2020-04-02T15:00:00Z"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["AcceptOffer", '"\"$BOB\""', "Prov1", "2021-04-02T15:00:00Z"]}' --waitForEvent
     ```
 19. Show that Anna has spent money and has acquired the subscription with  
     ```bash
