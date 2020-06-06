@@ -1,5 +1,7 @@
 # Demo on certificate-based access control
 
+N.B. For seek of semplicity in the demo the subscription are provided from the Admin of the globalMSP; in a real scenario this would not make sense since the globalMSP dose not provide any service outside the blockchain.
+
 1.  Run `./byfn.sh` to setup the network and `docker exec -it cli bash`.
 2.  Set ORD_STRING and PEER_STRING:
     ```bash
@@ -69,7 +71,7 @@ and then we execute
    ```
 13.  Now switch to Bob:  
     ```bash
-    CORE_PEER_MSPCONFIGPATH="/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Bob@global.example.com/msp"
+    CORE_PEER_MSPCONFIGPATH="/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Bob@global.example.com/msp"
    ```  
 14. Create another offer with price that Anna cannot afford to buy:  
     ```bash
@@ -90,12 +92,13 @@ and then we execute
     ```  
     and  
     ```bash
-    peer chaincode query -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions -c '{"Args":["GetInfoUser", '"\"$ANNA\""', "Prov1"]}'
+    peer chaincode query -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions -c '{"Args":["GetInfoUser", '"\"$ANNA\""', "GlobalMSP"]}'
     ```
 19. Show that Anna can login with the subscription he bought after loggin into admin
     ```bash
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Admin@global.example.com/msp
     ```
     ```bash
-    peer chaincode query -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions -c '{"Args":["ServiceAccess", '"\"$ANNA\""', "Prov1"]}'
+    peer chaincode query -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions -c '{"Args":["ServiceAccess", '"\"$ANNA\""', "GlobalMSP"]}'
     ```
+This verification may fail since the function ServiceAccess uses the current time, which could be extern to the period of time in which Anna bought the subscription.
