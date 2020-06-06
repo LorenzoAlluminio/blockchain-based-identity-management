@@ -28,7 +28,7 @@ Example network with 2 SP and 2 users:
 ### Service provider side
 
 - Link account page
-This page will allow users to link their "normal account" to the blockchain one. The user will have to send a signature to prove that he own the sk related to his pk. The SP will have to modify his internal database in order to link the "normal" account to the user identifier.
+This page will allow users to link their "normal service account" to the blockchain one. The user will have to send a signature to prove that he own the sk related to his pk. The SP will have to modify his internal database in order to link the "normal" account to the user identifier.
 
 ![Link](../img/link.png "Link")
 
