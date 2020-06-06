@@ -21,10 +21,11 @@ CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypt
 peer chaincode <query/invoke> -o orderer.org6.example.com:12050 $ORD_STRING -C mychannel -n <money/offers/subscriptions> $PEER_STRING -c <params> --waitForEvent
 ```
     
-4.  Whether you did step 1 or not, it is possible to test the removal of one of the orgs (org2.example.com) at runtime; just run the command `docker exec cli ./scripts/org2-remove.sh` from the folder containing this file. This script will also remove the corresponding orderer org (OrdererOrg2) from both the system and the application channel.
+4.  Whether you did step 1 or not, it is possible to test the removal of one of the orgs (org2.example.com) at runtime; just run the command `docker exec cli ./scripts/org2-remove.sh` from the semproj_net folder. This script will also remove the corresponding orderer org (OrdererOrg2) from both the system and the application channel.
 
 5. Now you can verify that the organization has been remove by trying to interact with Hyperledger through the order of organization 2:
 ```bash
+    ORD_STRING="--tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org6.example.com/orderers/orderer.org6.example.com/msp/tlscacerts/tlsca.org6.example.com-cert.pem"
 peer chaincode <query/invoke> -o orderer.org2.example.com:8050 $ORD_STRING -C mychannel -n <money/offers/subscriptions> $PEER_STRING -c <params> --waitForEvent
 ```
 
