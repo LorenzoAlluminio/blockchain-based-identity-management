@@ -43,9 +43,9 @@
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["SplitSubscription","U1", "Prov1", "GlobalMSP", "2021-04-02T15:00:00Z", "2021-05-02T15:00:00Z"]}' --waitForEvent
     ```
     this will fail since the SmartContract will be exectued only if is called by another one. Indeed if we can rent our subscription through the NewOffer method (operation that will call the SplitSubscrition method)
-    ```bash
+```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", "GlobalMSP", "2021-04-02T15:00:00Z", "2021-05-02T15:00:00Z", "30"]}' --waitForEvent
-    ```
+```
     it will succed. 
 
 10.  Now select Anna by setting 
@@ -71,24 +71,20 @@
     ```bash
     CORE_PEER_MSPCONFIGPATH="/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Bob@global.example.com/msp"
    ```  
-14. Then create a new offert
-    ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", "Prov1", "2021-04-02T15:00:00Z", "2021-05-02T15:00:00Z", "30"]}' --waitForEvent
-    ```
-15. Create another offer with price that Anna cannot afford to buy:  
+14. Create another offer with price that Anna cannot afford to buy:  
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", "Prov1", "2021-05-03T15:00:00Z", "2021-05-04T15:00:00Z", "120"]}' --waitForEvent
     ```
-16. Select Anna again as in point 10  
-17. Try to accept the second offer and see it fail with  
+15. Select Anna again as in point 10  
+16. Try to accept the second offer and see it fail with  
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["AcceptOffer", '"\"$BOB\""', "Prov1", "2021-05-03T15:00:00Z"]}' --waitForEvent
     ```
-18. Accept the first offer with  
+17. Accept the first offer with  
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["AcceptOffer", '"\"$BOB\""', "Prov1", "2021-04-02T15:00:00Z"]}' --waitForEvent
     ```
-19. Show that Anna has spent money and has acquired the subscription with  
+18. Show that Anna has spent money and has acquired the subscription with  
     ```bash
     peer chaincode query -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money -c '{"Args":["GetMoneyAccount", '"\"$ANNA\""']}'
     ```  
@@ -96,7 +92,7 @@
     ```bash
     peer chaincode query -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions -c '{"Args":["GetInfoUser", '"\"$ANNA\""', "Prov1"]}'
     ```
-20. Show that Anna can login with the subscription he bought after loggin into admin
+19. Show that Anna can login with the subscription he bought after loggin into admin
     ```bash
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Admin@global.example.com/msp
     ```
