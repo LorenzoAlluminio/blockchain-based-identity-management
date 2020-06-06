@@ -1,4 +1,10 @@
-# Semester project
+# Blockchain Based Identity Management - Semester project
+
+## Team members
+
+- Edoardo Giordano:   Edoardo.Giordano@eurecom.fr
+- Fulvio di Girolamo: Fulvio.Di-Girolamo@eurecom.fr
+- Lorenzo Alluminio:  Lorenzo.Alluminio@eurecom.fr
 
 ## Why this project
 
