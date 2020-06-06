@@ -2,11 +2,11 @@
 
 ## Why this project
 
-The idea is to create an hyperledger network between multiple service provider that offer different type of services (e.g video streaming, hosting, vpn access ...)
+The idea is to create an hyperledger network between multiple service providers that offer different type of services (e.g video streaming, hosting, vpn access ...)
 
-This network will allow users to rent to other users their access to services and gain in return HyperCash (HC). Then they will be able to rent access to other services belonging to the network using the gained currency. So this technology will basically allow the creation of a marketplace of access to services between users. Users will not be able to convert HyperCash into real money.
+This network will allow users to rent to other users their access to services and gain in return HyperCash (HC). Then they will be able to rent access to other services belonging to the network using the gained currency. Therefore this technology will basically allow the creation of an autonomous marketplace of access to services between users. Users will not be able to convert HyperCash into real money.
 
-Example: User A has access to service S. user A will put an advertisment on the Hyperledger network where he will specify that he rents his access to S from time X to time Y for the price P. Then user B will be able to pay the required price in HC and get access to S, without disclosing the credentials of A, for the specified interval of time.
+Example: User A has access to service S. user A will put an advertisment on the Hyperledger network where he will specify that he rents his access to S from time X to time Y for the price P. Then user B will be able to pay the required price P in HC and get access to S, without disclosing the credentials of A, for the specified interval of time.
 
 The service providers will then perform access control on the blockchain to check if a user has access to a determinate service in a determinate period of time.
 
