@@ -40,6 +40,6 @@ The amount of this fee can be decided by the organizations.
 - [Network architecture & interactions](docs/Design.md)
 - [Threshold Certification Authority](docs/TSIntegration.md)
 
-## Usage
+## Usage & Demos
 
-- [Usage of the project](docs/Usage.md)
+- [Usage of the project & demos](docs/Usage.md)
