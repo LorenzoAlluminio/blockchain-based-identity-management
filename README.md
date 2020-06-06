@@ -2,9 +2,9 @@
 
 ## Why this project
 
-# Design of the project
+## Design of the project
 
-# Threshold Certification Authority
+## Threshold Certification Authority
 
 ## Usage
 
