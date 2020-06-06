@@ -17,7 +17,7 @@ All this sharing of accesses can be done without the disclosure of the credentia
 
 Example: User A has access to service S. user A will put an advertisment on the Hyperledger network where he will specify that he rents his access to S from time X to time Y for the price P. Then user B will be able to pay the required price P in HC and get access to S, without disclosing the credentials of A, for the specified interval of time.
 
-### Key questions
+### Key points
 
 How the users will obtain HyperCash?
 - They will receive a periodic amount of it when paying the fee that is needed in order to have granted the access to the network.
