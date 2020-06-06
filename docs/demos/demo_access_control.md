@@ -1,6 +1,6 @@
 # Demo on certificate-based access control
 
-N.B. For seek of semplicity in the demo the subscription are provided from the Admin of the globalMSP; in a real scenario this would not make sense since the globalMSP dose not provide any service outside the blockchain.
+N.B. in this demo for the sake of simplicity the subscription are generated from the Admin of the globalMSP; in a real scenario this would not make sense since the globalMSP is not a service provider outside the blockchain.
 
 1.  Run `./byfn.sh` to setup the network and `docker exec -it cli bash`.
 2.  Set ORD_STRING and PEER_STRING:
