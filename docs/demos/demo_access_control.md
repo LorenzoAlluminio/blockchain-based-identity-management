@@ -53,7 +53,7 @@ it will succed.
 10.  Now select Anna by setting 
 ```bash
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Anna@global.example.com/msp
-   ```
+```
 11.  Print the user's id with  
 ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["GetUserId"]}' --waitForEvent
