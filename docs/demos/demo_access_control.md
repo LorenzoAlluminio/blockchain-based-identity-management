@@ -39,9 +39,9 @@
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Bob@global.example.com/msp
     ```  
 9.  Try to remove a time slot from a target user
-    ```bash
+```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["SplitSubscription","U1", "Prov1", "GlobalMSP", "2021-04-02T15:00:00Z", "2021-05-02T15:00:00Z"]}' --waitForEvent
-    ```
+```
     this will fail since the SmartContract will be exectued only if is called by another one. Indeed if we can rent our subscription through the NewOffer method (operation that will call the SplitSubscrition method)
 ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", "GlobalMSP", "2021-04-02T15:00:00Z", "2021-05-02T15:00:00Z", "30"]}' --waitForEvent
