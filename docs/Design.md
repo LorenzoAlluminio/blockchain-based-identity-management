@@ -1,14 +1,5 @@
 # Design
 
-
-## Summary of the requirements
-
-The idea is to create an hyperledger network between multiple service provider that offer different type of services (e.g video streaming, hosting, vpn access ...)
-
-This network will allow users to rent to other users their access to services and gain in return HyperCash (HC).
-Then they will be able to rent access to other services belonging to the network using the gained currency. So this technology will basically allow the creation of a marketplace of access to services between users.
-Users will not be able to convert HyperCash into real money.
-
 ## Network design
 
 #### Parties involved
