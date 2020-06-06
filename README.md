@@ -1,5 +1,11 @@
 # Semester project
 
+## Why this project
+
+# Design of the project
+
+# Threshold Certification Authority
+
 ## Usage
 
 1. Clone the repository
