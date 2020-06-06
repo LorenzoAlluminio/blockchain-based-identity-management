@@ -45,3 +45,7 @@ How the access control on users is performed?
 ## Usage & Demos
 
 - [Usage of the project & demos](docs/Usage.md)
+
+## Check out this ASCII-art powered user story
+
+- [User story](docs/story.md)
