@@ -18,7 +18,7 @@ CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypt
 
 3. Now you can interact with Hyperledger through the order of organization  6:
 ```bash
-peer chaincode <query/invoke> -o orderer.org6.example.com:12055 $ORD_STRING -C mychannel -n <money/offers/subscriptions> $PEER_STRING -c <params> --waitForEvent
+peer chaincode <query/invoke> -o orderer.org6.example.com:12050 $ORD_STRING -C mychannel -n <money/offers/subscriptions> $PEER_STRING -c <params> --waitForEvent
 ```
     
 4.  Whether you did step 1 or not, it is possible to test the removal of one of the orgs (org2.example.com) at runtime; just run the command `docker exec cli ./scripts/org2-remove.sh` from the folder containing this file. This script will also remove the corresponding orderer org (OrdererOrg2) from both the system and the application channel.
