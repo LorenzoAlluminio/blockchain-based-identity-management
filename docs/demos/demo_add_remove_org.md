@@ -26,7 +26,7 @@ peer chaincode <query/invoke> -o orderer.org6.example.com:12050 $ORD_STRING -C m
 5. Now you can verify that the organization has been remove by trying to interact with Hyperledger through the order of organization 2:
 ```bash
 docker exec -it cli bash
- ORD_STRING="--tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org2.example.com/orderers/orderer.org2.example.com/msp/tlscacerts/tlsca.org2.example.com-cert.pem"
+ORD_STRING="--tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/org2.example.com/orderers/orderer.org2.example.com/msp/tlscacerts/tlsca.org2.example.com-cert.pem"
 peer chaincode <query/invoke> -o orderer.org2.example.com:8050 $ORD_STRING -C mychannel -n <money/offers/subscriptions> $PEER_STRING -c <params> --waitForEvent
 ```
 
