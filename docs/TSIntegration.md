@@ -19,3 +19,12 @@ These properties are extremely desirable given our use case:
 The only negative aspect of TS is that for mathematical reasons it is not possible to reduce the value of t after the DKG (although it is theoretically possible to increase it); nevertheless, this is not a serious shortcoming because in any case we assume that events such as addition or removal of an Organization should be extremely uncommon and well-regulated, therefore if t is chosen wisely it should be able to remain stable for an extended period of time.
 
 ### How we use Threshold Signatures with Hyperledger
+
+Given our decision to make use of ECDSA Threshold signatures, the [alice](https://github.com/getamis/alice) library came to our help to provide an implementation. This library actually implements a more general concept, called Hierarchical TS, which allows to assign different weights to each private share; in our use case this is not necessary but it is very simple to fall back to non-hierarchical TS by simply assigning the same rank to all shares.
+
+Concerning how this library and scheme are actually used to solve the issues mentioned above:
+- The companies initially run the DKG to retrieve the shared public key and their private shares;
+- A "global" MSP is defined within the Hyperledger Network; its root certificate contains the shared public key from the DKG and is self-signed (therefore the signature is a TS computed in a distributed way by the Organizations using the private shares from the DKG);
+- When a new user is enrolled, he/she is assigned to the global MSP and is provided with a certificate again signed with a TS using the Organizations' private shares.
+
+Notice that our implementation is only meant for demonstrative purposes, therefore the DKG and signature computation are executed in the form of inter-process communication between different istances of alice on the local machine rather than in a really distributed way; nevertheless, this is not really a problem as the point we want to prove is that it is possible to configure Hyperledger to automatically handle MSPs whose certificates are signed using this kind of schemes.
