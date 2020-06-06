@@ -145,7 +145,7 @@ In order to claim the assets the client will invoke a transaction where he will 
 
 ![Payment](../img/payments.png "Payment")
 
-## Future implementation
+## Future implementations
 The following aspects of the project were not implemented for a lack of time.
 - Client webapp
 - Fees mechanism on transaction
