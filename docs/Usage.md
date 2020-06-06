@@ -52,5 +52,5 @@ You should also add at least one of the new peers to PEER_STRING:
 11.  When finished, exit the CLI and run `./byfn.sh down` to turn off the network and clean everything. You might still need to run the command `docker volume prune` in case some volumes are not deleted.  
 
 Demos scripts:
-- [Demo on certificate-based access control](docs/demos/demo_access_control.md)
-- [Demo on organization addition and removal of an organization](demo_add_remove_org.md)
+- [Demo on certificate-based access control](demos/demo_access_control.md)
+- [Demo on organization addition and removal of an organization](demos/demo_add_remove_org.md)
