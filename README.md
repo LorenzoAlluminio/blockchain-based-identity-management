@@ -10,7 +10,7 @@
 
 ### The idea
 
-The goal of this project is to create an autonomous market of access to services by creating hyperledger network between multiple service providers of different kind (e.g video streaming, hosting, vpn access ...).
+The goal of this project is to create an autonomous market of access to services by creating an hyperledger network between multiple service providers of different kind (e.g video streaming, hosting, vpn access ...).
 This network will allow users to rent to other users their access to services and gain in return HyperCash (HC). Then they will be able to rent access to other services belonging to the network using the gained currency. Users will not be able to convert HyperCash into real money.
 The service providers will then perform access control on the blockchain to check if a user has access to a determinate service in a determinate period of time. Therefore all this sharing of accesses can be done without the disclosure of the service providers credentials of any user. 
 
