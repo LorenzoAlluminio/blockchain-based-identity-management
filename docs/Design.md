@@ -89,7 +89,7 @@ The endorsement policy will require that at least the majority of the SP share t
 The function that need to be implemented are: addiction, subtraction,query, verifyPayment and newAccount
 
 
-UserId | amountOfMoney | StartOfValidity | EndOfValidity
+UserId | amountOfMoney | StartDate | EndDate
 ---- | ---- | ---- | ----
 A|100| 03/03/2020 | 03/12/2021
 
