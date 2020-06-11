@@ -40,6 +40,20 @@
 - Night out 
 
 ```
+  _
+ {_}
+ |(|
+ |=|
+/   \
+|.--|
+||  |
+||  |    .    ' .
+|'--|  '     \~~~/
+'-=-' \~~~/   \_/
+       \_/     Y
+        Y     _|_
+jgs    _|_
+
 
 ```
 
@@ -60,6 +74,7 @@ _(____nm_______ /____\____
 - Bob watches some series on netflix, but there is also a series that he would like to watch on Amazon Prime Video.
 Due to his rather poor finances, he is used to looking for "other ways" to retrieve this kind of goodies...
  ```
+*
      ___
      \_/
       |._
@@ -67,7 +82,7 @@ Due to his rather poor finances, he is used to looking for "other ways" to retri
       |  \       .-.        (
       |   |     (@.@)        )
       |   |   '=.|m|.='     /
-      |  /    .='`"``=.    /
+ jgs  |  /    .='`"``=.    /
       |.'                 (
       |.-"-.__.-""-.__.-"-.)
       |
