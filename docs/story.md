@@ -1,6 +1,6 @@
 # User story
 
-- Anna is a student...
+- Anna is a student, she owns a Netflix subscription but doesn’t use it very often. Also she is a happy user of our service :)
 
 ```
        .                                          
