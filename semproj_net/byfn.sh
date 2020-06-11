@@ -145,9 +145,10 @@ cd ../semproj_net
 cp -R ./global.example.com ./crypto-config/peerOrganizations/
 chmod -R 775 ./crypto-config/peerOrganizations/global.example.com
 
-# add Anna and Bob
+# add Anna
 cd scripts
 ./addUser_th.sh Anna
+sleep 1
 cd ..
 
 # Create orderer genesis block, the channel transaction artifact and define anchor peers on the channel based on the configuration in configtxgen.yaml
