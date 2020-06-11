@@ -148,8 +148,6 @@ chmod -R 775 ./crypto-config/peerOrganizations/global.example.com
 # add Anna and Bob
 cd scripts
 ./addUser_th.sh Anna
-sleep 1
-./addUser_th.sh Bob
 cd ..
 
 # Create orderer genesis block, the channel transaction artifact and define anchor peers on the channel based on the configuration in configtxgen.yaml
