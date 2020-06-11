@@ -23,6 +23,7 @@ Configuration:
 
 5.  To became admin use
     ```bash
+    CORE_PEER_LOCALMSPID="Org1MSP"
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
     ```
 6.  Create ANNA wallet
@@ -39,11 +40,12 @@ Start Demo:
     ```
 8. Go back to ANNA
     ```bash
+    CORE_PEER_LOCALMSPID="GlobalMSP"
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Anna@global.example.com/msp
     ```  
 9. Anna create its offer
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", '"\"$NETFLIX\""' , "2020-06-25T15:00:00Z", "2020-06-25T23:59:59Z", "30"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", '"\"$NETFLIX\""' , "2020-06-25T10:00:00Z", "2020-06-25T23:59:59Z", "30"]}' --waitForEvent
     ```
 10. Bob is added to the blockchain 
     ```bash 
@@ -59,21 +61,33 @@ Start Demo:
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["GetUserId"]}' --waitForEvent
     ```  
     and copy it to the env var BOB
-13. Became user and create the money account
+13. Became admin and create the money account
     ```bash
+    CORE_PEER_LOCALMSPID="Org1MSP"
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
     ```
     and
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["NewMoneyAccount", '"\"$BOB\""', "30", "2020-06-01T15:00:00Z", "2020-08-01T15:00:00Z"]}' --waitForEvent
+    CORE_PEER_LOCALMSPID="GlobalMSP"
     ```
-14. Get all the available offerts
+15. Return to Bob
+    ```bash
+    CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Bob@global.example.com/msp
+    ```  
+15. Get all the available offerts
     ```bash
     peer chaincode invoke -n offers -c '{"Args":["QueryAllOffers"]}' -C myc
     ```
-15. Accept one offert with bob
+16. Accept one offert with bob
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["AcceptOffer", '"\"$ANNA\""', "Prov1", "2020-06-25T15:00:00Z"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["AcceptOffer", '"\"$ANNA\""', "Prov1", "2020-06-25T10:00:00Z"]}' --waitForEvent
+    ```
+17. Became Admin to check Bob subscription to access Netflix
+    ```bash
+    CORE_PEER_LOCALMSPID="Org1MSP"
+    CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+    peer chaincode query -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions -c '{"Args":["ServiceAccess", '"\"$BOB\""', '"\"$NETFLIX\""']}'
     ```
 
 
