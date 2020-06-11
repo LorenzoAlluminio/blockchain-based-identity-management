@@ -14,7 +14,7 @@ _(____nm_______ /____\____
 
 ```
 
-- Joe watches some series on netflix, but there is also a series that he would like to watch on Amazon Prime Video.
+- BOb watches some series on netflix, but there is also a series that he would like to watch on Amazon Prime Video.
 Due to his rather poor finances, he is used to looking for "other ways" to retrieve this kind of goodies...
  ```
      ___
