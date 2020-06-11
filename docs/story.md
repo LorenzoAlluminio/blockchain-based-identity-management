@@ -72,7 +72,7 @@ _(____nm_______ /____\____
 
 ```
 
-- Bob watches some series on netflix, but there is also a series that he would like to watch on Amazon Prime Video.
+- Bob doesn’t watch many movies and TV series, but this evening Bob would like to invite over his friends to watch live the last episode of Dark.
 Due to his rather poor finances, he is used to looking for "other ways" to retrieve this kind of goodies...
  ```
 *
