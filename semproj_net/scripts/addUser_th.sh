@@ -70,3 +70,5 @@ set +x
 
 echo "\n\nResigned user certificate:\n"
 openssl x509 -in ../crypto-config/peerOrganizations/global.example.com/users/$1@global.example.com/msp/signcerts/$1@global.example.com-cert.pem -text
+
+echo "User $1 successfully added to the blockchain"
