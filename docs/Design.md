@@ -1,14 +1,5 @@
 # Design
 
-
-## Summary of the requirements
-
-The idea is to create an hyperledger network between multiple service provider that offer different type of services (e.g video streaming, hosting, vpn access ...)
-
-This network will allow users to rent to other users their access to services and gain in return HyperCash (HC).
-Then they will be able to rent access to other services belonging to the network using the gained currency. So this technology will basically allow the creation of a marketplace of access to services between users.
-Users will not be able to convert HyperCash into real money.
-
 ## Network design
 
 #### Parties involved
@@ -21,7 +12,7 @@ Users will not be able to convert HyperCash into real money.
 - End users
     - they will use the WebApp to interact to the hyperledger blockchain.
 
-- External CA, which will use a threshold signature between all the organization to create the user certificate
+- Distributed CA, which will use a threshold signature scheme between all the organization to create the user certificate
 - Common payment account, external to the Hyperledger blockchain.
 
 The network is composed by one application channel on which are deployed three chaincodes (one related to subscriptions, one related to money and one which controls the rent offers). Each service provider will have a peer which executes the three smart contracts (SCS, SCM and SCO respectively) and keeps an updated version of the three world states (WS, WM and WO). The endorsement policies and the access control are different based on the type of the transaction. Each provider will also have 1 ordering node, and they will reach consensus through Raft.
@@ -37,7 +28,7 @@ Example network with 2 SP and 2 users:
 ### Service provider side
 
 - Link account page
-This page will allow users to link their "normal account" to the blockchain one. The user will have to send a signature to prove that he own the sk related to his pk. The SP will have to modify his internal database in order to link the "normal" account to the user identifier.
+This page will allow users to link their "normal service account" to the blockchain one. The user will have to send a signature to prove that he own the sk related to his pk. The SP will have to modify his internal database in order to link the "normal" account to the user identifier on the blockchain.
 
 ![Link](../img/link.png "Link")
 
@@ -98,9 +89,9 @@ The endorsement policy will require that at least the majority of the SP share t
 The function that need to be implemented are: addiction, subtraction,query, verifyPayment and newAccount
 
 
-UserId | amountOfMoney | LastPaymentDate
----- | ---- | ---- |
-A|100| 03/09/2020 |
+UserId | amountOfMoney | StartDate | EndDate
+---- | ---- | ---- | ----
+A|100| 03/03/2020 | 03/12/2021
 
 #### offers world state
 
@@ -154,7 +145,7 @@ In order to claim the assets the client will invoke a transaction where he will 
 
 ![Payment](../img/payments.png "Payment")
 
-## Future implementation
+## Future implementations
 The following aspects of the project were not implemented for a lack of time.
 - Client webapp
 - Fees mechanism on transaction

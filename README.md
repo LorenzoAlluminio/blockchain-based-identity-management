@@ -10,14 +10,13 @@
 
 ### The idea
 
-The goal of this project is to create an autonomous market of access to services by creating hyperledger network between multiple service providers of different kind (e.g video streaming, hosting, vpn access ...).
-This network will allow users to rent to other users their access to services and gain in return HyperCash (HC). Then they will be able to rent access to other services belonging to the network using the gained currency. Therefore this technology will basically allow the creation of an autonomous marketplace of access to services between users. Users will not be able to convert HyperCash into real money.
-The service providers will then perform access control on the blockchain to check if a user has access to a determinate service in a determinate period of time.
-All this sharing of accesses can be done without the disclosure of the credentials of any user. 
+The goal of this project is to create an autonomous market of accesses to services by creating an hyperledger network between multiple service providers of different kind (e.g video  & music streaming, e-learning, vpn access, hosting … ).
+This network will allow users to rent to other users their access to services and gain in return HyperCash (HC). Then they will be able to rent access to other services belonging to the network using the gained currency. Users will not be able to convert HyperCash into real money.
+The service providers will then perform access control on the blockchain to check if a user has access to a determinate service in a determinate period of time. Therefore all this sharing of accesses can be done without the disclosure of the service providers credentials of any user. 
 
 Example: User A has access to service S. user A will put an advertisment on the Hyperledger network where he will specify that he rents his access to S from time X to time Y for the price P. Then user B will be able to pay the required price P in HC and get access to S, without disclosing the credentials of A, for the specified interval of time.
 
-### Key questions
+### Key points
 
 How the users will obtain HyperCash?
 - They will receive a periodic amount of it when paying the fee that is needed in order to have granted the access to the network.
@@ -35,6 +34,9 @@ How the provider will benefit from this technology?
 - In each rent transaction there will be a fee payed in Hypercash. This will not directly bring an economic benefit to the providers, but it will lead to a reduction of the amount of HC of the users, that will be "obliged" to buy more if he wants to continue to use the service.
 The amount of this fee can be decided by the organizations.
 
+How the access control on users is performed?
+- The providers will provide the option to "log in with hyperledger", they will retrieve the id of the user from his certificate and they will check if the user has access to the service by querying the blockchain.
+
 ## Design of the project
 
 - [Network architecture & interactions](docs/Design.md)
@@ -43,3 +45,7 @@ The amount of this fee can be decided by the organizations.
 ## Usage & Demos
 
 - [Usage of the project & demos](docs/Usage.md)
+
+## Check out this ASCII-art powered user story!
+
+- [User story](docs/story.md)
