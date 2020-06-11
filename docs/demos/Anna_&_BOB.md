@@ -41,6 +41,8 @@ Start Demo:
 8. Go back to ANNA
     ```bash
     CORE_PEER_LOCALMSPID="GlobalMSP"
+    ```
+    ```bash
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Anna@global.example.com/msp
     ```  
 9. Anna create its offer
@@ -64,6 +66,8 @@ Start Demo:
 13. Became admin and create the money account
     ```bash
     CORE_PEER_LOCALMSPID="Org1MSP"
+    ```
+    ```bash
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
     ```
     and
@@ -73,11 +77,13 @@ Start Demo:
 15. Return to Bob
     ```bash
     CORE_PEER_LOCALMSPID="GlobalMSP"
+    ```
+    ```bash
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Bob@global.example.com/msp
     ```  
 15. Get all the available offerts
     ```bash
-    peer chaincode invoke -n offers -c '{"Args":["QueryAllOffers"]}' -C myc --waitForEvent 2>&1 | grep "invoke successful"
+    peer chaincode invoke -n offers -c '{"Args":["QueryAllOffers"]}' -C mychannel --waitForEvent 2>&1 | grep "invoke successful"
     ```
 16. Accept one offert with bob
     ```bash
