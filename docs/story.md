@@ -37,7 +37,8 @@
 
 ```
 
-- Night out 
+- Tonight Anna is going out, therefore she decides to rent her subscription on the blockchain for the evening.
+
 
 ```
   _
