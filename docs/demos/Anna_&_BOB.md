@@ -17,7 +17,7 @@ Configuration:
     ```  
 4.  Print the user's id with  
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["GetUserId"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["GetUserId"]}' --waitForEvent 2>&1 | grep "invoke successful"
     ```  
     and copy it to the env var ANNA
 
@@ -28,7 +28,7 @@ Configuration:
     ```
 6.  Create ANNA wallet
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["NewMoneyAccount", '"\"$ANNA\""', "0", "2020-06-01T15:00:00Z", "2030-08-01T15:00:00Z"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["NewMoneyAccount", '"\"$ANNA\""', "0", "2020-06-01T15:00:00Z", "2030-08-01T15:00:00Z"]}' --waitForEvent 2>&1 | grep "invoke successful"
     ```
 7.  Issue `NETFLIX=Org1`
     
@@ -36,7 +36,7 @@ Start Demo:
 
 7.  Issue a Subscription for ANNA
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["IssueSubscription", '"\"$ANNA\""', "Prov1", "2020-06-02T15:00:00Z", "2020-08-02T15:00:00Z"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["IssueSubscription", '"\"$ANNA\""', "Prov1", "2020-06-02T15:00:00Z", "2020-08-02T15:00:00Z"]}' --waitForEvent 2>&1 | grep "invoke successful"
     ```
 8. Go back to ANNA
     ```bash
@@ -45,7 +45,7 @@ Start Demo:
     ```  
 9. Anna create its offer
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", '"\"$NETFLIX\""' , "2020-06-25T10:00:00Z", "2020-06-25T23:59:59Z", "30"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", '"\"$NETFLIX\""' , "2020-06-25T10:00:00Z", "2020-06-25T23:59:59Z", "30"]}' --waitForEvent 2>&1 | grep "invoke successful"
     ```
 10. Bob is added to the blockchain 
     ```bash 
@@ -58,7 +58,7 @@ Start Demo:
     ```  
 12. Get the UserID
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["GetUserId"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["GetUserId"]}' --waitForEvent 2>&1 | grep "invoke successful"
     ```  
     and copy it to the env var BOB
 13. Became admin and create the money account
@@ -68,20 +68,20 @@ Start Demo:
     ```
     and
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["NewMoneyAccount", '"\"$BOB\""', "30", "2020-06-01T15:00:00Z", "2020-08-01T15:00:00Z"]}' --waitForEvent
-    CORE_PEER_LOCALMSPID="GlobalMSP"
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["NewMoneyAccount", '"\"$BOB\""', "30", "2020-06-01T15:00:00Z", "2020-08-01T15:00:00Z"]}' --waitForEvent 2>&1 | grep "invoke successful"
     ```
 15. Return to Bob
     ```bash
+    CORE_PEER_LOCALMSPID="GlobalMSP"
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Bob@global.example.com/msp
     ```  
 15. Get all the available offerts
     ```bash
-    peer chaincode invoke -n offers -c '{"Args":["QueryAllOffers"]}' -C myc
+    peer chaincode invoke -n offers -c '{"Args":["QueryAllOffers"]}' -C myc --waitForEvent 2>&1 | grep "invoke successful"
     ```
 16. Accept one offert with bob
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["AcceptOffer", '"\"$ANNA\""', "Prov1", "2020-06-25T10:00:00Z"]}' --waitForEvent
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["AcceptOffer", '"\"$ANNA\""', "Prov1", "2020-06-25T10:00:00Z"]}' --waitForEvent  2>&1 | grep "invoke successful"
     ```
 17. Became Admin to check Bob subscription to access Netflix
     ```bash
