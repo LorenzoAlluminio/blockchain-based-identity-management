@@ -83,7 +83,7 @@ Start Demo:
     ```  
 15. Get all the available offerts
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["QueryAllOffers"]}' --waitForEvent 2>&1 | grep "invoke successful"
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["QueryAllOffers"]}' --waitForEvent 2>&1 | grep "invoke successful" | sed -r 's/.*payload:"\[//g' | sed -r 's/.{3}$//g' | tr -d "\\\"\{\}" | tr "," "\n" | sed 's/Key://' | sed 's/Data://' 
     ```
 16. Accept one offert with bob
     ```bash
