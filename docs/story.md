@@ -72,7 +72,7 @@ _(____nm_______ /____\____
 
 ```
 
-- Bob doesn’t watch many movies and TV series, but this evening Bob would like to invite over his friends to watch live the last episode of Dark.
+- Bob doesn’t watch many movies and TV series, but this evening he would like to invite over his friends to watch live the last episode of Dark.
 Due to his rather poor finances, he is used to looking for "other ways" to retrieve this kind of goodies...
  ```
 *
