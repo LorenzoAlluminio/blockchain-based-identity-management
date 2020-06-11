@@ -30,7 +30,7 @@ Configuration:
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["NewMoneyAccount", '"\"$ANNA\""', "0", "2020-06-01T15:00:00Z", "2030-08-01T15:00:00Z"]}' --waitForEvent 2>&1 | grep "invoke successful"
     ```
-7.  Issue `NETFLIX=Org1`
+7.  Issue `NETFLIX="Org1MSP"`
     
 Start Demo:
 
