@@ -35,54 +35,36 @@ Due to his rather poor finances, he is used to looking for "other ways" to retri
 - Anna is also a student...
 
 ```
-           -.                                                                   
-           -:. ..                                                               
-          `+:/:-.                                                               
-          `//+o/.                                                               
-           `-//:-                                                               
-             `:/:.                                                              
-               :/-.                                                             
-                :/-.`                                                           
-                 //-.`               `....-.`                                   
-                 `/+:.`            .:++oso+/++-                                 
-                  `:+:-.         .+oo+:-://syhh+                                
-                    /o/-.`      /hhhy/:-...+hdms.                               
-                     -o+:.`    -dddds/++:--/ddd+                                
-                      .+/-.`   oddhys+:-.::-ohyo                                
-                       .+/-.`  oddysss/--:--ohhy/-.`                            
-                        `+/-.``:hmmmyso+/:-/myyyyoo+:.                          
-                         .+/-.`.+oyhssoo+/sNmhssoosoo+/.                        
-                          .+/-.-+o/os+/:--oys/::--:++oo+:`                      
-                           :s+/ooooyy+:-../hys-.```.-.:+o:                      
-                         `:+hhhysshyyo+//::+ooy+   ``` `-:`                     
-                       `/+oyddhyydhdyo++/////+os:                               
-                       /ossdmNhddmddssoo++////++o/`                             
-                       +syhhNNmhdddyyyyoooo++++++++`                            
-                       :syhhmNNmmmdhyyyyyssooooooo+.                            
-                       -yyhhdNNNNdddhssyyyssoo+++o+.                            
-                        sydmNNNNNddhhysssssoooooo/+/.                           
-                        dhdNNNmmNNddhysssssooo+++/+/:                           
-                        hhhdmmNNNNmddyssssssooo+++//:`                          
-                        .hyhmmmNNNmdyysssssooooo+/`//-                          
-                         /yhmmmNNNmhhssssssssoooo+.-//:                         
-                          +hmmmmNNdhhssssssssssso+-`++/-                        
-                          `/:://+shhyssyyysssooso/::++.`                        
-                                `oyyyssssssssssso+.-.-`                         
-                                -yhyssooo+++ooos+:                              
-             `                  -yhysooo+++++oso+/.                             
-                               `-yhysoo+//::///+++:`                            
-                           `-+sy/+hysoo++/:-:ooo++/:                            
-                         .:+syyyh+oyyso+o+:--:+++/::`                           
-                      `-/ossssydddsshysooo+:--:o+/::-                           
-                     -/o++++osydddmhyyysoo+/::-+o+/:-`                          
-                    `///-....//+yhdddyyysoo+/:--o+/::.                          
-                     ```        ./hhdhyyyooo+/:-/o+::-                          
-                                  -shddyssooo+/:-++/:-`                         
-                                   `+hddyssooo+/::o+::`                         
-                                    `/yhdhysso+/::o+/:.                         
-                                      -shdyssso+/:oo+/-                         
-                                       `:shhyyso+/sso+-                         
-                                         `:yyyys++yso:                          
-                                           `.--.`````                         
+       .                                          
+      `:-.`                                       
+      `/+/`                                       
+        ./-                                       
+         ./-                                      
+          ./-`         `....`                     
+           ./-`      -/+/++os/                    
+            .+:.   `ohy/:-.sdy`                   
+             `/:.  :ddy+:--+hs                    
+              `/:.`:ddys/:-+yy+:.`                
+               `/:..oyys+/omysooo+-               
+                `+//o+y/:-+y+-..::+/              
+               .:yyyshho//:ooo` ```-`             
+              -osdmhddhso+//++/`                  
+              -shdNdmdyyysoo++++                  
+              `yhdNNmdhyyysooo++`                 
+               ydmNmNdhysssoo+++:                 
+               yymmNNmdysssooo+:/.                
+               .ydmmNmhssssooo+.//`               
+                :yyhhhhssssssso:/+-               
+                    -yysssssss+-..                
+                    /hyoo+++oo+.                  
+                  .-/hyo+/::+++/`                 
+               `-+syssys++:-/++/-                 
+             `:+ooshdhyyso+:-++/-                 
+             :/-..//yddyyoo+::o/:.                
+                    `/hdhsoo/:/+:-                
+                      -ydysoo/:+/:                
+                       `ohyss+/++/`               
+                         .oyys+ss/                
+                           .--`..                 
 
 ```
