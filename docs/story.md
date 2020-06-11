@@ -58,7 +58,7 @@ jgs    _|_
 
 ```
 
-- Bob is also a student and doesn't have much money
+- Bob is also a student and doesn't have much money.
 ```
      #####
     #### _\_  ________
