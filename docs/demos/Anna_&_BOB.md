@@ -36,7 +36,7 @@ Start Demo:
 
 7.  Issue a Subscription for ANNA
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["IssueSubscription", '"\"$ANNA\""', "Prov1", "2020-06-02T15:00:00Z", "2020-08-02T15:00:00Z"]}' --waitForEvent 2>&1 | grep "invoke successful"
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["IssueSubscription", '"\"$ANNA\""', "Sub1", "2020-06-02T15:00:00Z", "2020-08-02T15:00:00Z"]}' --waitForEvent 2>&1 | grep "invoke successful"
     ```
 8. Go back to ANNA
     ```bash
@@ -45,7 +45,7 @@ Start Demo:
     ```  
 9. Anna create its offer
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Prov1", '"\"$NETFLIX\""' , "2020-06-25T10:00:00Z", "2020-06-25T23:59:59Z", "30"]}' --waitForEvent 2>&1 | grep "invoke successful"
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Sub1", '"\"$NETFLIX\""' , "2020-06-25T10:00:00Z", "2020-06-25T23:59:59Z", "30"]}' --waitForEvent 2>&1 | grep "invoke successful"
     ```
 10. Bob is added to the blockchain 
     ```bash 
@@ -81,7 +81,7 @@ Start Demo:
     ```
 16. Accept one offert with bob
     ```bash
-    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["AcceptOffer", '"\"$ANNA\""', "Prov1", "2020-06-25T10:00:00Z"]}' --waitForEvent  2>&1 | grep "invoke successful"
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["AcceptOffer", '"\"$ANNA\""', "Sub1", "2020-06-25T10:00:00Z"]}' --waitForEvent  2>&1 | grep "invoke successful"
     ```
 17. Became Admin to check Bob subscription to access Netflix
     ```bash
