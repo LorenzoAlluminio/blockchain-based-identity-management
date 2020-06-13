@@ -38,6 +38,10 @@ Start Demo:
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["IssueSubscription", '"\"$ANNA\""', "Sub1", "2020-06-02T15:00:00Z", "2020-08-02T15:00:00Z"]}' --waitForEvent 2>&1 | grep "invoke successful"
     ```
+    and show that Anna now owns that subscription over this time interval.
+    ```
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["GetInfoUser", '"\"$ANNA\""', '"\"$NETFLIX\""']}' 2>&1 | tr "{" "\n" | grep -E "\"2020|SubID"  | tr -d "\\\"{}[]" | awk -F "," 'NR==1 {print $1;print $2} NR!=1 {print}'
+    ```
 8. Go back to ANNA
     ```bash
     CORE_PEER_LOCALMSPID="GlobalMSP"
