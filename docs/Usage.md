@@ -49,3 +49,4 @@ CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypt
 Demos scripts:
 - [Demo on certificate-based access control](demos/demo_access_control.md)
 - [Demo on organization addition and removal of an organization](demos/demo_add_remove_org.md)
+- [Demo on user story](demos/Anna_&_BOB.md)
