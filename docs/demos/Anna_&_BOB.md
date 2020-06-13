@@ -115,8 +115,10 @@ Start Demo:
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
     peer chaincode query -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions -c '{"Args":["ServiceAccess", '"\"$BOB\""', '"\"$NETFLIX\""']}'
     ```
-
-
+    also check Anna's new subscription state:
+    ```
+    peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["GetInfoUser", '"\"$ANNA\""', '"\"$NETFLIX\""']}' 2>&1 | tr "{" "\n" | grep -E "\"2020|SubID"  | tr -d "\\\"{}[]" | awk -F "," 'NR==1 {print $1;print $2} NR!=1 {print}'
+    ```
 
 
 
