@@ -90,6 +90,8 @@ Due to his rather poor finances, he is used to looking for "other ways" to retri
       |
       |
 ```
+- But suddenly he remembers about this service he saw a couple of days ago, where he can rent access to services for a short time. Therefore he registers immediately and after receiving his first amount of hypercash, he accepts the offer of Anna.
+He can now happily and legally watch the last episode of Dark with his friends!
 ```
                 -ssoooo++++////::::----.....`````                                                   
                 :MMMMMMMMMMMMMMMMMMMMMMMMMMMMMNNNNNNNNNmmmmddddhhhhyyyyssssoooo++++/:               
