@@ -34,7 +34,7 @@ Configuration:
     
 Start Demo:
 
-7.  Issue a Subscription for ANNA
+8.  Issue a Subscription for ANNA
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["IssueSubscription", '"\"$ANNA\""', "Sub1", "2020-06-02T15:00:00Z", "2020-08-02T15:00:00Z"]}' --waitForEvent 2>&1 | grep "invoke successful"
     ```
@@ -42,32 +42,32 @@ Start Demo:
     ```
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["GetInfoUser", '"\"$ANNA\""', '"\"$NETFLIX\""']}' 2>&1 | tr "{" "\n" | grep -E "\"2020|SubID"  | tr -d "\\\"{}[]" | awk -F "," 'NR==1 {print $1;print $2} NR!=1 {print}'
     ```
-8. Go back to ANNA
+9. Go back to ANNA
     ```bash
     CORE_PEER_LOCALMSPID="GlobalMSP"
     ```
     ```bash
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Anna@global.example.com/msp
     ```  
-9. Anna create its offer
+10. Anna create its offer
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Sub1", '"\"$NETFLIX\""' , "2020-06-25T10:00:00Z", "2020-06-25T23:59:59Z", "30"]}' --waitForEvent 2>&1 | grep "invoke successful"
     ```
-10. Bob is added to the blockchain 
+11. Bob is added to the blockchain 
     ```bash 
     cd scripts
     ./addUser_th.sh Bob 2>&1 | awk 'END{print}'
     ```
-11. Impersonate Bob
+12. Impersonate Bob
     ```bash
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Bob@global.example.com/msp
     ```  
-12. Get the UserID
+13. Get the UserID
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["GetUserId"]}' --waitForEvent 2>&1 | grep "invoke successful"
     ```  
     and copy it to the env var BOB
-13. Became admin and create the money account
+14. Became admin and create the money account
     ```bash
     CORE_PEER_LOCALMSPID="Org1MSP"
     ```
@@ -78,7 +78,7 @@ Start Demo:
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["NewMoneyAccount", '"\"$BOB\""', "30", "2020-06-01T15:00:00Z", "2020-08-01T15:00:00Z"]}' --waitForEvent 2>&1 | grep "invoke successful"
     ```
-14. Return to Anna 
+15. Return to Anna 
     ```bash
     CORE_PEER_LOCALMSPID="GlobalMSP"
     ```
@@ -89,7 +89,7 @@ Start Demo:
     ```
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["GetMoneyAccount"]}' 2>&1 | sed -r 's/.*payload:"\{//g' | sed -r 's/.{3}$//g' | tr -d "\\\"\{\}" | tr "," "\n" | sed 's/Key://' | sed 's/Data://'
     ```
-15. Return to Bob
+16. Return to Bob
     ```bash
     CORE_PEER_LOCALMSPID="GlobalMSP"
     ```
@@ -100,15 +100,16 @@ Start Demo:
     ```
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["GetMoneyAccount"]}' 2>&1 | sed -r 's/.*payload:"\{//g' | sed -r 's/.{3}$//g' | tr -d "\\\"\{\}" | tr "," "\n" | sed 's/Key://' | sed 's/Data://'
     ```
-15. Get all the available offerts
+17. Get all the available offerts
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["QueryAllOffers"]}' --waitForEvent 2>&1 | grep "invoke successful" | sed -r 's/.*payload:"\[//g' | sed -r 's/.{3}$//g' | tr -d "\\\"\{\}" | tr "," "\n" | sed 's/Key://' | sed 's/Data://' 
     ```
-16. Accept one offert with bob
+18. Accept one offert with bob
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["AcceptOffer", '"\"$ANNA\""', "Sub1", "2020-06-25T10:00:00Z"]}' --waitForEvent  2>&1 | grep "invoke successful"
     ```
-17. Became Admin to check Bob subscription to access Netflix
+19. Repeat point 15 and 16
+20. Become Admin to check Bob subscription to access Netflix
     ```bash
     CORE_PEER_LOCALMSPID="Org1MSP"
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
