@@ -50,7 +50,7 @@ Start Demo:
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Anna@global.example.com/msp
     
     ```  
-10. Wallet status of Anna
+10a. Wallet status of Anna
 ```bash
 peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["GetMoneyAccount"]}' 2>&1 | sed -r 's/.*payload:"\{//g' | sed -r 's/.{3}$//g' | tr -d "\\\"\{\}" | tr "," "\n" | sed 's/Key://' | sed 's/Data://'
 ```
@@ -102,7 +102,24 @@ peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel 
     ```bash
     peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["AcceptOffer", '"\"$ANNA\""', "Sub1", "2020-06-25T10:00:00Z"]}' --waitForEvent  2>&1 | grep "invoke successful"
     ```
-19. Repeat point 15 and 16
+19. show Bob wallet
+```bash
+peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["GetMoneyAccount"]}' 2>&1 | sed -r 's/.*payload:"\{//g' | sed -r 's/.{3}$//g' | tr -d "\\\"\{\}" | tr "," "\n" | sed 's/Key://' | sed 's/Data://'
+```
+
+19b. Go back to ANNA
+```bash
+CORE_PEER_LOCALMSPID="GlobalMSP"
+```
+```bash
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Anna@global.example.com/msp
+
+```  
+19b. Wallet status of Anna
+```bash
+peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["GetMoneyAccount"]}' 2>&1 | sed -r 's/.*payload:"\{//g' | sed -r 's/.{3}$//g' | tr -d "\\\"\{\}" | tr "," "\n" | sed 's/Key://' | sed 's/Data://'
+```
+
 20. Become Admin to check Bob subscription to access Netflix
     ```bash
     CORE_PEER_LOCALMSPID="Org1MSP"
