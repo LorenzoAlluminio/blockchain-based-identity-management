@@ -131,8 +131,32 @@ also check Anna's new subscription state:
 peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["GetInfoUser", '"\"$ANNA\""', '"\"$NETFLIX\""']}' 2>&1 | tr "{" "\n" | grep -E "\"2020|SubID"  | tr -d "\\\"{}[]" | awk -F "," 'NR==1 {print $1;print $2} NR!=1 {print}'
 ```
 
+21. Go back to ANNA
+```bash
+CORE_PEER_LOCALMSPID="GlobalMSP"
+```
+```bash
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Anna@global.example.com/msp
 
+```  
 
+21. Anna create its offer
+```bash
+peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["NewOffer", "Sub1", '"\"$NETFLIX\""' , "2020-06-27T10:00:00Z", "2020-06-27T23:59:59Z", "30"]}' --waitForEvent 2>&1 | grep "invoke successful"
+```
+
+22. Return to Bob
+```bash
+CORE_PEER_LOCALMSPID="GlobalMSP"
+```
+```bash
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Bob@global.example.com/msp
+```  
+
+23. Accept one offert with bob
+```bash
+peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["AcceptOffer", '"\"$ANNA\""', "Sub1", "2020-06-27T10:00:00Z"]}' --waitForEvent"
+```
 
 
 
