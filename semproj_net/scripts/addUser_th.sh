@@ -39,15 +39,15 @@ cat signer/id-10005-input_base.yaml signer/msg > signer/id-10005-input.yaml
 
 # sign message
 set -x
-./alice signer --config signer/id-10001-input.yaml &
+./alice signer --config signer/id-10001-input.yaml 2>&1 > /dev/null &
 set +x
 sleep 1
 set -x
-./alice signer --config signer/id-10002-input.yaml &
+./alice signer --config signer/id-10002-input.yaml 2>&1 > /dev/null &
 set +x
 sleep 1
 set -x
-./alice signer --config signer/id-10003-input.yaml
+./alice signer --config signer/id-10003-input.yaml 2>&1 > /dev/null
 set +x
 
 sleep 1
