@@ -72,6 +72,7 @@ CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypt
 peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["GetUserId"]}' --waitForEvent 2>&1 | grep "invoke successful"
 ```  
 and copy it to the env var BOB
+
 14. Became admin and create the money account
 ```bash
 CORE_PEER_LOCALMSPID="Org1MSP"
