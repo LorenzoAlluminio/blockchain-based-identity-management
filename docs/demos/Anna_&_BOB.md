@@ -107,7 +107,12 @@ peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel 
 ```bash
 peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["GetMoneyAccount"]}' 2>&1 | sed -r 's/.*payload:"\{//g' | sed -r 's/.{3}$//g' | tr -d "\\\"\{\}" | tr "," "\n" | sed 's/Key://' | sed 's/Data://'
 ```
-
+19a. Go to Admin and show access
+```bash
+CORE_PEER_LOCALMSPID="Org1MSP"
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+peer chaincode query -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions -c '{"Args":["ServiceAccess", '"\"$BOB\""', '"\"$NETFLIX\""']}'
+```
 19b. Go back to ANNA
 ```bash
 CORE_PEER_LOCALMSPID="GlobalMSP"
@@ -121,17 +126,12 @@ CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypt
 peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n money $PEER_STRING -c '{"Args":["GetMoneyAccount"]}' 2>&1 | sed -r 's/.*payload:"\{//g' | sed -r 's/.{3}$//g' | tr -d "\\\"\{\}" | tr "," "\n" | sed 's/Key://' | sed 's/Data://'
 ```
 
-20. Become Admin to check Bob subscription to access Netflix
+20. Become Admin to check Anna subscription state
 ```bash
 CORE_PEER_LOCALMSPID="Org1MSP"
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
-peer chaincode query -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions -c '{"Args":["ServiceAccess", '"\"$BOB\""', '"\"$NETFLIX\""']}'
-```
-also check Anna's new subscription state:
-```
 peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n subscriptions $PEER_STRING -c '{"Args":["GetInfoUser", '"\"$ANNA\""', '"\"$NETFLIX\""']}' 2>&1 | tr "{" "\n" | grep -E "\"2020|SubID"  | tr -d "\\\"{}[]" | awk -F "," 'NR==1 {print $1;print $2} NR!=1 {print}'
 ```
-
 21. Go back to ANNA
 ```bash
 CORE_PEER_LOCALMSPID="GlobalMSP"
