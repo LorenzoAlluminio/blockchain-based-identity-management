@@ -45,8 +45,6 @@ peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel 
 9. Go back to ANNA
 ```bash
 CORE_PEER_LOCALMSPID="GlobalMSP"
-```
-```bash
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Anna@global.example.com/msp
 
 ```  
@@ -76,8 +74,6 @@ and copy it to the env var BOB
 14. Became admin and create the money account
 ```bash
 CORE_PEER_LOCALMSPID="Org1MSP"
-```
-```bash
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
 ```
 and
@@ -87,8 +83,6 @@ peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel 
 16. Return to Bob
 ```bash
 CORE_PEER_LOCALMSPID="GlobalMSP"
-```
-```bash
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Bob@global.example.com/msp
 ```  
 and print his money account data:
@@ -116,8 +110,6 @@ peer chaincode query -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -
 19b. Go back to ANNA
 ```bash
 CORE_PEER_LOCALMSPID="GlobalMSP"
-```
-```bash
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Anna@global.example.com/msp
 
 ```  
@@ -135,8 +127,6 @@ peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel 
 21. Go back to ANNA
 ```bash
 CORE_PEER_LOCALMSPID="GlobalMSP"
-```
-```bash
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Anna@global.example.com/msp
 
 ```  
@@ -149,14 +139,12 @@ peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel 
 22. Return to Bob
 ```bash
 CORE_PEER_LOCALMSPID="GlobalMSP"
-```
-```bash
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/global.example.com/users/Bob@global.example.com/msp
 ```  
 
 23. Accept one offert with bob
 ```bash
-peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["AcceptOffer", '"\"$ANNA\""', "Sub1", "2020-06-27T10:00:00Z"]}' --waitForEvent"
+peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["AcceptOffer", '"\"$ANNA\""', "Sub1", "2020-06-27T10:00:00Z"]}' --waitForEvent
 ```
 
 
