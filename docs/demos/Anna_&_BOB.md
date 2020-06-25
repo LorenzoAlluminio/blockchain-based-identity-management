@@ -147,14 +147,27 @@ CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypt
 peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["AcceptOffer", '"\"$ANNA\""', "Sub1", "2020-06-27T10:00:00Z"]}' --waitForEvent
 ```
 
+### Removing Org2
 
+25. From a different shell, within the semproj_net folder run 
+```bash
+docker exec cli ./scripts/org2-remove.sh 
+```
 
+25. Again from the cli, run
+```bash
+peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["GetUserId"]}' 
+```
 
+26. Impersonate admin of org2
+```bash
+CORE_PEER_LOCALMSPID="Org2MSP"
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp
+```
 
-
-
-
-
-
-
+27. Again run
+```bash
+peer chaincode invoke -o orderer.org1.example.com:7050 $ORD_STRING -C mychannel -n offers $PEER_STRING -c '{"Args":["GetUserId"]}' 
+```
+it will fail
 
